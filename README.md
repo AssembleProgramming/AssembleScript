@@ -20,8 +20,4 @@ AssembleScript is a programming language designed for Avengers to write powerful
 
 Contributions are welcome! If you find a bug or have suggestions for improvement, please open an issue or submit a pull request.
 
-## 🙏 Acknowledgements
-
-Thanks to the creators and maintainers of Lex and Yacc for their invaluable tools and documentation.
-
 That's it! Start writing powerful scripts using AssembleScript and unleash your superhero potential!
