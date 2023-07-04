@@ -1,0 +1,167 @@
+$ TESTING $
+
+$ ==========================================================================
+                            Variable Declaration 
+========================================================================== $
+
+newAvenger a = 10;
+newEternal b = 10;
+vision(a);
+vision(b);
+
+$ ==========================================================================
+                            fightUntil Loop
+========================================================================== $
+
+newAvenger i = 0;
+fightUntil(i < 10){
+    vision(i);
+    ifWorthy(i == 8){
+        vision("Break");
+        endGame;
+    }
+    i = i + 1;
+}
+
+$ ==========================================================================
+                            wakandaFor Loop
+========================================================================== $
+
+wakandaFor i in 0 to 10 {
+     vision(i);
+}
+vision();
+wakandaFor i in 0 to 10 step 2{
+    vision("This is value of i:",i);
+}
+
+$ ==========================================================================
+                            ifWorthy-otherwise
+========================================================================== $
+
+newAvenger age = 21;
+ifWorthy(age < 18){
+    vision("Not eligible");
+}
+otherwise ifWorthy(age == 18){
+    vision("JUST Eligible");
+}
+otherwise{
+     vision("Eligible");
+}
+
+
+$ ==========================================================================
+                            Switch case
+========================================================================== $
+$ BREAK IN SWITCH $
+
+
+newAvenger c = 0;
+wakandaFor i in 0 to 4{
+    multiverse(i){
+        madness 0:
+            vision(c);
+            newAvenger c = "Case 0";
+            vision(c);
+        madness 1:
+            vision(c);
+            newAvenger c = "Case 1";
+            vision(c);
+        madness 2:
+            vision(c);
+            newAvenger c = "Case 2";
+            vision(c);
+        madness 3:
+            vision(c);
+            newAvenger c = "Case 3";
+            vision(c);
+        default:
+            vision("Default");
+    }
+}
+
+
+$ ==========================================================================
+                            team
+========================================================================== $
+
+
+newAvenger str = "Sahil";
+team apk(1) = {str};
+team arr(1) = {apk};
+wakandaFor i in 0 to 0{
+    wakandaFor j in 0 to 0{
+        wakandaFor k in 0 to len(str)-1{
+            vision(arr[i][j][k]);
+        }
+    }
+}
+
+
+$ ==========================================================================
+                            String
+========================================================================== $
+
+newEternal string = "12";
+newEternal s =  "34";
+
+vision(string+s);
+vision(string*s);
+vision(string*3);
+
+newAvenger numstr = parseInt(str);
+newAvenger nums = parseInt(s);
+vision(numstr + nums);
+vision(numstr * nums);
+
+team arrx(3) = {1,2,3};
+vision(string);
+
+$ ==========================================================================
+                            Nums
+========================================================================== $
+
+
+newAvenger n = 2;
+newAvenger m = 10;
+
+vision(n ^ m);
+vision(pow(n, m));
+
+
+
+$ ==========================================================================
+                            ifWorthy-CHAIN
+========================================================================== $
+newAvenger name = "Shashank";
+ifWorthy(name[0] == "S"){
+    ifWorthy(name[1] == "h"){
+        ifWorthy(name[2] == "a"){
+            ifWorthy(name[3] == "s"){
+                ifWorthy(name[4] == "h"){
+                    ifWorthy(name[5] == "a"){
+                        ifWorthy(name[6] == "n"){
+                            ifWorthy(name[7] == "k"){
+                                vision("HI");
+                            } 
+                        } 
+                    } 
+                } 
+            } 
+        } 
+    }   
+}
+
+$ ==========================================================================
+                            shield hydra
+========================================================================== $
+ifWorthy(SHIELD){
+    vision("Hey SHIELD");
+}
+ifWorthy(!HYDRA){
+    vision("Boo HYDRA");
+}
+ifWorthy(HYDRA){
+    vision("Boo SHIELD");
+}
