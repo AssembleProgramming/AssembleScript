@@ -1,4 +1,4 @@
-# AssembleScript 🚀
+![AssembleScript](https://github.com/AssembleProgramming/AssembleScript/assets/104154041/1f7809c0-1516-435d-b112-f761de5cc491)
 
 AssembleScript is a programming language designed for avengers to write powerful scripts and fight against evil forces. This repository contains the source code and documentation for AssembleScript.
 
@@ -7,6 +7,33 @@ The `.avenger` file extension is commonly used for code written in AssembleScrip
 
 Here is the demo file for the code written in AssembleScript. [download](https://github.com/AssembleProgramming/AssembleScript/files/11951651/test.avenger.zip)
 
+## Setup
+
+Download Node.js. Run this followed commands:
+
+```bash
+# Clone the Repository
+git clone https://github.com/AssembleProgramming/AssembleScript.git
+
+# Install Deno using npm: In the terminal, execute the following command to install Deno globally using npm:
+sudo npm install -g deno (MAC/LINUX)
+npm install -g deno (WINDOWS)
+
+# Verify the installation: After the installation is complete, you can verify that Deno has been installed correctly by running the following command:
+deno --version
+
+# Run the project
+deno run -A main.ts
+
+# Add your test code to test.txt
+```
+<hr>
+<hr>
+<hr>
+
+<div align="center">
+<h1> 📚 Documentation and Usage Guide </h1>
+</div>
 
 ## KeyWords
 
@@ -37,8 +64,6 @@ The following keywords in AssembleScript have significant references to the Marv
 - `team` (Array): The Avengers, a team of superheroes with diverse abilities, join forces to achieve common goals. In AssembleScript, the `team` keyword  represents array, symbolizing the formation of an array or a team of values working together.
 
 Embrace the spirit of superheroes as you code in AssembleScript, harnessing the power of these keywords to build marvelous programs!
-
-## 📚 Documentation and Usage Guide
 
 To write scripts in AssembleScript, follow the syntax described blelow. The language supports variables, operators, if-else statements, switch statements, and loops.Use .a Here are some important points to keep in mind:
 
