@@ -16,7 +16,8 @@ Download Node.js. Run this followed commands:
 git clone https://github.com/AssembleProgramming/AssembleScript.git
 
 # Install Deno using npm: In the terminal, execute the following command to install Deno globally using npm:
-sudo npm install -g deno (MAC/LINUX)
+sudo npm install -g deno (MAC)
+sudo snap install deno (LINUX)
 npm install -g deno (WINDOWS)
 
 # Verify the installation: After the installation is complete, you can verify that Deno has been installed correctly by running the following command:
