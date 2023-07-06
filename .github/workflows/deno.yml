@@ -37,3 +37,6 @@ jobs:
 
       - name: Run tests
         run: deno test -A main.ts
+
+      - name: Run project
+        run: deno run -A main.ts
