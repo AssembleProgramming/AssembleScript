@@ -227,18 +227,20 @@ fightUntil(i < 10){
     i = i + 1;
 }
 ```
+
 ### 🛡 Arrays
 
-- Array Declaration
-To declare an array in AssembleScript, use the `team` keyword followed by the array name and the size of the array in parentheses. Initialize the array with 
-values enclosed in curly braces. Here's an example:
+- Array Declaration To declare an array in AssembleScript, use the `team`
+  keyword followed by the array name and the size of the array in parentheses.
+  Initialize the array with values enclosed in curly braces. Here's an example:
 
 ```css
 team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
 ```
 
-- Accessing Array Elements
-To access individual elements of an array, use square brackets with the index position. Remember, array indices start from 0. Here's an example:
+- Accessing Array Elements To access individual elements of an array, use square
+  brackets with the index position. Remember, array indices start from 0. Here's
+  an example:
 
 ```css
 team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
@@ -248,11 +250,11 @@ newAvenger secondAvenger = avengers[1];
 
 vision(firstAvenger);     // Output: 'Captain America'
 vision(secondAvenger);    // Output: 'Iron Man'
-
 ```
 
-- 2D Array Declaration
-In AssembleScript, you can create a 2D array by nesting arrays within the main array. Here's an example:
+- 2D Array Declaration In AssembleScript, you can create a 2D array by nesting
+  arrays within the main array. Here's an example:
+
 ```css
 team male(10) = {'Captain America', 'Iron Man' ,'Dr. Strange', 'Hulk', 'Hawkeye', 'Spiderman', 'Thor', 'T`Challa', 'Ant Man', 'Moon Knight'};
 team female(7) = {'Black Widow','Captain Marvel','Wanda Maximoff','She Hulk','Ms Marvel','Gamora','Nebula'};
@@ -260,9 +262,7 @@ team avengers(2) = {male, female};
 
 vision(avengers[0][4]);  // Output: 'Hawkeye'
 vision(avengers[1][6]);  // Output: 'Gamora'
-
 ```
-
 
 ### 🛡 Comments
 
