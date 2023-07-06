@@ -4,8 +4,6 @@
 
 ## Types of Changes
 
-What types of changes does your code introduce to this project?
-
 What types of changes does your code introduce to this project? Please mark with
 an `x` the applicable boxes.
 
