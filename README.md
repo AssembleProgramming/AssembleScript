@@ -95,7 +95,7 @@ Marvel Cinematic Universe:
 
 - `wakandaFor` loop (For Loop): Wakanda, a technologically advanced nation in
   the Marvel universe, embraces progress and innovation. The for loop in
-  AssembleScript is aptly named `wakandaFor`, signifying a iteration and
+  AssembleScript is aptly named `wakandaFor`, signifying an iteration and
   advancement.
 
 - `fightUntil` loop (While Loop): Marvel superheroes engage in relentless
@@ -117,7 +117,7 @@ power of these keywords to build marvelous programs!
 
 To write scripts in AssembleScript, follow the syntax described blelow. The
 language supports variables, operators, if-else statements, switch statements,
-and loops.Use .a Here are some important points to keep in mind:
+and loops.Here are some important points to keep in mind:
 
 ### 🛡 Variables
 
@@ -201,7 +201,7 @@ AssembleScript supports for and while loops.
 
 - For Loops Use the `wakandaFor` keyword for loops. Declare a new variable,
   specify the condition, and execute the code within the loop. Use `step` to
-  increment or decrement the value of interator.
+  increment or decrement the value of iterator.
 
 ```diff
 @@ use blank `vision()` for a newline@@
@@ -227,6 +227,42 @@ fightUntil(i < 10){
     i = i + 1;
 }
 ```
+### 🛡 Arrays
+
+- Array Declaration
+To declare an array in AssembleScript, use the `team` keyword followed by the array name and the size of the array in parentheses. Initialize the array with 
+values enclosed in curly braces. Here's an example:
+
+```css
+team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
+```
+
+- Accessing Array Elements
+To access individual elements of an array, use square brackets with the index position. Remember, array indices start from 0. Here's an example:
+
+```css
+team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
+
+newAvenger firstAvenger = avengers[0];
+newAvenger secondAvenger = avengers[1];
+
+vision(firstAvenger);     // Output: 'Captain America'
+vision(secondAvenger);    // Output: 'Iron Man'
+
+```
+
+- 2D Array Declaration
+In AssembleScript, you can create a 2D array by nesting arrays within the main array. Here's an example:
+```css
+team male(10) = {'Captain America', 'Iron Man' ,'Dr. Strange', 'Hulk', 'Hawkeye', 'Spiderman', 'Thor', 'T`Challa', 'Ant Man', 'Moon Knight'};
+team female(7) = {'Black Widow','Captain Marvel','Wanda Maximoff','She Hulk','Ms Marvel','Gamora','Nebula'};
+team avengers(2) = {male, female};
+
+vision(avengers[0][4]);  // Output: 'Hawkeye'
+vision(avengers[1][6]);  // Output: 'Gamora'
+
+```
+
 
 ### 🛡 Comments
 
