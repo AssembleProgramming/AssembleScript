@@ -1,8 +1,20 @@
-import { CallExpr,AssignmentExpression,Identifier,MemberExpr,Expr } from "../../../FrontEnd/AST.ts";
+import {
+  AssignmentExpression,
+  CallExpr,
+  Expr,
+  Identifier,
+  MemberExpr,
+} from "../../../FrontEnd/AST.ts";
 import Environment from "../../Scope/environment.ts";
-import { RuntimeVal,NativeFnVal,NumberVal,StringVal,ArrayVal,MAKE_NUll } from "../../values.ts";
+import {
+  ArrayVal,
+  MAKE_NUll,
+  NativeFnVal,
+  NumberVal,
+  RuntimeVal,
+  StringVal,
+} from "../../values.ts";
 import { evaluate } from "../interpreter.ts";
-
 
 /**
  * Evaluates a call expression by invoking a function with the provided arguments.

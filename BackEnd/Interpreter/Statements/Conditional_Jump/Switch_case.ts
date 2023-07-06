@@ -1,8 +1,12 @@
 import { SwitchStatement } from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
-import { RuntimeVal,NumberVal,MAKE_NUll,StringVal } from "../../../values.ts";
+import {
+  MAKE_NUll,
+  NumberVal,
+  RuntimeVal,
+  StringVal,
+} from "../../../values.ts";
 import { evaluate } from "../../interpreter.ts";
-
 
 /**
  * Evaluates a switch statement.

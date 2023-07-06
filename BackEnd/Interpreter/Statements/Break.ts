@@ -1,4 +1,4 @@
-import { RuntimeVal,BreakVal } from "../../values.ts";
+import { BreakVal, RuntimeVal } from "../../values.ts";
 
 /**
  * Evaluates a continue statement.

@@ -1,8 +1,13 @@
-import { IfStatement,ElseStatement } from "../../../../FrontEnd/AST.ts";
+import { ElseStatement, IfStatement } from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
-import { NumberVal,RuntimeVal,BreakVal,MAKE_NUll,BooleanVal } from "../../../values.ts";
+import {
+  BooleanVal,
+  BreakVal,
+  MAKE_NUll,
+  NumberVal,
+  RuntimeVal,
+} from "../../../values.ts";
 import { evaluate } from "../../interpreter.ts";
-
 
 /**
  * Evaluates a numeric if statement by conditionally executing the body based on the condition value.
