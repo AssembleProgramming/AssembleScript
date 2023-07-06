@@ -70,14 +70,14 @@ To write scripts in AssembleScript, follow the syntax described blelow. The lang
 
 ### 🛡 Variables
 
-Declare variables using the newAvenger keyword followed by the variable name and initial value.
+Declare variables using the `newAvenger` keyword followed by the variable name and initial value.
 
-Declare const using the newEternal keyword followed by the variable name and value.
+Declare const using the `newEternal` keyword followed by the variable name and value.
 
 Variable name must not contain any number or any other special character otherthan `UNDERSCORE` 
 
 ```diff
----INVALID: $thanos, gor69, iamgolbintheno1, @dormamu, %hella
+---INVALID: $thanos, gor69, iamgoblintheno1, @dormamu, %hella
 
 +++VALID: _ironman, captain_america, __moon_knight, spiderman
 ```
@@ -100,7 +100,7 @@ vision("Love You 3000");
 
 ### 🛡 Switch Statements
 
-Use the multiverse keyword for switch statements. Check the value of a variable and execute the corresponding madness or the default block.
+Use the `multiverse` keyword for switch statements. Check the value of a variable and execute the corresponding `madness` or the `default` block.
 
 ```diff
 @@ Instead of break keyword use `endgame`@@
@@ -121,7 +121,7 @@ multiverse(name){
 
 ### 🛡 If-Else Statements
 
-Use the ifWorthy keyword for conditional statements. If the condition is true, execute the code within the curly braces; otherwise, execute the code in the otherwise block.
+Use the `ifWorthy` keyword for conditional statements. If the condition is true, execute the code within the curly braces; otherwise, execute the code in the `otherwise` block.
 
 ```diff
 @@ Instead of True keyword use `SHIELD`@@
@@ -145,7 +145,7 @@ otherwise{
 AssembleScript supports for and while loops.
 
 - For Loops
-  Use the wakandaFor keyword for loops. Declare a new variable, specify the condition, and execute the code within the loop. Use `step` to increment or decrement the value of interator.
+  Use the `wakandaFor` keyword for loops. Declare a new variable, specify the condition, and execute the code within the loop. Use `step` to increment or decrement the value of interator.
 
 ```diff
 @@ use blank `vision()` for a newline@@
@@ -163,7 +163,7 @@ wakandaFor i in 10 to 0 step 2{
 ```
 
 - While Loops
-  Use the fightUntil keyword for while loops. Specify the condition and execute the code within the loop.
+  Use the `fightUntil` keyword for while loops. Specify the condition and execute the code within the loop.
 
 ```css
 newAvenger i = 0;
@@ -205,7 +205,7 @@ newAvenger power = 100;
     - Binary : `+`(ADD) &nbsp;&nbsp;&nbsp;&nbsp; `-`(SUB)&nbsp;&nbsp;&nbsp;&nbsp; `*`(MUL)&nbsp;&nbsp;&nbsp;&nbsp; `/`(DIV) &nbsp;&nbsp;&nbsp;&nbsp;`%`(MOD)&nbsp;&nbsp;&nbsp;&nbsp; `^`(POW)
     - Relop : `<` &nbsp;&nbsp;&nbsp;&nbsp; `>` &nbsp;&nbsp;&nbsp;&nbsp;  `<=` &nbsp;&nbsp;&nbsp;&nbsp; `>=`  &nbsp;&nbsp;&nbsp;&nbsp; `==`  &nbsp;&nbsp;&nbsp;&nbsp; `!=`
     - Unary : `!`  &nbsp;&nbsp;&nbsp;&nbsp; `<MINUS>` &nbsp;&nbsp;&nbsp;&nbsp;
-    - Logical : `&&` &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; `and` &nbsp;&nbsp;&nbsp;&nbsp; `||` &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; `or` 
+    - Logical : `&&` &nbsp;| &nbsp; `and` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `||` &nbsp; | &nbsp; `or` 
 
 ### 🛡 Built-In Methods
 
