@@ -26,6 +26,9 @@ deno --version
 # Run the project
 deno run -A main.ts
 
+# Format your entire code with this command
+deno fmt
+
 # Add your test code to test.txt
 ```
 <hr>
