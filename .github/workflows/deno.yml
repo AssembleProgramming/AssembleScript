@@ -35,8 +35,8 @@ jobs:
       - name: Verify formatting
         run: deno fmt --check
 
-      - name: Run tests
+      - name: Run test
         run: deno test -A main.ts
-
+        
       - name: Run project
         run: deno run -A main.ts
