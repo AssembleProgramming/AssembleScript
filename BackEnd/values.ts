@@ -1,7 +1,6 @@
 import { Expr } from "../FrontEnd/AST.ts";
 import Environment from "./Scope/environment.ts";
 
-
 /**
  * Represents the possible value types for a RuntimeVal.
  */
@@ -107,7 +106,7 @@ export interface BreakVal extends RuntimeVal {
 
 export interface ArrayVal extends RuntimeVal {
   type: "array";
-  name: string,
+  name: string;
   values: Expr[]; // Array values
-  size: number
+  size: number;
 }

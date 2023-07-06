@@ -1,6 +1,11 @@
 import { WhileStatement } from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
-import { BooleanVal,RuntimeVal,MAKE_NUll,NumberVal } from "../../../values.ts";
+import {
+  BooleanVal,
+  MAKE_NUll,
+  NumberVal,
+  RuntimeVal,
+} from "../../../values.ts";
 import { evaluate } from "../../interpreter.ts";
 
 /**

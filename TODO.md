@@ -1,6 +1,7 @@
 # TODO-List
 
 ## Completed
+
 - [x] Implement lexer to parser to interpreter to execute the AST...
 - [x] Handle let (newAvenger) variable assignment
 - [x] Handle const (newEternal) variable assignment
@@ -16,6 +17,7 @@
 - [x] Implement arrays (teams)
 
 ## Backlog
+
 - [ ] Implement user defined functions
 - [ ] Implement objects
 - [ ] Implement error handling

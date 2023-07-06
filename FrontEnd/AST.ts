@@ -10,7 +10,7 @@ export type NodeType =
   | "ArrayDeclaration"
   | "IfStatement"
   | "ElseStatement"
-  | "WhileStatement" 
+  | "WhileStatement"
   | "ForLoopStatement"
   | "BreakStatement"
   | "SwitchStatement"
@@ -29,8 +29,7 @@ export type NodeType =
   | "NumericLiteral"
   | "Property"
   | "StringLiteral"
-  | "NullLiteral"
-   ;
+  | "NullLiteral";
 
 /**
  * Represents a statement in the program.
@@ -63,7 +62,6 @@ export interface VariableDeclaration extends Stmt {
   identifier: string;
   value?: Expr;
 }
-
 
 /**
  * Represents an if statement.

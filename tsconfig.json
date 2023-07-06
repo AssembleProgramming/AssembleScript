@@ -1,14 +1,13 @@
 {
-    "compilerOptions": {
-      "plugins": [
-        {
-          "name": "typescript-deno-plugin",
-          "config": {
-            "lint": true,
-            "importmap": "import_map.json"
-          }
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-deno-plugin",
+        "config": {
+          "lint": true,
+          "importmap": "import_map.json"
         }
-      ]
-    }
+      }
+    ]
   }
-  
+}

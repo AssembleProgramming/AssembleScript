@@ -20,9 +20,9 @@ export enum TokenType {
   Madness,
   Default,
   Minus,
-  WakandaFor, 
+  WakandaFor,
   In,
-  To, 
+  To,
   Step,
   // Operators + Other tokens
   Equals,
@@ -63,8 +63,8 @@ const KEYWORDS: Record<string, TokenType> = {
   in: TokenType.In,
   to: TokenType.To,
   step: TokenType.Step,
-  and : TokenType.LogicalOperator,
-  or : TokenType.LogicalOperator,
+  and: TokenType.LogicalOperator,
+  or: TokenType.LogicalOperator,
 };
 
 /**
@@ -186,15 +186,14 @@ export function tokenize(sourceCode: string): Token[] {
 
   // Build tokens until end of file
   while (src.length > 0) {
-    if(src[0] === "$"){
+    if (src[0] === "$") {
       let comment = "";
       comment += src.shift();
-      while(src.length > 0 && src[0] !== "$"){
+      while (src.length > 0 && src[0] !== "$") {
         comment += src.shift();
       }
       comment += src.shift();
-    }
-    else if (src[0] === "(") {
+    } else if (src[0] === "(") {
       tokens.push(getToken(src.shift(), TokenType.OpenParen));
     } else if (src[0] === ")") {
       tokens.push(getToken(src.shift(), TokenType.CloseParen));
@@ -225,8 +224,7 @@ export function tokenize(sourceCode: string): Token[] {
       const token = getMultiCharacterToken(src);
       if (token) {
         tokens.push(token);
-      } 
-      // Check for identifiers
+      } // Check for identifiers
       else if (isAlphabet(src[0])) {
         let id = "";
         while (src.length > 0 && isAlphabet(src[0])) {
@@ -240,8 +238,7 @@ export function tokenize(sourceCode: string): Token[] {
           // unreserved means user defined identifier
           tokens.push(getToken(id, TokenType.Identifier));
         }
-      } 
-      // Build number token
+      } // Build number token
       else if (isNum(src[0])) {
         let num = "";
         while (src.length > 0 && isNum(src[0])) {
@@ -249,15 +246,13 @@ export function tokenize(sourceCode: string): Token[] {
         }
 
         tokens.push(getToken(num, TokenType.Number));
-      } 
-
-      // Skip the skippable character
+      } // Skip the skippable character
       else if (isSkippable(src[0])) {
         // Skip the current character
         src.shift();
       } // Handle unrecognized characters
       else {
-        throw `Unrecognized character: , ${src[0]}`
+        throw `Unrecognized character: , ${src[0]}`;
       }
     }
   }

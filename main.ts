@@ -2,7 +2,6 @@ import { evaluate } from "./BackEnd/Interpreter/interpreter.ts";
 import { setupGlobalScope } from "./BackEnd/Scope/globalScope.ts";
 import Parser from "./FrontEnd/Parser.ts";
 
-
 /**
  * @param inputFile : User program
  */
