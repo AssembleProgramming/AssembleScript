@@ -13,7 +13,7 @@ async function __run(inputFile: string) {
   const program = parser.produceAST(input);
   evaluate(program, env);
 }
-__run("./test.txt");
+__run("./test.avenger");
 /**
  * Initializes the script execution.
  */
