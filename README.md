@@ -243,25 +243,25 @@ team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
   an example:
 
 ```css
-team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
+team avengers(4) = {"Captain America", "Iron Man", "Thor", "Hulk"};
 
 newAvenger firstAvenger = avengers[0];
 newAvenger secondAvenger = avengers[1];
 
-vision(firstAvenger);     // Output: 'Captain America'
-vision(secondAvenger);    // Output: 'Iron Man'
+vision(firstAvenger);     $ Output: 'Captain America' $
+vision(secondAvenger);    $ Output: 'Iron Man' $
 ```
 
 - 2D Array Declaration In AssembleScript, you can create a 2D array by nesting
   arrays within the main array. Here's an example:
 
 ```css
-team male(10) = {'Captain America', 'Iron Man' ,'Dr. Strange', 'Hulk', 'Hawkeye', 'Spiderman', 'Thor', 'T`Challa', 'Ant Man', 'Moon Knight'};
-team female(7) = {'Black Widow','Captain Marvel','Wanda Maximoff','She Hulk','Ms Marvel','Gamora','Nebula'};
-team avengers(2) = {male, female};
+team male(10) = {"Captain America", "Iron Man" ,"Dr. Strange", "Hulk", "Hawkeye", "Spiderman", "Thor", "T`Challa", "Ant Man", "Moon Knight"};
+team female(7) = {"Black Widow","Captain Marvel","Wanda Maximoff","She Hulk","Ms Marvel","Gamora","Nebula"};
+team avenger(2) = {male, female};
 
-vision(avengers[0][4]);  // Output: 'Hawkeye'
-vision(avengers[1][6]);  // Output: 'Gamora'
+vision(avengers[0][4]);  $ Output: 'Hawkeye' $
+vision(avengers[1][6]);  $ Output: 'Gamora' $
 ```
 
 ### 🛡 Comments
