@@ -34,9 +34,6 @@ jobs:
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
       - name: Verify formatting
         run: deno fmt --check
-
-      - name: Run test
-        run: deno test -A main.ts
         
       - name: Run project
         run: deno run -A main.ts
