@@ -193,6 +193,13 @@ export function tokenize(sourceCode: string): Token[] {
         comment += src.shift();
       }
       comment += src.shift();
+    } else if (src[0] === "#") {
+      let comment = "";
+      comment += src.shift();
+      while (src.length > 0 && src[0] !== "\n") {
+        comment += src.shift();
+      }
+      comment += src.shift();
     } else if (src[0] === "(") {
       tokens.push(getToken(src.shift(), TokenType.OpenParen));
     } else if (src[0] === ")") {
