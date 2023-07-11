@@ -16,7 +16,7 @@ export const evaluate_boolean_logical_expression = (
   operator: string,
 ): BooleanVal => {
   let result: boolean;
-  if (operator == "&&" || operator == "and") {
+  if (operator === "&&" || operator === "and") {
     result = lhs.value && rhs.value;
   } else {
     result = lhs.value || rhs.value;
@@ -36,7 +36,7 @@ export const evaluate_logical_expression = (
   const LHS = evaluate(logic.left, env);
   const RHS = evaluate(logic.right, env);
 
-  if (LHS.type == "boolean" && RHS.type == "boolean") {
+  if (LHS.type === "boolean" && RHS.type === "boolean") {
     return evaluate_boolean_logical_expression(
       LHS as BooleanVal,
       RHS as BooleanVal,
@@ -69,7 +69,7 @@ export const evaluate_unary_expr = (
   env: Environment,
 ): RuntimeVal => {
   const expression = evaluate(expr.argument, env);
-  if (expression.type == "boolean") {
+  if (expression.type === "boolean") {
     return evaluate_boolean_unary_expression(
       expression as BooleanVal,
     );

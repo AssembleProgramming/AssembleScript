@@ -17,7 +17,7 @@ export const evaluate_for_loop_statement = (
   const start = evaluate(stmt.start, env) as NumberVal;
   const end = evaluate(stmt.end, env) as NumberVal;
   let step: NumberVal;
-  if (stmt.step == undefined) {
+  if (stmt.step === undefined) {
     step = { value: 1, type: "number" };
   } else {
     step = evaluate(stmt.step as NumericLiteral, env) as NumberVal;

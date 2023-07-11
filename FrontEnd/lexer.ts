@@ -239,7 +239,7 @@ export function tokenize(sourceCode: string): Token[] {
         }
         // Check for keywords
         const reserved: TokenType = KEYWORDS[id];
-        if (typeof reserved == "number") {
+        if (typeof reserved === "number") {
           tokens.push(getToken(id, reserved));
         } else {
           // unreserved means user defined identifier

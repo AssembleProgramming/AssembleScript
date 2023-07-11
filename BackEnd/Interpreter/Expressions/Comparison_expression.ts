@@ -22,15 +22,15 @@ export const evaluate_numeric_comparison_expression = (
   operator: string,
 ): BooleanVal => {
   let result: boolean;
-  if (operator == "==") {
+  if (operator === "==") {
     result = lhs.value === rhs.value;
-  } else if (operator == "!=") {
+  } else if (operator === "!=") {
     result = lhs.value !== rhs.value;
-  } else if (operator == "<") {
+  } else if (operator === "<") {
     result = lhs.value < rhs.value;
-  } else if (operator == ">") {
+  } else if (operator === ">") {
     result = lhs.value > rhs.value;
-  } else if (operator == "<=") {
+  } else if (operator === "<=") {
     result = lhs.value <= rhs.value;
   } else {
     result = lhs.value >= rhs.value;
@@ -51,15 +51,15 @@ export const evaluate_string_comparison_expression = (
   operator: string,
 ): BooleanVal => {
   let result: boolean;
-  if (operator == "==") {
+  if (operator === "==") {
     result = lhs.value === rhs.value;
-  } else if (operator == "!=") {
+  } else if (operator === "!=") {
     result = lhs.value !== rhs.value;
-  } else if (operator == "<") {
+  } else if (operator === "<") {
     result = lhs.value < rhs.value;
-  } else if (operator == ">") {
+  } else if (operator === ">") {
     result = lhs.value > rhs.value;
-  } else if (operator == "<=") {
+  } else if (operator === "<=") {
     result = lhs.value <= rhs.value;
   } else {
     result = lhs.value >= rhs.value;
@@ -79,7 +79,7 @@ export const evaluate_comparison_expression = (
   const LHS = evaluate(comp.left, env);
   const RHS = evaluate(comp.right, env);
 
-  if (LHS.type == "number" && RHS.type == "number") {
+  if (LHS.type === "number" && RHS.type === "number") {
     return evaluate_numeric_comparison_expression(
       LHS as NumberVal,
       RHS as NumberVal,
@@ -87,7 +87,7 @@ export const evaluate_comparison_expression = (
     );
   }
 
-  if (LHS.type == "string" && RHS.type == "string") {
+  if (LHS.type === "string" && RHS.type === "string") {
     return evaluate_string_comparison_expression(
       LHS as StringVal,
       RHS as StringVal,
