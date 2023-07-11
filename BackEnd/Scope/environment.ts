@@ -80,7 +80,7 @@ export default class Environment {
     if (this.variables.has(varname)) {
       return this;
     }
-    if (this.parent == undefined) {
+    if (this.parent === undefined) {
       throw `cannot resolve ${varname} in the scope.`;
     }
     return this.parent.resolveScope(varname);

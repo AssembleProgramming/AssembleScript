@@ -30,7 +30,7 @@ export const evaluate_call_expression = (
   const args = expr.args.map((arg) => evaluate(arg, env));
   const fn = evaluate(expr.caller, env);
 
-  if (fn.type == "native-fn") {
+  if (fn.type === "native-fn") {
     const result = (fn as NativeFnVal).call(args, env);
     return result;
   }
@@ -47,17 +47,17 @@ export const evaluate_assignment_expression = (
   node: AssignmentExpression,
   env: Environment,
 ): RuntimeVal => {
-  if (node.assignee.kind == "Identifier") {
+  if (node.assignee.kind === "Identifier") {
     const varname = (node.assignee as Identifier).symbol;
     const value = evaluate(node.val, env);
     return env.assignVar(varname, value);
   }
-  if (node.assignee.kind == "MemberExpr") {
+  if (node.assignee.kind === "MemberExpr") {
     const rhs = evaluate(node.val, env) as RuntimeVal;
     let rhs_value;
-    if (rhs.type == "number") {
+    if (rhs.type === "number") {
       rhs_value = (rhs as NumberVal).value;
-    } else if (rhs.type == "string") {
+    } else if (rhs.type === "string") {
       rhs_value = (rhs as StringVal).value;
     }
     const assigner = (node.assignee) as MemberExpr;
@@ -71,7 +71,7 @@ export const evaluate_assignment_expression = (
     const object = evaluate(assigner.object, env) as ArrayVal;
     if (object.type === "array") {
       const array = object.values;
-      if (rhs.type == "number") {
+      if (rhs.type === "number") {
         array[index_val] = { kind: "NumericLiteral", value: rhs_value } as Expr;
       } else {
         array[index_val] = { kind: "StringLiteral", value: rhs_value } as Expr;

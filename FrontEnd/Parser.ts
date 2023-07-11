@@ -50,7 +50,7 @@ export default class Parser {
    * @returns A boolean indicating if there are more tokens.
    */
   private not_eof(): boolean {
-    return this.tokens[0].type != TokenType.EOF;
+    return this.tokens[0].type !== TokenType.EOF;
   }
 
   /**
@@ -79,7 +79,7 @@ export default class Parser {
    */
   private expect(type: TokenType, err: string) {
     const prev = this.tokens.shift() as Token;
-    if (!prev || prev.type != type) {
+    if (!prev || prev.type !== type) {
       console.error("Parser Error: \n", err, prev, "- Expecting: ", type);
       Deno.exit(1);
     }
@@ -497,13 +497,13 @@ export default class Parser {
    * @throws {Error} If there are syntax errors or missing tokens in the statement.
    */
   private parse_var_declaration(): Stmt {
-    const isConstant = this.eat().type == TokenType.NewEternal;
+    const isConstant = this.eat().type === TokenType.NewEternal;
     const identifier = this.expect(
       TokenType.Identifier,
       "Expected identifier name while declaration",
     ).value;
 
-    if (this.at().type == TokenType.Semicolon) {
+    if (this.at().type === TokenType.Semicolon) {
       // Consume semicolon
       this.eat();
       if (isConstant) {
@@ -557,7 +557,7 @@ export default class Parser {
    */
   private parse_assignment_expr(): Expr {
     const left = this.parse_logical_expr();
-    if (this.at().type == TokenType.Equals) {
+    if (this.at().type === TokenType.Equals) {
       // Consume the equals token we just found
       this.eat();
 
@@ -588,7 +588,7 @@ export default class Parser {
   private parse_logical_expr(): Expr {
     let left = this.parse_comparison_expr();
 
-    while (this.at().type == TokenType.LogicalOperator) {
+    while (this.at().type === TokenType.LogicalOperator) {
       const operator = this.eat().value;
       const right = this.parse_comparison_expr();
 
@@ -611,7 +611,7 @@ export default class Parser {
     let left = this.parse_additive_expr();
 
     while (
-      this.at().type == TokenType.ComparisonOperator
+      this.at().type === TokenType.ComparisonOperator
     ) {
       const operator = this.eat().value; // Consume the comparison operator token
       const right = this.parse_additive_expr(); // Parse the right-hand side of the comparison
@@ -638,7 +638,7 @@ export default class Parser {
     let left = this.parse_multiplicative_expr();
 
     // Pase operator
-    while (this.at().value == "+" || this.at().value == "-") {
+    while (this.at().value === "+" || this.at().value === "-") {
       const operator = this.eat().value;
       const right = this.parse_multiplicative_expr();
 
@@ -661,7 +661,8 @@ export default class Parser {
 
     // Pase operator
     while (
-      this.at().value == "*" || this.at().value == "/" || this.at().value == "%"
+      this.at().value === "*" || this.at().value === "/" ||
+      this.at().value === "%"
     ) {
       const operator = this.eat().value;
       const right = this.parse_exponential_expr();
@@ -685,7 +686,7 @@ export default class Parser {
 
     // Pase operator
     while (
-      this.at().value == "^"
+      this.at().value === "^"
     ) {
       const operator = this.eat().value;
       const right = this.parse_call_member_expr();
@@ -709,7 +710,7 @@ export default class Parser {
   private parse_call_member_expr(): Expr {
     const member = this.parse_member_expr();
 
-    if (this.at().type == TokenType.OpenParen) {
+    if (this.at().type === TokenType.OpenParen) {
       return this.parse_call_expr(member);
     }
     return member;
@@ -729,7 +730,7 @@ export default class Parser {
       args: this.parse_args(),
     } as CallExpr;
 
-    if (this.at().type == TokenType.OpenParen) {
+    if (this.at().type === TokenType.OpenParen) {
       call_expr = this.parse_call_expr(call_expr);
     }
 
@@ -744,7 +745,7 @@ export default class Parser {
    */
   private parse_args(): Expr[] {
     this.expect(TokenType.OpenParen, `Expected open parenthesis`);
-    const args = this.at().type == TokenType.CloseParen
+    const args = this.at().type === TokenType.CloseParen
       ? []
       : this.parse_arguments_list();
 
@@ -761,7 +762,7 @@ export default class Parser {
   private parse_arguments_list(): Expr[] {
     const args = [this.parse_assignment_expr()];
 
-    while (this.at().type == TokenType.Comma && this.eat()) {
+    while (this.at().type === TokenType.Comma && this.eat()) {
       args.push(this.parse_assignment_expr());
     }
 

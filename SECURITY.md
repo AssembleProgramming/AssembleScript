@@ -1,20 +1,33 @@
 # Security Policy
 
-## Supported Versions
+## Security considerations
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+When writing AssembleScript scripts, it is important to be aware of the
+following security considerations:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+- Do not use AssembleScript to execute code that you do not trust.
+- Use caution when importing modules from third-party sources.
+- Be aware of the potential for AssembleScript scripts to be used for malicious
+  purposes.
 
-## Reporting a Vulnerability
+## Reporting security vulnerabilities
 
-Use this section to tell people how to report a vulnerability.
+If you believe that you have found a security vulnerability in AssembleScript,
+please report it to the project maintainers by opening an issue on the GitHub
+repository.
 
-Tell them where to go, how often they can expect to get an update on a reported
-vulnerability, what to expect if the vulnerability is accepted or declined, etc.
+## Security updates
+
+The AssembleScript project will periodically release security updates to address
+known vulnerabilities. It is important to keep your AssembleScript installation
+up to date to ensure that you are protected against the latest threats.
+
+## Reporting security vulnerabilities
+
+If you believe that you have found a security vulnerability in AssembleScript,
+please report it to the project's team via discussions.
+
+The security team will investigate your report and take appropriate action to
+address the vulnerability.
+
+Thank you for helping to keep AssembleScript secure.

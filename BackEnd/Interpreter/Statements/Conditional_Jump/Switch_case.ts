@@ -24,7 +24,7 @@ export const evaluate_switch_statement = (
   if (discriminant.type === "number") {
     for (const switchCase of switchStmt.cases) {
       const test = evaluate(switchCase.test, env);
-      if (test.type == "number") {
+      if (test.type === "number") {
         const value = (test as NumberVal).value;
         const discriminant_val = (discriminant as NumberVal).value;
         if (value === discriminant_val) {
@@ -59,7 +59,7 @@ export const evaluate_switch_statement = (
   } else if (discriminant.type === "string") {
     for (const switchCase of switchStmt.cases) {
       const test = evaluate(switchCase.test, env);
-      if (test.type == "string") {
+      if (test.type === "string") {
         const value = (test as StringVal).value;
         const discriminant_val = (discriminant as StringVal).value;
         if (value === discriminant_val) {
