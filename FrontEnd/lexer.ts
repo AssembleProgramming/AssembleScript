@@ -111,7 +111,7 @@ function isAlphabet(src: string): boolean {
   const c = src.charCodeAt(0);
   const underscore = "_".charCodeAt(0);
   return (
-    src.toUpperCase() != src.toLowerCase() ||
+    src.toUpperCase() !== src.toLowerCase() ||
     c === underscore
   );
 }

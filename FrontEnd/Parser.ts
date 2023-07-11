@@ -50,7 +50,7 @@ export default class Parser {
    * @returns A boolean indicating if there are more tokens.
    */
   private not_eof(): boolean {
-    return this.tokens[0].type != TokenType.EOF;
+    return this.tokens[0].type !== TokenType.EOF;
   }
 
   /**
@@ -79,7 +79,7 @@ export default class Parser {
    */
   private expect(type: TokenType, err: string) {
     const prev = this.tokens.shift() as Token;
-    if (!prev || prev.type != type) {
+    if (!prev || prev.type !== type) {
       console.error("Parser Error: \n", err, prev, "- Expecting: ", type);
       Deno.exit(1);
     }
