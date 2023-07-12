@@ -80,8 +80,7 @@ export default class Parser {
   private expect(type: TokenType, err: string) {
     const prev = this.tokens.shift() as Token;
     if (!prev || prev.type !== type) {
-      console.error("Parser Error: \n", err, prev, "- Expecting: ", type);
-      Deno.exit(1);
+      throw "Compiler Error: " + err + " scanned " + prev.value;
     }
     return prev;
   }
@@ -862,7 +861,7 @@ export default class Parser {
         const value = this.parse_expr();
         this.expect(
           TokenType.CloseParen,
-          "Unexpected token found inside parenthesized expression. Expected closing parenthesis !!!",
+          "Unexpected token found inside parenthesized expression. Expected closing parenthesis",
         ); //Eat closing parenthesis
         return value;
       }
@@ -871,7 +870,7 @@ export default class Parser {
         const value = this.parse_expr();
         this.expect(
           TokenType.CloseBrace,
-          "Unexpected token found inside parenthesized expression. Expected closing parenthesis !!!",
+          "Unexpected token found inside parenthesized expression. Expected closing parenthesis",
         ); //Eat closing parenthesis
         return value;
       }
@@ -881,7 +880,7 @@ export default class Parser {
         return this.parse_not_expr();
 
       default:
-        throw `Unexpected token found while parsing: , ${this.at()}`;
+        throw `Unexpected token found while parsing scanned ${this.at().value}`;
     }
   }
 }
