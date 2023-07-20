@@ -21,7 +21,7 @@ export default class Environment {
   }
 
   public checkInfiniteLoop(
-    iterationCnt: number
+    iterationCnt: number,
   ): Boolean {
     if (iterationCnt > this.MAX_ALLOWED_ITERATIONS) {
       throw `TIME LIMIT EXCEEDED...`;
