@@ -18,15 +18,18 @@ $ ==========================================================================
                             fightUntil Loop
 ========================================================================== $
 
-newAvenger i = 0;
-fightUntil(i < 10){
-    vision(i);
-    ifWorthy(i == 8){
-        vision("Break");
-        endGame;
+def fufunc(){
+    newAvenger i = 0;
+    fightUntil(i < 10){
+        vision(i);
+        ifWorthy(i == 8){
+            endGame;
+            vision("Break");
+        }
+        i = i + 1;
     }
-    i = i + 1;
 }
+
 
 $ ==========================================================================
                             wakandaFor Loop
@@ -139,7 +142,8 @@ vision(pow(n, m));
 $ ==========================================================================
                             ifWorthy-CHAIN
 ========================================================================== $
-newAvenger name = "Shashank";
+def nestedIf(){
+    newAvenger name = "Shashank";
 ifWorthy(name[0] == "S"){
     ifWorthy(name[1] == "h"){
         ifWorthy(name[2] == "a"){
@@ -157,19 +161,24 @@ ifWorthy(name[0] == "S"){
         } 
     }   
 }
+}
+
 
 $ ==========================================================================
                             shield hydra
 ========================================================================== $
-ifWorthy(SHIELD){
-    vision("Hey SHIELD");
+def funcy(){
+    ifWorthy(SHIELD){
+        vision("Hey SHIELD");
+    }
+    ifWorthy(!HYDRA){
+        vision("Boo HYDRA");
+    }
+    ifWorthy(HYDRA){
+        vision("Boo SHIELD");
+    }
 }
-ifWorthy(!HYDRA){
-    vision("Boo HYDRA");
-}
-ifWorthy(HYDRA){
-    vision("Boo SHIELD");
-}
+
 
 $ ==========================================================================
                             Teams
@@ -212,13 +221,8 @@ def fact(i){
 }
 def main(){
     vision(fact(5));
-    func();
+    fufunc();
+    funcy();
 }
 
-def func(){
-    def foo(){
-        vision("Hello World!");
-    }
-    foo();
-}
 main();
