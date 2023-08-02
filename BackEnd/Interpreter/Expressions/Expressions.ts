@@ -1,6 +1,5 @@
 import {
   AssignmentExpression,
-  CallExpr,
   Expr,
   Identifier,
   MemberExpr,
@@ -9,33 +8,11 @@ import Environment from "../../Scope/environment.ts";
 import {
   ArrayVal,
   MAKE_NUll,
-  NativeFnVal,
   NumberVal,
   RuntimeVal,
   StringVal,
 } from "../../values.ts";
 import { evaluate } from "../interpreter.ts";
-
-/**
- * Evaluates a call expression by invoking a function with the provided arguments.
- * @param expr The call expression to evaluate.
- * @param env The environment in which the expression is evaluated.
- * @returns The result of the function call.
- * @throws Error if the value being called is not a function.
- */
-export const evaluate_call_expression = (
-  expr: CallExpr,
-  env: Environment,
-): RuntimeVal => {
-  const args = expr.args.map((arg) => evaluate(arg, env));
-  const fn = evaluate(expr.caller, env);
-
-  if (fn.type === "native-fn") {
-    const result = (fn as NativeFnVal).call(args, env);
-    return result;
-  }
-  throw `Cannot call value that is not a function.`;
-};
 
 /**
  * Evaluates an assignment expression by assigning a value to a variable or array element.

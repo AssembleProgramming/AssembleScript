@@ -11,6 +11,8 @@ import {
   ElseStatement,
   Expr,
   ForLoopStatement,
+  FunctionDefinition,
+  FunctionParam,
   Identifier,
   IfStatement,
   LogicalExpression,
@@ -19,6 +21,7 @@ import {
   NullLiteral,
   NumericLiteral,
   Program,
+  ReturnStatement,
   Stmt,
   StringLiteral,
   SwitchCase,
@@ -126,6 +129,11 @@ export default class Parser {
         return this.parse_switch_statement();
       case TokenType.WakandaFor:
         return this.parse_for_loop_statement();
+      case TokenType.Def:
+        return this.parse_function_definition();
+      case TokenType.Return:
+        return this.parse_return_statement();
+
       default: {
         const expr = this.parse_expr();
         this.expect(
@@ -136,6 +144,131 @@ export default class Parser {
       }
     }
   }
+  /**
+   * Parses a function parameter.
+   *
+   * @returns A FunctionParam object representing the parsed parameter.
+   * @throws {Error} If there are syntax errors or missing tokens in the parameter.
+   */
+  private parse_function_param(): FunctionParam {
+    const name =
+      this.expect(TokenType.Identifier, "Expected parameter name").value;
+    return { kind: "FunctionParam", name };
+  }
+
+  /**
+   * Parses a function definition statement.
+   *
+   * @returns A FunctionDefinition object representing the parsed function definition.
+   * @throws {Error} If there are syntax errors or missing tokens in the function definition.
+   */
+  private parse_function_definition(): FunctionDefinition {
+    this.eat(); // Eat 'def' token
+
+    const name =
+      this.expect(TokenType.Identifier, "Expected function name").value;
+
+    this.expect(
+      TokenType.OpenParen,
+      "Expected opening parenthesis after function name",
+    );
+
+    const params: FunctionParam[] = [];
+    if (this.at().type !== TokenType.CloseParen) {
+      params.push(this.parse_function_param());
+      while (this.at().type === TokenType.Comma && this.eat()) {
+        params.push(this.parse_function_param());
+      }
+    }
+
+    this.expect(
+      TokenType.CloseParen,
+      "Expected closing parenthesis after function parameters",
+    );
+
+    this.expect(
+      TokenType.OpenBrace,
+      "Expected opening brace before function body",
+    );
+
+    const body: Stmt[] = [];
+    while (this.at().type !== TokenType.CloseBrace && this.not_eof()) {
+      body.push(this.parse_stmt());
+    }
+
+    this.expect(
+      TokenType.CloseBrace,
+      "Expected closing brace after function body",
+    );
+
+    return {
+      kind: "FunctionDefinition",
+      name,
+      params,
+      body,
+    } as FunctionDefinition;
+  }
+
+  /**
+   * Parses a return statement.
+   *
+   * @returns A ReturnStatement object representing the parsed return statement.
+   * @throws {Error} If there are syntax errors or missing tokens in the return statement.
+   */
+  private parse_return_statement(): ReturnStatement {
+    this.eat(); // Eat 'return' token
+
+    let value: Expr | undefined = undefined;
+    if (this.at().type !== TokenType.Semicolon) {
+      value = this.parse_expr();
+    }
+
+    this.expect(
+      TokenType.Semicolon,
+      "Expected semicolon after return statement",
+    );
+
+    return {
+      kind: "ReturnStatement",
+      value,
+    } as ReturnStatement;
+  }
+
+  // /**
+  //  * Parses a function call expression.
+  //  *
+  //  * @param callee - The expression that represents the function being called.
+  //  * @returns A FunctionCallExpr object representing the parsed function call expression.
+  //  * @throws {Error} If there are syntax errors or missing tokens in the function call expression.
+  //  */
+  // private parse_function_call_expr(callee: Expr): FunctionCallExpr {
+  //   const args: Expr[] = [];
+  //   this.expect(TokenType.Identifier, "Expected function name after 'call'");
+  //   this.expect(
+  //     TokenType.OpenParen,
+  //     "Expected opening parenthesis after function name",
+  //   );
+
+  //   if (this.at().type !== TokenType.CloseParen) {
+  //     args.push(this.parse_assignment_expr());
+  //     while (this.at().type === TokenType.Comma && this.eat()) {
+  //       args.push(this.parse_assignment_expr());
+  //     }
+  //   }
+
+  //   this.expect(
+  //     TokenType.CloseParen,
+  //     "Expected closing parenthesis after function arguments",
+  //   );
+
+  //   this.expect(TokenType.Semicolon, "Expected semicolon after function call");
+
+  //   return {
+  //     kind: "FunctionCallExpr",
+  //     args,
+  //     callee,
+  //   } as FunctionCallExpr;
+  // }
 
   /**
    * Parses a 'for' loop statement.

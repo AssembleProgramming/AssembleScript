@@ -1,13 +1,18 @@
-import { ElseStatement, IfStatement } from "../../../../FrontEnd/AST.ts";
+import {
+  ElseStatement,
+  IfStatement,
+  ReturnStatement,
+} from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
 import {
   BooleanVal,
   BreakVal,
+  MAKE_BOOL,
   MAKE_NUll,
   NumberVal,
   RuntimeVal,
 } from "../../../values.ts";
-import { evaluate } from "../../interpreter.ts";
+import { evaluate, evaluate_return_statement } from "../../interpreter.ts";
 
 /**
  * Evaluates a numeric if statement by conditionally executing the body based on the condition value.
@@ -29,6 +34,9 @@ export const evaluate_numeric_if_statement = (
       if (bodyStmt.kind === "BreakStatement") {
         hasBreak = true;
       }
+      if (bodyStmt.kind === "ReturnStatement") {
+        return evaluate_return_statement(bodyStmt as ReturnStatement, ifEnv);
+      }
       evaluate(bodyStmt, ifEnv);
     }
   } else if (stmt.elseBranch) {
@@ -42,6 +50,9 @@ export const evaluate_numeric_if_statement = (
       for (const bodyStmt of stmt.elseBranch.body) {
         if (bodyStmt.kind === "BreakStatement") {
           hasBreak = true;
+        }
+        if (bodyStmt.kind === "ReturnStatement") {
+          return evaluate_return_statement(bodyStmt as ReturnStatement, ifEnv);
         }
         evaluate(bodyStmt, elseEnv);
       }
@@ -74,7 +85,17 @@ export const evaluate_boolean_if_statement = (
       if (bodyStmt.kind === "BreakStatement") {
         hasBreak = true;
       }
-      evaluate(bodyStmt, ifEnv);
+      if (bodyStmt.kind === "ReturnStatement") {
+        env.assignVar("hasReturn", MAKE_BOOL(true));
+        return evaluate_return_statement(bodyStmt as ReturnStatement, env);
+      }
+      let result = evaluate(bodyStmt, env);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
+      } else {
+        continue;
+      }
     }
   } else if (stmt.elseBranch) {
     if (stmt.elseBranch.kind === "IfStatement") {
@@ -87,6 +108,12 @@ export const evaluate_boolean_if_statement = (
       for (const bodyStmt of stmt.elseBranch.body) {
         if (bodyStmt.kind === "BreakStatement") {
           hasBreak = true;
+        }
+        if (bodyStmt.kind === "ReturnStatement") {
+          return evaluate_return_statement(
+            bodyStmt as ReturnStatement,
+            elseEnv,
+          );
         }
         evaluate(bodyStmt, elseEnv);
       }

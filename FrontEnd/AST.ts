@@ -29,7 +29,11 @@ export type NodeType =
   | "NumericLiteral"
   | "Property"
   | "StringLiteral"
-  | "NullLiteral";
+  | "NullLiteral"
+  // Function-related nodes
+  | "FunctionParam"
+  | "FunctionDefinition"
+  | "ReturnStatement";
 
 /**
  * Represents a statement in the program.
@@ -342,4 +346,47 @@ export interface SwitchStatement {
 export interface MinusExpr extends Expr {
   kind: "MinusExpr";
   argument: Expr;
+}
+
+/**
+ * ===========================================================================================
+ *                        User Defined Functions
+ * ===========================================================================================
+ */
+/**
+ * Represents a function parameter.
+ * The FunctionParam interface represents a parameter of a function. It has the following properties:
+ * - kind: The type of the node ("FunctionParam").
+ * - name: The name of the parameter.
+ */
+export interface FunctionParam {
+  kind: "FunctionParam";
+  name: string;
+}
+
+/**
+ * Represents a function definition statement.
+ * The FunctionDefinition interface represents a statement that defines a function. It has the following properties:
+ * - kind: The type of the node ("FunctionDefinition").
+ * - name: The name of the function.
+ * - params: An array of FunctionParam objects representing the function parameters.
+ * - body: The body of the function (an array of statements).
+ * - returnType: The return type of the function (optional).
+ */
+export interface FunctionDefinition extends Stmt {
+  kind: "FunctionDefinition";
+  name: string;
+  params: FunctionParam[];
+  body: Stmt[];
+}
+
+/**
+ * Represents a return statement.
+ * The ReturnStatement interface represents a return statement. It has the following properties:
+ * - kind: The type of the node ("ReturnStatement").
+ * - value: The expression being returned (optional).
+ */
+export interface ReturnStatement extends Stmt {
+  kind: "ReturnStatement";
+  value?: Expr;
 }

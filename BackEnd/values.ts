@@ -1,4 +1,4 @@
-import { Expr } from "../FrontEnd/AST.ts";
+import { Expr, Stmt } from "../FrontEnd/AST.ts";
 import Environment from "./Scope/environment.ts";
 
 /**
@@ -109,4 +109,29 @@ export interface ArrayVal extends RuntimeVal {
   name: string;
   values: Expr[]; // Array values
   size: number;
+}
+
+/**
+ * Represents a function value.
+ */
+export interface FunctionVal extends RuntimeVal {
+  type: "function";
+  params: string[];
+  body: Stmt[];
+  closure: Environment;
+}
+
+/**
+ * Creates a function value.
+ * @param params - The function parameters.
+ * @param body - The function body statements.
+ * @param closure - The closure environment for the function.
+ * @returns The created FunctionVal object.
+ */
+export function MAKE_FUNCTION(
+  params: string[],
+  body: Stmt[],
+  closure: Environment,
+): FunctionVal {
+  return { type: "function", params, body, closure } as FunctionVal;
 }

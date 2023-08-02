@@ -190,3 +190,35 @@ team avenger(2) = {male, female};
 
 vision(avenger[0][4]); 
 vision(avenger[1][6]);
+
+$ ==========================================================================
+                            User defined Functions
+========================================================================== $
+def f(){
+    vision("f");
+}
+def f_(){
+    vision("f_");
+}
+
+team functions(2) = {f(), f_};
+functions[1]();
+
+def fact(i){
+    ifWorthy(i == 0){
+        return 1;
+    }
+    return fact(i-1) * i;
+}
+def main(){
+    vision(fact(5));
+    func();
+}
+
+def func(){
+    def foo(){
+        vision("Hello World!");
+    }
+    foo();
+}
+main();
