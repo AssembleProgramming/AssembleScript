@@ -18,18 +18,15 @@ $ ==========================================================================
                             fightUntil Loop
 ========================================================================== $
 
-def fufunc(){
-    newAvenger i = 0;
-    fightUntil(i < 10){
-        vision(i);
-        ifWorthy(i == 8){
-            endGame;
-            vision("Break");
-        }
-        i = i + 1;
+newAvenger i = 0;
+fightUntil(i < 10){
+    vision(i);
+    ifWorthy(i == 8){
+        vision("Break");
+        endGame;
     }
+    i = i + 1;
 }
-
 
 $ ==========================================================================
                             wakandaFor Loop
@@ -142,8 +139,7 @@ vision(pow(n, m));
 $ ==========================================================================
                             ifWorthy-CHAIN
 ========================================================================== $
-def nestedIf(){
-    newAvenger name = "Shashank";
+newAvenger name = "Shashank";
 ifWorthy(name[0] == "S"){
     ifWorthy(name[1] == "h"){
         ifWorthy(name[2] == "a"){
@@ -161,24 +157,19 @@ ifWorthy(name[0] == "S"){
         } 
     }   
 }
-}
-
 
 $ ==========================================================================
                             shield hydra
 ========================================================================== $
-def funcy(){
-    ifWorthy(SHIELD){
-        vision("Hey SHIELD");
-    }
-    ifWorthy(!HYDRA){
-        vision("Boo HYDRA");
-    }
-    ifWorthy(HYDRA){
-        vision("Boo SHIELD");
-    }
+ifWorthy(SHIELD){
+    vision("Hey SHIELD");
 }
-
+ifWorthy(!HYDRA){
+    vision("Boo HYDRA");
+}
+ifWorthy(HYDRA){
+    vision("Boo SHIELD");
+}
 
 $ ==========================================================================
                             Teams
@@ -201,8 +192,27 @@ vision(avenger[0][4]);
 vision(avenger[1][6]);
 
 $ ==========================================================================
-                            User defined Functions
+                            Use Define Functions
 ========================================================================== $
+newAvenger abcd = 10;
+ifWorthy(SHIELD){
+    ifWorthy(SHIELD){
+        ifWorthy(SHIELD){
+            ifWorthy(SHIELD){
+                vision(0);
+            }
+            vision(1);
+            return;
+        }
+    }   
+    ifWorthy(SHIELD){
+        vision(10);
+    }
+    vision(2);
+}
+vision(3);
+
+
 def f(){
     vision("f");
 }
@@ -219,10 +229,24 @@ def fact(i){
     }
     return fact(i-1) * i;
 }
+def fib(i){
+    ifWorthy(i == 0 || i == 1){
+        return i;
+    }
+    return fib(i-1)+fib(i-2);
+}
+def print(i){
+    ifWorthy(i == 0){
+        return;
+    }
+    vision(i);
+    print(i-1);
+    vision(i);
+}
 def main(){
     vision(fact(5));
-    fufunc();
-    funcy();
+    print(5);
+    vision(fib(7));
 }
 
 main();

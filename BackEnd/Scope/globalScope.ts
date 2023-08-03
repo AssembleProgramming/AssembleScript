@@ -17,6 +17,7 @@ export function setupGlobalScope() {
   =========================================================================================== */
   env.declareVar("SHIELD", MAKE_BOOL(true), true);
   env.declareVar("HYDRA", MAKE_BOOL(false), true);
+  env.declareVar("hasReturn", MAKE_BOOL(false), false);
   env.declareVar("null", MAKE_NUll(), true);
 
   // Define a native builtin method GENERAL

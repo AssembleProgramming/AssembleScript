@@ -87,9 +87,9 @@ export const evaluate_boolean_if_statement = (
       }
       if (bodyStmt.kind === "ReturnStatement") {
         env.assignVar("hasReturn", MAKE_BOOL(true));
-        return evaluate_return_statement(bodyStmt as ReturnStatement, env);
+        return evaluate_return_statement(bodyStmt as ReturnStatement, ifEnv);
       }
-      let result = evaluate(bodyStmt, env);
+      let result = evaluate(bodyStmt, ifEnv);
       let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
       if (detectedReturn.value === true) {
         return result;
