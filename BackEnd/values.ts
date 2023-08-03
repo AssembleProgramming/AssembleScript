@@ -105,8 +105,8 @@ export interface BreakVal extends RuntimeVal {
   value: null;
 }
 
-export function MAKE_BREAK(): BreakVal{
-  return {type: "break", value: null} as BreakVal;
+export function MAKE_BREAK(): BreakVal {
+  return { type: "break", value: null } as BreakVal;
 }
 
 export interface ArrayVal extends RuntimeVal {

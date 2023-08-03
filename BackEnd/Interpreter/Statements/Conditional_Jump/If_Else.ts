@@ -131,8 +131,7 @@ export const evaluate_boolean_if_statement = (
           let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
           if (detectedReturn.value === true) {
             return result;
-          } 
-          else{
+          } else {
             continue;
           }
         }

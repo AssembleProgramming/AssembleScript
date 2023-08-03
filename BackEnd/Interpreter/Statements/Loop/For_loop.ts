@@ -76,7 +76,7 @@ export const evaluate_for_loop_statement = (
             return result;
           } else {
             const result = evaluate(bodyStmt, loopEnv);
-            
+
             let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
             if (detectedReturn.value === true) {
               return result;
@@ -84,8 +84,7 @@ export const evaluate_for_loop_statement = (
               if (result !== undefined) {
                 if (result.type === "break") {
                   break;
-                }
-                else{
+                } else {
                   continue;
                 }
               }
@@ -141,8 +140,7 @@ export const evaluate_for_loop_statement = (
               if (result !== undefined) {
                 if (result.type === "break") {
                   break;
-                }
-                else{
+                } else {
                   continue;
                 }
               }
