@@ -105,7 +105,7 @@ export const evaluate_boolean_if_statement = (
       let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
       if (detectedReturn.value === true) {
         return result;
-      } 
+      }
     } else if (stmt.elseBranch.kind === "ElseStatement") {
       // Evaluate the body of the else statement in a new environment
       const elseEnv = new Environment(env);
