@@ -333,3 +333,51 @@ def stringSwitchTest(c){
 }
 
 vision(stringSwitchTest("1"));
+
+$ ==========================================================================
+                            Return in For loop
+========================================================================== $
+
+def printGrid(){
+    wakandaFor i in 0 to 3 {
+        wakandaFor j in 0 to 3 {
+            ifWorthy(i == 3){
+                return 10;
+                vision("I BROKE CODE");
+            }
+            vision(i,j);
+        }
+        vision(" ");
+    }
+}
+
+vision(printGrid());
+
+
+vision(" ");
+wakandaFor j in 0 to 0 {
+    ifWorthy(j == 1){
+        endGame;
+        vision("I BROKE CODE");
+    }
+    vision(j);
+}
+
+
+
+$ ==========================================================================
+                            Return in while loop
+========================================================================== $
+team testArray(6) = {11,13,17,19,23,27};
+def testWhile(arr){
+    newAvenger idx = 0;
+    fightUntil(idx < 6){
+        ifWorthy(arr[idx] % 2 == 0){
+            return HYDRA;
+        }
+        idx = idx + 1;
+    }
+    return SHIELD;
+}
+
+vision(testWhile(testArray));

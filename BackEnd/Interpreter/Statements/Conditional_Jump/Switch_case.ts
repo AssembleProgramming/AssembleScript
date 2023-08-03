@@ -3,6 +3,7 @@ import Environment from "../../../Scope/environment.ts";
 import {
   BooleanVal,
   MAKE_BOOL,
+  MAKE_BREAK,
   MAKE_NUll,
   NumberVal,
   RuntimeVal,
@@ -33,21 +34,26 @@ export const evaluate_switch_statement = (
         if (value === discriminant_val) {
           for (const consequent of switchCase.consequent) {
             if (consequent.kind === "BreakStatement") {
-              return MAKE_NUll();
+              return MAKE_BREAK();
             } else {
               if (consequent.kind === "ReturnStatement") {
                 env.assignVar("hasReturn", MAKE_BOOL(true));
-                return evaluate_return_statement(
+                const result = evaluate_return_statement(
                   consequent as ReturnStatement,
                   switchEnv,
                 );
-              }
-              let result = evaluate(consequent, switchEnv);
-              let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-              if (detectedReturn.value === true) {
+                if (result === undefined) {
+                  return MAKE_NUll();
+                }
                 return result;
               } else {
-                continue;
+                let result = evaluate(consequent, switchEnv);
+                let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+                if (detectedReturn.value === true) {
+                  return result;
+                } else {
+                  continue;
+                }
               }
             }
           }
@@ -60,21 +66,26 @@ export const evaluate_switch_statement = (
     }
     for (const consequent of switchStmt.default) {
       if (consequent.kind === "BreakStatement") {
-        return MAKE_NUll();
+        return MAKE_BREAK();
       } else {
         if (consequent.kind === "ReturnStatement") {
           env.assignVar("hasReturn", MAKE_BOOL(true));
-          return evaluate_return_statement(
+          const result = evaluate_return_statement(
             consequent as ReturnStatement,
             switchEnv,
           );
-        }
-        let result = evaluate(consequent, switchEnv);
-        let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-        if (detectedReturn.value === true) {
+          if (result === undefined) {
+            return MAKE_NUll();
+          }
           return result;
         } else {
-          continue;
+          let result = evaluate(consequent, switchEnv);
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            continue;
+          }
         }
       }
     }
@@ -88,21 +99,26 @@ export const evaluate_switch_statement = (
         if (value === discriminant_val) {
           for (const consequent of switchCase.consequent) {
             if (consequent.kind === "BreakStatement") {
-              return MAKE_NUll();
+              return MAKE_BREAK();
             } else {
               if (consequent.kind === "ReturnStatement") {
                 env.assignVar("hasReturn", MAKE_BOOL(true));
-                return evaluate_return_statement(
+                const result = evaluate_return_statement(
                   consequent as ReturnStatement,
                   switchEnv,
                 );
-              }
-              let result = evaluate(consequent, switchEnv);
-              let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-              if (detectedReturn.value === true) {
+                if (result === undefined) {
+                  return MAKE_NUll();
+                }
                 return result;
               } else {
-                continue;
+                let result = evaluate(consequent, switchEnv);
+                let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+                if (detectedReturn.value === true) {
+                  return result;
+                } else {
+                  continue;
+                }
               }
             }
           }
@@ -115,21 +131,26 @@ export const evaluate_switch_statement = (
     }
     for (const consequent of switchStmt.default) {
       if (consequent.kind === "BreakStatement") {
-        return MAKE_NUll();
+        return MAKE_BREAK();
       } else {
         if (consequent.kind === "ReturnStatement") {
           env.assignVar("hasReturn", MAKE_BOOL(true));
-          return evaluate_return_statement(
+          const result = evaluate_return_statement(
             consequent as ReturnStatement,
             switchEnv,
           );
-        }
-        let result = evaluate(consequent, switchEnv);
-        let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-        if (detectedReturn.value === true) {
+          if (result === undefined) {
+            return MAKE_NUll();
+          }
           return result;
         } else {
-          continue;
+          let result = evaluate(consequent, switchEnv);
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            continue;
+          }
         }
       }
     }

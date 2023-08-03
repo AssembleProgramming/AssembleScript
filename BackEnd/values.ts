@@ -102,6 +102,11 @@ export function MAKE_STRING(str: string): StringVal {
 
 export interface BreakVal extends RuntimeVal {
   type: "break";
+  value: null;
+}
+
+export function MAKE_BREAK(): BreakVal{
+  return {type: "break", value: null} as BreakVal;
 }
 
 export interface ArrayVal extends RuntimeVal {
