@@ -1,277 +1,57 @@
-$ TESTING $
-
-$
-MultilineComments
-$
-
-# Single line Comment
 $ ==========================================================================
-                            Variable Declaration 
+                            Return in switch
 ========================================================================== $
 
-newAvenger a = 10;
-newEternal b = 10;
-vision(a);
-#vision(b);
-
-$ ==========================================================================
-                            fightUntil Loop
-========================================================================== $
-
-newAvenger i = 0;
-fightUntil(i < 10){
-    vision(i);
-    ifWorthy(i == 8){
-        vision("Break");
-        endGame;
-    }
-    i = i + 1;
-}
-
-$ ==========================================================================
-                            wakandaFor Loop
-========================================================================== $
-
-wakandaFor i in 0 to 10 {
-     vision(i);
-}
-vision();
-wakandaFor i in 0 to 10 step 2{
-    vision("This is value of i:",i);
-}
-
-$ ==========================================================================
-                            ifWorthy-otherwise
-========================================================================== $
-
-newAvenger age = 21;
-ifWorthy(age < 18){
-    vision("Not eligible");
-}
-otherwise ifWorthy(age == 18){
-    vision("JUST Eligible");
-}
-otherwise{
-     vision("Eligible");
-}
-
-
-$ ==========================================================================
-                            Switch case
-========================================================================== $
-$ BREAK IN SWITCH $
-
-
-newAvenger c = 0;
-wakandaFor i in 0 to 4{
-    multiverse(i){
+def switchTest(c){
+    multiverse(c){
         madness 0:
-            vision(c);
-            newAvenger c = "Case 0";
-            vision(c);
+            vision(0);
+            return "Case 0";
+            vision(0);
         madness 1:
-            vision(c);
-            newAvenger c = "Case 1";
-            vision(c);
+            vision(1);
+            return "Case 1";
+            endGame;
+            vision(1);
         madness 2:
-            vision(c);
-            newAvenger c = "Case 2";
-            vision(c);
+            vision(2);
+            return "Case 2";
+            vision(2);
         madness 3:
-            vision(c);
-            newAvenger c = "Case 3";
-            vision(c);
+            vision(3);
+            return "Case 3";
+            vision(3);
         default:
-            vision("Default");
+            vision(4);
+            return "Default";
+            vision(4);
     }
 }
 
-
-$ ==========================================================================
-                            team
-========================================================================== $
-
-
-newAvenger str = "Sahil";
-team apk(1) = {str};
-team arr(1) = {apk};
-wakandaFor i in 0 to 0{
-    wakandaFor j in 0 to 0{
-        wakandaFor k in 0 to len(str)-1{
-            vision(arr[i][j][k]);
-        }
+def stringSwitchTest(c){
+    multiverse(c){
+        madness "one":
+            vision(1);
+            return "String Case 1";
+            vision(1);
+        madness "two":
+            vision(2);
+            return "String Case 2";
+            vision(2);
+        madness "three":
+            vision(3);
+            return "String Case 3";
+            vision(3);
+        madness "four":
+            vision(4);
+            return "String Case 4";
+            vision(4);
+        default:
+            vision(100);
+            return "String Case Default";
+            vision(100);
+            endGame;
     }
 }
 
-
-$ ==========================================================================
-                            String
-========================================================================== $
-
-newEternal string = "12";
-newEternal s =  "34";
-
-vision(string+s);
-vision(string*s);
-vision(string*3);
-
-newAvenger numstr = parseInt(str);
-newAvenger nums = parseInt(s);
-vision(numstr + nums);
-vision(numstr * nums);
-
-team arrx(3) = {1,2,3};
-vision(string);
-
-$ ==========================================================================
-                            Nums
-========================================================================== $
-
-
-newAvenger n = 2;
-newAvenger m = 10;
-
-vision(n ^ m);
-vision(pow(n, m));
-
-
-
-$ ==========================================================================
-                            ifWorthy-CHAIN
-========================================================================== $
-newAvenger name = "Shashank";
-ifWorthy(name[0] == "S"){
-    ifWorthy(name[1] == "h"){
-        ifWorthy(name[2] == "a"){
-            ifWorthy(name[3] == "s"){
-                ifWorthy(name[4] == "h"){
-                    ifWorthy(name[5] == "a"){
-                        ifWorthy(name[6] == "n"){
-                            ifWorthy(name[7] == "k"){
-                                vision("HI");
-                            } 
-                        } 
-                    } 
-                } 
-            } 
-        } 
-    }   
-}
-
-$ ==========================================================================
-                            shield hydra
-========================================================================== $
-ifWorthy(SHIELD){
-    vision("Hey SHIELD");
-}
-ifWorthy(!HYDRA){
-    vision("Boo HYDRA");
-}
-ifWorthy(HYDRA){
-    vision("Boo SHIELD");
-}
-
-$ ==========================================================================
-                            Teams
-========================================================================== $
-
-team avengers(4) = {"Captain America", "Iron Man", "Thor", "Hulk"};
-
-newAvenger firstAvenger = avengers[0];
-newAvenger secondAvenger = avengers[1];
-
-vision(firstAvenger);  
-vision(secondAvenger); 
-
-
-team male(10) = {"Captain America", "Iron Man" ,"Dr. Strange", "Hulk", "Hawkeye", "Spiderman", "Thor", "T`Challa", "Ant Man", "Moon Knight"};
-team female(7) = {"Black Widow","Captain Marvel","Wanda Maximoff","She Hulk","Ms Marvel","Gamora","Nebula"};
-team avenger(2) = {male, female};
-
-vision(avenger[0][4]); 
-vision(avenger[1][6]);
-$ ==========================================================================
-                            Use Define Functions
-========================================================================== $
-
-def f(){
-    vision("Called f");
-}
-def f_(){
-    vision("Called f_");
-}
-
-team functions(2) = {f(), f_};
-functions[1]();
-
-def fact(i){
-    ifWorthy(i == 0){
-        return 1;
-    }
-    return fact(i-1) * i;
-}
-def fib(i){
-    ifWorthy(i == 0 || i == 1){
-        return i;
-    }
-    return fib(i-1)+fib(i-2);
-}
-def print(i){
-    ifWorthy(i == 0){
-        return;
-    }
-    vision(i);
-    print(i-1);
-    vision(i);
-}
-def testFunction(){
-    ifWorthy(HYDRA){
-        ifWorthy(HYDRA){
-            return 10;
-        }
-        otherwise{
-            ifWorthy(HYDRA){
-                return 20;
-            }
-            otherwise{
-                ifWorthy(HYDRA){
-                    return 30;
-                }
-                otherwise{
-                    return 11;
-                }
-            }
-        }
-    }
-    otherwise ifWorthy(SHIELD){
-        ifWorthy(HYDRA){
-            return 100;
-        }
-        otherwise{
-            ifWorthy(HYDRA){
-                return 200;
-            }
-            otherwise{
-                ifWorthy(HYDRA){
-                    return 300;
-                }
-                otherwise{
-                    vision("hi1");
-                    return 1000;
-                    vision("hi2");
-                }
-                vision("hi3");
-            }
-            vision("hi4");
-        }
-    }
-    otherwise{
-        return 21;
-        vision("hi5");
-    }
-}
-def main(){
-    vision(testFunction());
-}
-
-main();
+vision(stringSwitchTest("1"));
