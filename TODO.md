@@ -20,8 +20,9 @@
 
 - [ ] Implement user defined functions
 
-> **Note** User Defined Function in LOOP scope, SWITCH scope etc. Writing test
-> cases for User Defined Function.
+> __Note__ 
+> User Defined Function in LOOP scope, SWITCH scope etc. 
+> Writing test cases for User Defined Function.
 
 ## Backlog
 

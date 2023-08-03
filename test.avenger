@@ -190,34 +190,15 @@ team avenger(2) = {male, female};
 
 vision(avenger[0][4]); 
 vision(avenger[1][6]);
-
 $ ==========================================================================
                             Use Define Functions
 ========================================================================== $
-newAvenger abcd = 10;
-ifWorthy(SHIELD){
-    ifWorthy(SHIELD){
-        ifWorthy(SHIELD){
-            ifWorthy(SHIELD){
-                vision(0);
-            }
-            vision(1);
-            return;
-        }
-    }   
-    ifWorthy(SHIELD){
-        vision(10);
-    }
-    vision(2);
-}
-vision(3);
-
 
 def f(){
-    vision("f");
+    vision("Called f");
 }
 def f_(){
-    vision("f_");
+    vision("Called f_");
 }
 
 team functions(2) = {f(), f_};
@@ -243,10 +224,54 @@ def print(i){
     print(i-1);
     vision(i);
 }
+def testFunction(){
+    ifWorthy(HYDRA){
+        ifWorthy(HYDRA){
+            return 10;
+        }
+        otherwise{
+            ifWorthy(HYDRA){
+                return 20;
+            }
+            otherwise{
+                ifWorthy(HYDRA){
+                    return 30;
+                }
+                otherwise{
+                    return 11;
+                }
+            }
+        }
+    }
+    otherwise ifWorthy(SHIELD){
+        ifWorthy(HYDRA){
+            return 100;
+        }
+        otherwise{
+            ifWorthy(HYDRA){
+                return 200;
+            }
+            otherwise{
+                ifWorthy(HYDRA){
+                    return 300;
+                }
+                otherwise{
+                    vision("hi1");
+                    return 1000;
+                    vision("hi2");
+                }
+                vision("hi3");
+            }
+            vision("hi4");
+        }
+    }
+    otherwise{
+        return 21;
+        vision("hi5");
+    }
+}
 def main(){
-    vision(fact(5));
-    print(5);
-    vision(fib(7));
+    vision(testFunction());
 }
 
 main();

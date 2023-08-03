@@ -101,7 +101,11 @@ export const evaluate_boolean_if_statement = (
     if (stmt.elseBranch.kind === "IfStatement") {
       // Evaluate the else if statement recursively in a new environment
       const elseIfEnv = new Environment(env);
-      evaluate_if_statement(stmt.elseBranch, elseIfEnv);
+      let result = evaluate_if_statement(stmt.elseBranch, elseIfEnv);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
+      } 
     } else if (stmt.elseBranch.kind === "ElseStatement") {
       // Evaluate the body of the else statement in a new environment
       const elseEnv = new Environment(env);
@@ -110,12 +114,19 @@ export const evaluate_boolean_if_statement = (
           hasBreak = true;
         }
         if (bodyStmt.kind === "ReturnStatement") {
+          env.assignVar("hasReturn", MAKE_BOOL(true));
           return evaluate_return_statement(
             bodyStmt as ReturnStatement,
             elseEnv,
           );
         }
-        evaluate(bodyStmt, elseEnv);
+        let result = evaluate(bodyStmt, elseEnv);
+        let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+        if (detectedReturn.value === true) {
+          return result;
+        } else {
+          continue;
+        }
       }
     }
   }
