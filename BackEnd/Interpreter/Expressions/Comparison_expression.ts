@@ -68,6 +68,35 @@ export const evaluate_string_comparison_expression = (
 };
 
 /**
+ * Evaluates a comparison expression between boolean values.
+ * @param lhs The left-hand side Bool value.
+ * @param rhs The right-hand side Bool value.
+ * @param operator The operator used in the comparison expression.
+ * @returns The result of the comparison as a boolean value.
+ */
+export const evaluate_boolean_comparison_expression = (
+  lhs: BooleanVal,
+  rhs: BooleanVal,
+  operator: string,
+): BooleanVal => {
+  let result: boolean;
+  if (operator === "==") {
+    result = lhs.value === rhs.value;
+  } else if (operator === "!=") {
+    result = lhs.value !== rhs.value;
+  } else if (operator === "<") {
+    result = lhs.value < rhs.value;
+  } else if (operator === ">") {
+    result = lhs.value > rhs.value;
+  } else if (operator === "<=") {
+    result = lhs.value <= rhs.value;
+  } else {
+    result = lhs.value >= rhs.value;
+  }
+  return { type: "boolean", value: result } as BooleanVal;
+};
+
+/**
  * Evaluates a comparison expression by evaluating its left and right expressions and performing the comparison operation.
  * @param comp - The comparison expression to evaluate.
  * @returns The runtime value of the evaluated comparison expression (true or false).
@@ -91,6 +120,14 @@ export const evaluate_comparison_expression = (
     return evaluate_string_comparison_expression(
       LHS as StringVal,
       RHS as StringVal,
+      comp.operator,
+    );
+  }
+
+  if (LHS.type === "boolean" && RHS.type === "boolean") {
+    return evaluate_boolean_comparison_expression(
+      LHS as BooleanVal,
+      RHS as BooleanVal,
       comp.operator,
     );
   }

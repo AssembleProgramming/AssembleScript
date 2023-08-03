@@ -6,6 +6,7 @@ import {
   ArrayDeclaration,
   AssignmentExpression,
   BinaryExpr,
+  BooleanLiteral,
   CallExpr,
   ComparisonExpression,
   ElseStatement,
@@ -221,6 +222,12 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
         value: (astNode as StringLiteral).value,
         type: "string",
       } as StringVal;
+
+    case "BooleanLiteral":
+      return {
+        value: (astNode as BooleanLiteral).value,
+        type: "boolean",
+      } as BooleanVal;
 
     case "NullLiteral":
       return MAKE_NUll();

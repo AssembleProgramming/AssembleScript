@@ -30,6 +30,7 @@ export type NodeType =
   | "Property"
   | "StringLiteral"
   | "NullLiteral"
+  | "BooleanLiteral"
   // Function-related nodes
   | "FunctionParam"
   | "FunctionDefinition"
@@ -228,6 +229,17 @@ export interface NumericLiteral extends Expr {
 export interface NullLiteral extends Expr {
   kind: "NullLiteral";
   value: "null";
+}
+
+/**
+ * Represents a boolean literal expression.
+ * The BooleanLiteral interface represents a bool literal expression. It has the following properties:
+ * - kind: The type of the node ("BooleanLiteral").
+ * - value: The value of the bool literal ("bool").
+ */
+export interface BooleanLiteral extends Expr {
+  kind: "BooleanLiteral";
+  value: boolean;
 }
 
 /**

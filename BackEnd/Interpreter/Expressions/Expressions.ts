@@ -7,6 +7,7 @@ import {
 import Environment from "../../Scope/environment.ts";
 import {
   ArrayVal,
+  BooleanVal,
   MAKE_NUll,
   NumberVal,
   RuntimeVal,
@@ -36,7 +37,10 @@ export const evaluate_assignment_expression = (
       rhs_value = (rhs as NumberVal).value;
     } else if (rhs.type === "string") {
       rhs_value = (rhs as StringVal).value;
+    } else if (rhs.type === "boolean") {
+      rhs_value = (rhs as BooleanVal).value;
     }
+
     const assigner = (node.assignee) as MemberExpr;
     const assigner_name = (assigner.object as Identifier).symbol;
     const index = evaluate(assigner.property, env) as NumberVal;
@@ -46,10 +50,13 @@ export const evaluate_assignment_expression = (
       throw new Error("Index must be a valid number");
     }
     const object = evaluate(assigner.object, env) as ArrayVal;
+
     if (object.type === "array") {
       const array = object.values;
       if (rhs.type === "number") {
         array[index_val] = { kind: "NumericLiteral", value: rhs_value } as Expr;
+      } else if (rhs.type === "boolean") {
+        array[index_val] = { kind: "BooleanLiteral", value: rhs_value } as Expr;
       } else {
         array[index_val] = { kind: "StringLiteral", value: rhs_value } as Expr;
       }

@@ -455,6 +455,10 @@ export default class Parser {
         this.expect(TokenType.Number, "Expected array size").value,
       );
 
+      if (size > 10000000) {
+        throw `Error occurred at array declaration ${name}: Cannot declare Array of size greater than 10000000`;
+      }
+
       // Expect closing parenthesis ) after array size or values
       this.expect(
         TokenType.CloseParen,
