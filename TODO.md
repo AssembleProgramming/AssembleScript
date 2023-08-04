@@ -20,8 +20,8 @@
 - [x] Documentation
 
 ## Increment
-- [x] For loop new syntax
 
+- [x] For loop new syntax
 
 ## Backlog
 
