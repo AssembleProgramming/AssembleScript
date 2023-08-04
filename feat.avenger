@@ -1,0 +1,19 @@
+$ Problems in for loop $
+
+# 1. Handling Step value of 0
+newAvenger n = 10;
+wakandaFor i in 0 to N step 0{
+    vision(i);
+}
+
+# 2. Handling Infinite For loops
+wakandaFor i in 0 to 1000 step <MINUS>1{
+    vision(i);
+}
+
+# OR
+wakandaFor i in 1000 to 0 step <MINUS>1{
+    vision(i);
+}
+
+$ ALL THIS CODES WILL THROW TLE EXCEPTIONS $
