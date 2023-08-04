@@ -15,19 +15,17 @@
 - [x] Implement while (fightUntil) loop
 - [x] Handle null value
 - [x] Implement arrays (teams)
+- [x] Implement user defined functions
+- [x] Write test cases
+- [x] Documentation
 
 ## Increment
+- [x] For loop new syntax
 
-- [ ] Implement user defined functions
-
-> **Note** User Defined Function in LOOP scope, SWITCH scope etc. Writing test
-> cases for User Defined Function.
 
 ## Backlog
 
 - [ ] Implement objects
 - [ ] Implement error handling
-- [ ] Write test cases
 - [ ] Optimize performance
-- [ ] Documentation
 - [ ] Add support for `+=` `-=` `*=` `/=` `%=` `^=` operator
