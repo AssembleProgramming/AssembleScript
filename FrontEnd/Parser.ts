@@ -113,53 +113,29 @@ export default class Parser {
   private parse_easter_egg(): Stmt {
     switch (this.at().type) {
       case TokenType.If:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'if' did you mean 'ifWorthy'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'if' did you mean 'ifWorthy'`;
       case TokenType.Else:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'else' did you mean 'otherwise'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'else' did you mean 'otherwise'`;
       case TokenType.While:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'while' did you mean 'fightUntil'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'while' did you mean 'fightUntil'`;
       case TokenType.For:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'for' did you mean 'wakandFor'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'for' did you mean 'wakandFor'`;
       case TokenType.Switch:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'switch' did you mean 'multiverse'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'switch' did you mean 'multiverse'`;
       case TokenType.Case:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'case' did you mean 'madness'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'case' did you mean 'madness'`;
       case TokenType.Let:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'let' did you mean 'newAvenger'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'let' did you mean 'newAvenger'`;
       case TokenType.Const:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'const' did you mean 'newEternal'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'const' did you mean 'newEternal'`;
       case TokenType.Return:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'return' did you mean 'snap'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'return' did you mean 'snap'`;
       case TokenType.Break:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'break' did you mean 'endGame'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'break' did you mean 'endGame'`;
       case TokenType.True:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'true' did you mean 'SHIELD'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'true' did you mean 'SHIELD'`;
       case TokenType.False:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Hey Avenger you just snapped an error found an unexpected token 'false' did you mean 'HYDRA'`;
+        throw `SyntaxError:line:${this.at().curr_line}: Hey Avenger you just snapped an error found an unexpected token 'false' did you mean 'HYDRA'`;
     }
     throw `Hey Avenger you just snapped an error {If this error displayed it's fault of developer contact them with a screenshot for reward}`;
   }
@@ -232,7 +208,7 @@ export default class Parser {
   private parse_function_param(): FunctionParam {
     const name = this.expect(
       TokenType.Identifier,
-      "Expected parameter name"
+      "Expected parameter name",
     ).value;
     return { kind: "FunctionParam", name };
   }
@@ -248,7 +224,7 @@ export default class Parser {
 
     const name = this.expect(
       TokenType.Identifier,
-      "Expected function name"
+      "Expected function name",
     ).value;
 
     this.expect(TokenType.OpenParen, "Expected '(' after function name");
@@ -315,7 +291,7 @@ export default class Parser {
     // Expect identifier as iterator in 'wakandaFor' loop
     const iterator = this.expect(
       TokenType.Identifier,
-      "Expected identifier as an iterator in 'wakandaFor' loop"
+      "Expected identifier as an iterator in 'wakandaFor' loop",
     ).value;
 
     // Expect 'in' keyword after iterator
@@ -340,7 +316,7 @@ export default class Parser {
     // Expect '{' before 'for' statement body
     this.expect(
       TokenType.OpenBrace,
-      "Expected '{' before 'wakandaFor' statement body"
+      "Expected '{' before 'wakandaFor' statement body",
     );
 
     // Parse statements within the 'for' loop body
@@ -352,7 +328,7 @@ export default class Parser {
     // Expect '}' after 'for' statement body
     this.expect(
       TokenType.CloseBrace,
-      "Expected '}' after 'wakandaFor' statement body"
+      "Expected '}' after 'wakandaFor' statement body",
     );
 
     // Return the parsed 'for' loop statement object
@@ -385,13 +361,13 @@ export default class Parser {
     // Expect ')' after switch expression
     this.expect(
       TokenType.CloseParen,
-      "Expected ')' after 'multiverse' expression"
+      "Expected ')' after 'multiverse' expression",
     );
 
     // Expect '{' before 'switch' statement body
     this.expect(
       TokenType.OpenBrace,
-      "Expected '{' before 'multiverse' statement body"
+      "Expected '{' before 'multiverse' statement body",
     );
 
     const cases: SwitchCase[] = [];
@@ -438,16 +414,14 @@ export default class Parser {
           defaultCase.push(this.parse_stmt());
         }
       } else {
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Expected 'madness' or 'default' inside 'multiverse' statement`;
+        throw `SyntaxError:line:${this.at().curr_line}: Expected 'madness' or 'default' inside 'multiverse' statement`;
       }
     }
 
     // Expect '}' after 'switch' statement body
     this.expect(
       TokenType.CloseBrace,
-      "Expected '}' after 'multiverse' statement body"
+      "Expected '}' after 'multiverse' statement body",
     );
 
     // Return the parsed 'multiverse' statement object
@@ -471,7 +445,7 @@ export default class Parser {
     // Parse identifier
     const name = this.expect(
       TokenType.Identifier,
-      "Expected 'team (array)' name"
+      "Expected 'team (array)' name",
     ).value;
 
     // Check for optional size or values
@@ -482,7 +456,7 @@ export default class Parser {
     // Expect '[' after array identifier
     this.expect(
       TokenType.OpenBracket,
-      `Expected '[' after identifier '${name}'`
+      `Expected '[' after identifier '${name}'`,
     );
 
     // Parse the array size as a number
@@ -506,7 +480,7 @@ export default class Parser {
     // Expect ; at the end of the declaration statement
     this.expect(
       TokenType.Semicolon,
-      "Expected ';' at end of declaration statement"
+      "Expected ';' at end of declaration statement",
     );
 
     // Return the parsed array declaration statement object
@@ -551,12 +525,12 @@ export default class Parser {
     const condition = this.parse_expr();
     this.expect(
       TokenType.CloseParen,
-      "Expected ')' after condition in 'ifWorthy' statement"
+      "Expected ')' after condition in 'ifWorthy' statement",
     );
 
     this.expect(
       TokenType.OpenBrace,
-      "Expected '{' before 'ifWorthy' statement body"
+      "Expected '{' before 'ifWorthy' statement body",
     );
     const body: Stmt[] = [];
     while (this.at().type !== TokenType.CloseBrace && this.not_eof()) {
@@ -564,7 +538,7 @@ export default class Parser {
     }
     this.expect(
       TokenType.CloseBrace,
-      "Expected '}' after 'ifWorthy' statement body"
+      "Expected '}' after 'ifWorthy' statement body",
     );
     let elseBranch: IfStatement | ElseStatement | undefined = undefined;
     if (this.at().type === TokenType.Otherwise) {
@@ -576,7 +550,7 @@ export default class Parser {
         // 'else' statement
         this.expect(
           TokenType.OpenBrace,
-          "Expected '{' before 'otherwise' statement body"
+          "Expected '{' before 'otherwise' statement body",
         );
         const elseBody: Stmt[] = [];
         while (this.at().type !== TokenType.CloseBrace && this.not_eof()) {
@@ -584,7 +558,7 @@ export default class Parser {
         }
         this.expect(
           TokenType.CloseBrace,
-          "Expected '}' after 'otherwise' statement body"
+          "Expected '}' after 'otherwise' statement body",
         );
 
         elseBranch = { kind: "ElseStatement", body: elseBody };
@@ -608,12 +582,12 @@ export default class Parser {
 
     this.expect(
       TokenType.CloseParen,
-      "Expected ')' after condition in 'fightUntil' statement"
+      "Expected ')' after condition in 'fightUntil' statement",
     );
 
     this.expect(
       TokenType.OpenBrace,
-      "Expected '{' before 'fightUntil' statement body"
+      "Expected '{' before 'fightUntil' statement body",
     );
 
     const body: Stmt[] = [];
@@ -624,7 +598,7 @@ export default class Parser {
 
     this.expect(
       TokenType.CloseBrace,
-      "Expected '}' after 'fightUntil' statement body"
+      "Expected '}' after 'fightUntil' statement body",
     );
 
     return {
@@ -644,16 +618,14 @@ export default class Parser {
     const isConstant = this.eat().type === TokenType.NewEternal;
     const identifier = this.expect(
       TokenType.Identifier,
-      "Expected identifier name while declaration"
+      "Expected identifier name while declaration",
     ).value;
 
     if (this.at().type === TokenType.Semicolon) {
       // Consume semicolon
       this.eat();
       if (isConstant) {
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Must assign value to constant expression ${identifier}`;
+        throw `SyntaxError:line:${this.at().curr_line}: Must assign value to constant expression ${identifier}`;
       }
       return {
         kind: "VariableDeclaration",
@@ -665,7 +637,7 @@ export default class Parser {
 
     this.expect(
       TokenType.Equals,
-      `Expected assignment to identifier ${identifier}`
+      `Expected assignment to identifier ${identifier}`,
     );
 
     const declaration = {
@@ -891,10 +863,9 @@ export default class Parser {
    */
   private parse_args(): Expr[] {
     this.expect(TokenType.OpenParen, `Expected '('`);
-    const args =
-      this.at().type === TokenType.CloseParen
-        ? []
-        : this.parse_arguments_list();
+    const args = this.at().type === TokenType.CloseParen
+      ? []
+      : this.parse_arguments_list();
 
     this.expect(TokenType.CloseParen, `Expected ')'`);
     return args;
@@ -1009,7 +980,7 @@ export default class Parser {
         const value = this.parse_expr();
         this.expect(
           TokenType.CloseParen,
-          "Unexpected token found inside parenthesized expression. Expected ')'"
+          "Unexpected token found inside parenthesized expression. Expected ')'",
         ); //Eat ')'
         return value;
       }
@@ -1018,7 +989,7 @@ export default class Parser {
         const value = this.parse_expr();
         this.expect(
           TokenType.CloseBrace,
-          "Unexpected token found inside parenthesized expression. Expected ')'"
+          "Unexpected token found inside parenthesized expression. Expected ')'",
         ); //Eat ')'
         return value;
       }
@@ -1028,9 +999,7 @@ export default class Parser {
         return this.parse_not_expr();
 
       default:
-        throw `SyntaxError:line:${
-          this.at().curr_line
-        }: Unexpected token found while parsing scanned ${this.at().value}`;
+        throw `SyntaxError:line:${this.at().curr_line}: Unexpected token found while parsing scanned ${this.at().value}`;
     }
   }
 }

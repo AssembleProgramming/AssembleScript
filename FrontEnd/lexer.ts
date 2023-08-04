@@ -303,7 +303,9 @@ export function tokenize(sourceCode: string): Token[] {
         src.shift();
       } // Handle unrecognized characters
       else {
-        throw `SyntaxError:line:${line_cnt}: Unrecognised character ${src[0]} found.`;
+        throw `SyntaxError:line:${line_cnt}: Unrecognised character ${
+          src[0]
+        } found.`;
       }
     }
   }

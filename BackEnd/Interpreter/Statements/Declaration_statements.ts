@@ -5,8 +5,8 @@ import {
 import Environment from "../../Scope/environment.ts";
 import {
   ArrayVal,
-  MAKE_NUM,
   MAKE_NUll,
+  MAKE_NUM,
   NumberVal,
   RuntimeVal,
 } from "../../values.ts";
@@ -20,7 +20,7 @@ import { evaluate } from "../interpreter.ts";
  */
 export const evaluate_variable_declaration = (
   declaration: VariableDeclaration,
-  env: Environment
+  env: Environment,
 ): RuntimeVal => {
   // Evaluate the value of the declaration if it exists, otherwise assign null value
   const value = declaration.value
@@ -38,7 +38,7 @@ export const evaluate_variable_declaration = (
  */
 export const evaluate_array_declaration = (
   declaration: ArrayDeclaration,
-  env: Environment
+  env: Environment,
 ): RuntimeVal => {
   const size_expr = evaluate(declaration.size, env);
   const values_provided = declaration.values.length;

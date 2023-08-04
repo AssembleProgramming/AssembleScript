@@ -23,7 +23,7 @@ import { evaluate } from "../interpreter.ts";
  */
 export const evaluate_assignment_expression = (
   node: AssignmentExpression,
-  env: Environment
+  env: Environment,
 ): RuntimeVal => {
   if (node.assignee.kind === "Identifier") {
     const varname = (node.assignee as Identifier).symbol;
@@ -67,8 +67,7 @@ export const evaluate_assignment_expression = (
       const object2 = evaluate(memberExpr.object, env);
       const newValue = evaluate(node.val, env) as StringVal;
       const updatedString = {
-        value:
-          (object2 as StringVal).value.slice(0, index.value) +
+        value: (object2 as StringVal).value.slice(0, index.value) +
           newValue.value +
           (object2 as StringVal).value.slice(index.value + 1),
         type: "string",
@@ -91,7 +90,7 @@ export const evaluate_assignment_expression = (
  */
 export const evaluate_member_expression = (
   member: MemberExpr,
-  env: Environment
+  env: Environment,
 ): RuntimeVal => {
   const object = evaluate(member.object, env);
   // console.log(object);
@@ -127,6 +126,6 @@ export const evaluate_member_expression = (
 
   // Handle other types of objects here
   throw new Error(
-    `Member expression not supported for the given object ${object.type}`
+    `Member expression not supported for the given object ${object.type}`,
   );
 };
