@@ -1,3 +1,4 @@
+let line_cnt: number = 1;
 /**
  * Represents the type of a token.
  */
@@ -42,6 +43,20 @@ export enum TokenType {
   CloseBrace, // }
   OpenBracket, // [
   CloseBracket, // ]
+  //Easter eggs
+  If,
+  Else,
+  While,
+  For,
+  Switch,
+  Case,
+  Let,
+  Const,
+  Return,
+  Break,
+  True,
+  False,
+
   // End of the file token
   EOF,
 }
@@ -69,6 +84,19 @@ const KEYWORDS: Record<string, TokenType> = {
   or: TokenType.LogicalOperator,
   assemble: TokenType.Assemble,
   snap: TokenType.Snap,
+  //? Easter Egg 🥚
+  if: TokenType.If,
+  else: TokenType.Else,
+  while: TokenType.While,
+  for: TokenType.For,
+  switch: TokenType.Switch,
+  case: TokenType.Case,
+  let: TokenType.Let,
+  const: TokenType.Const,
+  return: TokenType.Return,
+  break: TokenType.Break,
+  true: TokenType.True,
+  false: TokenType.False,
 };
 
 /**
@@ -77,6 +105,7 @@ const KEYWORDS: Record<string, TokenType> = {
 export interface Token {
   value: string;
   type: TokenType;
+  curr_line: number;
 }
 
 /**
@@ -85,8 +114,8 @@ export interface Token {
  * @param type - The type of the token.
  * @returns The token with the specified value and type.
  */
-function getToken(value = "", type: TokenType): Token {
-  return { value, type };
+function getToken(value = "", type: TokenType, curr_line: number): Token {
+  return { value, type, curr_line };
 }
 
 /**
@@ -138,14 +167,14 @@ function getMultiCharacterToken(src: string[]): Token | null {
   for (const operator in operators) {
     if (src.slice(0, operator.length).join("") === operator) {
       src.splice(0, operator.length);
-      return getToken(operator, operators[operator]);
+      return getToken(operator, operators[operator], line_cnt);
     }
   }
 
   if (src[0] === "=") {
     // Handle single "=" as a separate token
     src.shift();
-    return getToken("=", TokenType.Equals);
+    return getToken("=", TokenType.Equals, line_cnt);
   }
 
   if (src[0] === '"') {
@@ -158,7 +187,9 @@ function getMultiCharacterToken(src: string[]): Token | null {
 
     if (src[0] === '"') {
       src.shift(); // Consume the closing double quote
-      return getToken(string, TokenType.String);
+      return getToken(string, TokenType.String, line_cnt);
+    } else {
+      throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
     }
   }
 
@@ -171,6 +202,9 @@ function getMultiCharacterToken(src: string[]): Token | null {
  * @returns True if the string represents a skippable character, false otherwise.
  */
 function isSkippable(src: string): boolean {
+  if (src === "\n") {
+    line_cnt = line_cnt + 1;
+  }
   return (
     src === " " || src === "\n" || src === "\t" || src === "\r" || src === '"'
   );
@@ -192,6 +226,9 @@ export function tokenize(sourceCode: string): Token[] {
       let comment = "";
       comment += src.shift();
       while (src.length > 0 && src[0] !== "$") {
+        if (src[0] === "\n") {
+          line_cnt = line_cnt + 1;
+        }
         comment += src.shift();
       }
       comment += src.shift();
@@ -201,19 +238,20 @@ export function tokenize(sourceCode: string): Token[] {
       while (src.length > 0 && src[0] !== "\n") {
         comment += src.shift();
       }
+      line_cnt = line_cnt + 1;
       comment += src.shift();
     } else if (src[0] === "(") {
-      tokens.push(getToken(src.shift(), TokenType.OpenParen));
+      tokens.push(getToken(src.shift(), TokenType.OpenParen, line_cnt));
     } else if (src[0] === ")") {
-      tokens.push(getToken(src.shift(), TokenType.CloseParen));
+      tokens.push(getToken(src.shift(), TokenType.CloseParen, line_cnt));
     } else if (src[0] === "{") {
-      tokens.push(getToken(src.shift(), TokenType.OpenBrace));
+      tokens.push(getToken(src.shift(), TokenType.OpenBrace, line_cnt));
     } else if (src[0] === "}") {
-      tokens.push(getToken(src.shift(), TokenType.CloseBrace));
+      tokens.push(getToken(src.shift(), TokenType.CloseBrace, line_cnt));
     } else if (src[0] === "[") {
-      tokens.push(getToken(src.shift(), TokenType.OpenBracket));
+      tokens.push(getToken(src.shift(), TokenType.OpenBracket, line_cnt));
     } else if (src[0] === "]") {
-      tokens.push(getToken(src.shift(), TokenType.CloseBracket));
+      tokens.push(getToken(src.shift(), TokenType.CloseBracket, line_cnt));
     } else if (
       src[0] === "+" ||
       src[0] === "-" ||
@@ -222,17 +260,17 @@ export function tokenize(sourceCode: string): Token[] {
       src[0] === "%" ||
       src[0] === "^"
     ) {
-      tokens.push(getToken(src.shift(), TokenType.BinaryOperator));
+      tokens.push(getToken(src.shift(), TokenType.BinaryOperator, line_cnt));
     } else if (src[0] === ";") {
-      tokens.push(getToken(src.shift(), TokenType.Semicolon));
+      tokens.push(getToken(src.shift(), TokenType.Semicolon, line_cnt));
     } else if (src[0] === "!") {
-      tokens.push(getToken(src.shift(), TokenType.NotOperator));
+      tokens.push(getToken(src.shift(), TokenType.NotOperator, line_cnt));
     } else if (src[0] === ":") {
-      tokens.push(getToken(src.shift(), TokenType.Colon));
+      tokens.push(getToken(src.shift(), TokenType.Colon, line_cnt));
     } else if (src[0] === ",") {
-      tokens.push(getToken(src.shift(), TokenType.Comma));
+      tokens.push(getToken(src.shift(), TokenType.Comma, line_cnt));
     } else if (src[0] === ".") {
-      tokens.push(getToken(src.shift(), TokenType.Dot));
+      tokens.push(getToken(src.shift(), TokenType.Dot, line_cnt));
     } else {
       const token = getMultiCharacterToken(src);
       if (token) {
@@ -246,10 +284,10 @@ export function tokenize(sourceCode: string): Token[] {
         // Check for keywords
         const reserved: TokenType = KEYWORDS[id];
         if (typeof reserved === "number") {
-          tokens.push(getToken(id, reserved));
+          tokens.push(getToken(id, reserved, line_cnt));
         } else {
           // unreserved means user defined identifier
-          tokens.push(getToken(id, TokenType.Identifier));
+          tokens.push(getToken(id, TokenType.Identifier, line_cnt));
         }
       } // Build number token
       else if (isNum(src[0])) {
@@ -258,20 +296,22 @@ export function tokenize(sourceCode: string): Token[] {
           num += src.shift();
         }
 
-        tokens.push(getToken(num, TokenType.Number));
+        tokens.push(getToken(num, TokenType.Number, line_cnt));
       } // Skip the skippable character
       else if (isSkippable(src[0])) {
         // Skip the current character
         src.shift();
       } // Handle unrecognized characters
       else {
-        throw `Unrecognized character: , ${src[0]}`;
+        throw `SyntaxError:line:${line_cnt}: Unrecognised character ${
+          src[0]
+        } found.`;
       }
     }
   }
 
   // Push EOF token
-  tokens.push({ type: TokenType.EOF, value: "EndOfFile" });
+  tokens.push({ type: TokenType.EOF, value: "EndOfFile", curr_line: line_cnt });
   return tokens;
 }
 

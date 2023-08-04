@@ -317,7 +317,7 @@ export interface BreakStatement extends Stmt {
 export interface ArrayDeclaration extends Stmt {
   kind: "ArrayDeclaration";
   name: string;
-  size: number;
+  size: Expr;
   values: Expr[];
 }
 

@@ -41,7 +41,7 @@ export const evaluate_assignment_expression = (
       rhs_value = (rhs as BooleanVal).value;
     }
 
-    const assigner = (node.assignee) as MemberExpr;
+    const assigner = node.assignee as MemberExpr;
     const assigner_name = (assigner.object as Identifier).symbol;
     const index = evaluate(assigner.property, env) as NumberVal;
     const index_val = index.value;
@@ -93,8 +93,10 @@ export const evaluate_member_expression = (
   env: Environment,
 ): RuntimeVal => {
   const object = evaluate(member.object, env);
+  // console.log(object);
 
   if (object.type === "array") {
+    // console.log(object.size);
     const index = evaluate(member.property, env) as NumberVal;
     if (index.type !== "number") {
       throw new Error("Array index must be a number");
