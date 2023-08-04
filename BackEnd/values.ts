@@ -136,7 +136,7 @@ export interface FunctionVal extends RuntimeVal {
 export function MAKE_FUNCTION(
   params: string[],
   body: Stmt[],
-  closure: Environment,
+  closure: Environment
 ): FunctionVal {
   return { type: "function", params, body, closure } as FunctionVal;
 }

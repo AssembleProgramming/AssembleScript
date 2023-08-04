@@ -3,7 +3,13 @@ import {
   VariableDeclaration,
 } from "../../../FrontEnd/AST.ts";
 import Environment from "../../Scope/environment.ts";
-import { ArrayVal, MAKE_NUll, RuntimeVal } from "../../values.ts";
+import {
+  ArrayVal,
+  MAKE_NUM,
+  MAKE_NUll,
+  NumberVal,
+  RuntimeVal,
+} from "../../values.ts";
 import { evaluate } from "../interpreter.ts";
 
 /**
@@ -14,7 +20,7 @@ import { evaluate } from "../interpreter.ts";
  */
 export const evaluate_variable_declaration = (
   declaration: VariableDeclaration,
-  env: Environment,
+  env: Environment
 ): RuntimeVal => {
   // Evaluate the value of the declaration if it exists, otherwise assign null value
   const value = declaration.value
@@ -32,13 +38,34 @@ export const evaluate_variable_declaration = (
  */
 export const evaluate_array_declaration = (
   declaration: ArrayDeclaration,
-  env: Environment,
+  env: Environment
 ): RuntimeVal => {
+  const size_expr = evaluate(declaration.size, env);
+  const values_provided = declaration.values.length;
+
+  if (size_expr.type !== "number") {
+    throw `error from array Shas`;
+  }
+  const arr_size = (evaluate(declaration.size, env) as NumberVal).value;
+  if (arr_size > 10000000) {
+    throw `Memory limit exceeded`;
+  } else if (arr_size <= 0) {
+    throw `Invalid Array size`;
+  }
+  if (values_provided > arr_size) {
+    throw `Size of array exceeded`;
+  }
+  let count: number = values_provided;
+  while (count < arr_size) {
+    declaration.values.push({ kind: "NumericLiteral", value: 0 });
+    count++;
+  }
+
   const arr = {
     type: "array",
     name: declaration.name,
     values: declaration.values,
-    size: declaration.size,
+    size: arr_size,
   } as ArrayVal;
 
   return env.declareVar(declaration.name, arr, false);
