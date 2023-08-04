@@ -1,7 +1,18 @@
-import { ForLoopStatement, NumericLiteral } from "../../../../FrontEnd/AST.ts";
+import {
+  ForLoopStatement,
+  NumericLiteral,
+  ReturnStatement,
+} from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
-import { MAKE_NUll, MAKE_NUM, NumberVal, RuntimeVal } from "../../../values.ts";
-import { evaluate } from "../../interpreter.ts";
+import {
+  BooleanVal,
+  MAKE_BOOL,
+  MAKE_NUll,
+  MAKE_NUM,
+  NumberVal,
+  RuntimeVal,
+} from "../../../values.ts";
+import { evaluate, evaluate_return_statement } from "../../interpreter.ts";
 
 /**
  * Evaluates a for loop statement.
@@ -40,13 +51,44 @@ export const evaluate_for_loop_statement = (
       for (const bodyStmt of stmt.body) {
         if (bodyStmt.kind === "ForLoopStatement") {
           // Handle nested for loops
-          evaluate_for_loop_statement(bodyStmt as ForLoopStatement, loopEnv);
+          let result = evaluate_for_loop_statement(
+            bodyStmt as ForLoopStatement,
+            loopEnv,
+          );
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            continue;
+          }
+        } else if (bodyStmt.kind === "BreakStatement") {
+          return MAKE_NUll();
         } else {
-          const result = evaluate(bodyStmt, loopEnv);
+          if (bodyStmt.kind === "ReturnStatement") {
+            env.assignVar("hasReturn", MAKE_BOOL(true));
+            const result = evaluate_return_statement(
+              bodyStmt as ReturnStatement,
+              loopEnv,
+            );
+            if (result === undefined) {
+              return MAKE_NUll();
+            }
+            return result;
+          } else {
+            const result = evaluate(bodyStmt, loopEnv);
 
-          // Check if a "break" statement was executed inside the loop body
-          if (result.type === "break") {
-            return MAKE_NUll(); // Return null to signal the loop was exited with a break
+            let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+            if (detectedReturn.value === true) {
+              return result;
+            } else {
+              if (result !== undefined) {
+                if (result.type === "break") {
+                  break;
+                } else {
+                  continue;
+                }
+              }
+            }
           }
         }
       }
@@ -65,13 +107,44 @@ export const evaluate_for_loop_statement = (
       for (const bodyStmt of stmt.body) {
         if (bodyStmt.kind === "ForLoopStatement") {
           // Handle nested for loops
-          evaluate_for_loop_statement(bodyStmt as ForLoopStatement, loopEnv);
+          let result = evaluate_for_loop_statement(
+            bodyStmt as ForLoopStatement,
+            loopEnv,
+          );
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            continue;
+          }
         } else {
-          const result = evaluate(bodyStmt, loopEnv);
-
-          // Check if a "break" statement was executed inside the loop body
-          if (result.type === "break") {
-            return MAKE_NUll(); // Return null to signal the loop was exited with a break
+          if (bodyStmt.kind === "BreakStatement") {
+            return MAKE_NUll();
+          }
+          if (bodyStmt.kind === "ReturnStatement") {
+            env.assignVar("hasReturn", MAKE_BOOL(true));
+            const result = evaluate_return_statement(
+              bodyStmt as ReturnStatement,
+              loopEnv,
+            );
+            if (result === undefined) {
+              return MAKE_NUll();
+            }
+            return result;
+          } else {
+            const result = evaluate(bodyStmt, loopEnv);
+            let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+            if (detectedReturn.value === true) {
+              return result;
+            } else {
+              if (result !== undefined) {
+                if (result.type === "break") {
+                  break;
+                } else {
+                  continue;
+                }
+              }
+            }
           }
         }
       }

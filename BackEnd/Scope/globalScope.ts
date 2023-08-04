@@ -6,6 +6,7 @@ import {
   MAKE_NUM,
   MAKE_STRING,
   NumberVal,
+  RuntimeVal,
   StringVal,
 } from "../values.ts";
 import Environment from "./environment.ts";
@@ -17,19 +18,20 @@ export function setupGlobalScope() {
   =========================================================================================== */
   env.declareVar("SHIELD", MAKE_BOOL(true), true);
   env.declareVar("HYDRA", MAKE_BOOL(false), true);
+  env.declareVar("hasReturn", MAKE_BOOL(false), false);
   env.declareVar("null", MAKE_NUll(), true);
 
   // Define a native builtin method GENERAL
   env.declareVar(
     "vision",
-    MAKE_NATIVE_FN((args, _scope) => {
+    MAKE_NATIVE_FN((args, _scope): RuntimeVal => {
       for (let i = 0; i < args.length; i++) {
         const type = args[i].type;
         switch (type) {
           case "number": {
             const num_to_print = (args[i] as NumberVal).value;
             console.log(num_to_print);
-            break;
+            return MAKE_NUll();
           }
           case "boolean": {
             const bool_to_print = (args[i] as BooleanVal).value;
@@ -40,19 +42,19 @@ export function setupGlobalScope() {
               ans = "false";
             }
             console.log(ans);
-            break;
+            return MAKE_NUll();
           }
           case "string": {
             const string_to_print = (args[i] as StringVal).value;
             console.log(string_to_print);
-            break;
+            return MAKE_NUll();
           }
           case "array": {
             throw `Invalid Array Print Operation. Use Iterative Method Instead.`;
           }
           case "null": {
             console.log(null);
-            break;
+            return MAKE_NUll();
           }
         }
       }

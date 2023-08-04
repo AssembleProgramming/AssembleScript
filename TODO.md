@@ -16,9 +16,15 @@
 - [x] Handle null value
 - [x] Implement arrays (teams)
 
-## Backlog
+## Increment
 
 - [ ] Implement user defined functions
+
+> **Note** User Defined Function in LOOP scope, SWITCH scope etc. Writing test
+> cases for User Defined Function.
+
+## Backlog
+
 - [ ] Implement objects
 - [ ] Implement error handling
 - [ ] Write test cases

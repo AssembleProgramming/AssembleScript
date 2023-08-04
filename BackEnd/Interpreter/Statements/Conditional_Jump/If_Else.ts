@@ -1,13 +1,18 @@
-import { ElseStatement, IfStatement } from "../../../../FrontEnd/AST.ts";
+import {
+  ElseStatement,
+  IfStatement,
+  ReturnStatement,
+} from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
 import {
   BooleanVal,
-  BreakVal,
+  MAKE_BOOL,
+  MAKE_BREAK,
   MAKE_NUll,
   NumberVal,
   RuntimeVal,
 } from "../../../values.ts";
-import { evaluate } from "../../interpreter.ts";
+import { evaluate, evaluate_return_statement } from "../../interpreter.ts";
 
 /**
  * Evaluates a numeric if statement by conditionally executing the body based on the condition value.
@@ -21,37 +26,75 @@ export const evaluate_numeric_if_statement = (
   stmt: IfStatement,
   env: Environment,
 ): RuntimeVal => {
-  let hasBreak = false;
   if (condition.value) {
     // Evaluate the body of the if statement in a new environment
     const ifEnv = new Environment(env);
     for (const bodyStmt of stmt.body) {
       if (bodyStmt.kind === "BreakStatement") {
-        hasBreak = true;
+        return MAKE_BREAK();
+      } else {
+        if (bodyStmt.kind === "ReturnStatement") {
+          env.assignVar("hasReturn", MAKE_BOOL(true));
+          const result = evaluate_return_statement(
+            bodyStmt as ReturnStatement,
+            ifEnv,
+          );
+          if (result === undefined) {
+            return MAKE_NUll();
+          }
+          return result;
+        } else {
+          let result = evaluate(bodyStmt, ifEnv);
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            continue;
+          }
+        }
       }
-      evaluate(bodyStmt, ifEnv);
     }
+    return MAKE_NUll();
   } else if (stmt.elseBranch) {
     if (stmt.elseBranch.kind === "IfStatement") {
       // Evaluate the else if statement recursively in a new environment
       const elseIfEnv = new Environment(env);
-      evaluate_if_statement(stmt.elseBranch, elseIfEnv);
+      let result = evaluate_if_statement(stmt.elseBranch, elseIfEnv);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
+      }
     } else if (stmt.elseBranch.kind === "ElseStatement") {
       // Evaluate the body of the else statement in a new environment
       const elseEnv = new Environment(env);
       for (const bodyStmt of stmt.elseBranch.body) {
         if (bodyStmt.kind === "BreakStatement") {
-          hasBreak = true;
+          return MAKE_BREAK();
+        } else {
+          if (bodyStmt.kind === "ReturnStatement") {
+            env.assignVar("hasReturn", MAKE_BOOL(true));
+            const result = evaluate_return_statement(
+              bodyStmt as ReturnStatement,
+              elseEnv,
+            );
+            if (result === undefined) {
+              return MAKE_NUll();
+            }
+            return result;
+          } else {
+            let result = evaluate(bodyStmt, elseEnv);
+            let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+            if (detectedReturn.value === true) {
+              return result;
+            } else {
+              continue;
+            }
+          }
         }
-        evaluate(bodyStmt, elseEnv);
       }
     }
   }
-  if (hasBreak) {
-    return { type: "break" } as BreakVal;
-  } else {
-    return MAKE_NUll();
-  }
+  return MAKE_NUll();
 };
 
 /**
@@ -66,37 +109,74 @@ export const evaluate_boolean_if_statement = (
   stmt: IfStatement,
   env: Environment,
 ): RuntimeVal => {
-  let hasBreak = false;
   if (condition.value) {
     // Evaluate the body of the if statement in a new environment
     const ifEnv = new Environment(env);
     for (const bodyStmt of stmt.body) {
       if (bodyStmt.kind === "BreakStatement") {
-        hasBreak = true;
+        return MAKE_BREAK();
+      } else {
+        if (bodyStmt.kind === "ReturnStatement") {
+          env.assignVar("hasReturn", MAKE_BOOL(true));
+          let result = evaluate_return_statement(
+            bodyStmt as ReturnStatement,
+            ifEnv,
+          );
+          if (result === undefined) {
+            return MAKE_NUll();
+          }
+          return result;
+        } else {
+          let result = evaluate(bodyStmt, ifEnv);
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            continue;
+          }
+        }
       }
-      evaluate(bodyStmt, ifEnv);
     }
   } else if (stmt.elseBranch) {
     if (stmt.elseBranch.kind === "IfStatement") {
       // Evaluate the else if statement recursively in a new environment
       const elseIfEnv = new Environment(env);
-      evaluate_if_statement(stmt.elseBranch, elseIfEnv);
+      let result = evaluate_if_statement(stmt.elseBranch, elseIfEnv);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
+      }
     } else if (stmt.elseBranch.kind === "ElseStatement") {
       // Evaluate the body of the else statement in a new environment
       const elseEnv = new Environment(env);
       for (const bodyStmt of stmt.elseBranch.body) {
         if (bodyStmt.kind === "BreakStatement") {
-          hasBreak = true;
+          return MAKE_BREAK();
+        } else {
+          if (bodyStmt.kind === "ReturnStatement") {
+            env.assignVar("hasReturn", MAKE_BOOL(true));
+            const result = evaluate_return_statement(
+              bodyStmt as ReturnStatement,
+              elseEnv,
+            );
+            if (result === undefined) {
+              return MAKE_NUll();
+            }
+            return result;
+          } else {
+            let result = evaluate(bodyStmt, elseEnv);
+            let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+            if (detectedReturn.value === true) {
+              return result;
+            } else {
+              continue;
+            }
+          }
         }
-        evaluate(bodyStmt, elseEnv);
       }
     }
   }
-  if (hasBreak) {
-    return { type: "break" } as BreakVal;
-  } else {
-    return MAKE_NUll();
-  }
+  return MAKE_NUll();
 };
 
 /**

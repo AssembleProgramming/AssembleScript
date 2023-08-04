@@ -24,6 +24,9 @@ export enum TokenType {
   In,
   To,
   Step,
+  Def,
+  // TODO: Change Return name to Snap
+  Return,
   // Operators + Other tokens
   Equals,
   Semicolon,
@@ -65,6 +68,9 @@ const KEYWORDS: Record<string, TokenType> = {
   step: TokenType.Step,
   and: TokenType.LogicalOperator,
   or: TokenType.LogicalOperator,
+  def: TokenType.Def,
+  // TODO: Change Return name to Snap
+  return: TokenType.Return,
 };
 
 /**
@@ -268,3 +274,9 @@ export function tokenize(sourceCode: string): Token[] {
   tokens.push({ type: TokenType.EOF, value: "EndOfFile" });
   return tokens;
 }
+
+// // !Testing Lexer
+// const sourceCode = await Deno.readTextFile("./test.avenger");
+// for (const token of tokenize(sourceCode)) {
+//   console.log(token);
+// }

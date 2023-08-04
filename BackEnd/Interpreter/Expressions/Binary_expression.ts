@@ -52,8 +52,10 @@ export const evaluate_numeric_string_binary_expression = (
     result = "NaN";
   } else if (operator === "*") {
     result = rhs.value;
-    while (--lhs.value) {
+    let number_to_multiply = lhs.value;
+    while (number_to_multiply > 1) {
       result += rhs.value;
+      number_to_multiply = number_to_multiply - 1;
     }
   } else if (operator === "/") {
     result = "NaN";
@@ -82,8 +84,10 @@ export const evaluate_string_numeric_binary_expression = (
     result = "NaN";
   } else if (operator === "*") {
     result = lhs.value;
-    while (--rhs.value) {
+    let number_to_multiply = rhs.value;
+    while (number_to_multiply > 1) {
       result += lhs.value;
+      number_to_multiply = number_to_multiply - 1;
     }
   } else if (operator === "/") {
     result = "NaN";

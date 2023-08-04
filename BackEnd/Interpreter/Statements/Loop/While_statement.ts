@@ -1,12 +1,14 @@
-import { WhileStatement } from "../../../../FrontEnd/AST.ts";
+import { ReturnStatement, WhileStatement } from "../../../../FrontEnd/AST.ts";
 import Environment from "../../../Scope/environment.ts";
 import {
   BooleanVal,
+  MAKE_BOOL,
+  MAKE_BREAK,
   MAKE_NUll,
   NumberVal,
   RuntimeVal,
 } from "../../../values.ts";
-import { evaluate } from "../../interpreter.ts";
+import { evaluate, evaluate_return_statement } from "../../interpreter.ts";
 
 /**
  * Evaluates a boolean while statement by repeatedly executing the body as long as the condition is true.
@@ -21,11 +23,9 @@ export const evaluate_boolean_while_statement = (
   env: Environment,
 ): RuntimeVal => {
   let iterationCnt = 0;
-  let breakLoop = false;
   let evaluatedCondition = evaluate(stmt.condition, env) as BooleanVal;
-  const startTime = performance.now();
-
-  while (evaluatedCondition.value && !breakLoop) {
+  let hasBreak = false;
+  while (evaluatedCondition.value && !hasBreak) {
     iterationCnt++;
 
     // Check for infinite loop
@@ -36,19 +36,48 @@ export const evaluate_boolean_while_statement = (
     // Create a new environment for each iteration
     const whileEnv = new Environment(env);
     for (const statement of stmt.body) {
-      if (statement.kind === "BreakStatement") {
-        breakLoop = true;
-        break;
-      }
-
-      const evaluatedStatement = evaluate(statement, whileEnv);
-      if (evaluatedStatement.type === "break") {
-        breakLoop = true;
-        break;
+      if (statement.kind === "WhileStatement") {
+        let result = evaluate_while_statement(
+          statement as WhileStatement,
+          whileEnv,
+        );
+        let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+        if (detectedReturn.value === true) {
+          return result;
+        } else {
+          continue;
+        }
+      } else {
+        if (statement.kind === "BreakStatement") {
+          return MAKE_BREAK();
+        }
+        if (statement.kind === "ReturnStatement") {
+          env.assignVar("hasReturn", MAKE_BOOL(true));
+          const result = evaluate_return_statement(
+            statement as ReturnStatement,
+            whileEnv,
+          );
+          if (result === undefined) {
+            return MAKE_NUll();
+          }
+          return result;
+        } else {
+          const result = evaluate(statement, whileEnv);
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            if (result !== undefined) {
+              if (result.type === "break") {
+                hasBreak = true;
+              }
+            }
+          }
+        }
       }
     }
 
-    whileEnv.cleanUp(); // Clean up the variables defined within the loop body
+    whileEnv.cleanUp();
 
     evaluatedCondition = evaluate(stmt.condition, env) as BooleanVal;
   }
@@ -69,10 +98,10 @@ export const evaluate_numeric_while_statement = (
   env: Environment,
 ): RuntimeVal => {
   let iterationCnt = 0;
-  let breakLoop = false;
+  let hasBreak = false;
   let evaluatedCondition = evaluate(stmt.condition, env) as NumberVal;
 
-  while (evaluatedCondition.value && !breakLoop) {
+  while (evaluatedCondition.value && !hasBreak) {
     iterationCnt++;
 
     // Check for infinite loop
@@ -83,19 +112,48 @@ export const evaluate_numeric_while_statement = (
     // Create a new environment for each iteration
     const whileEnv = new Environment(env);
     for (const statement of stmt.body) {
-      if (statement.kind === "BreakStatement") {
-        breakLoop = true;
-        break;
-      }
-
-      const evaluatedStatement = evaluate(statement, whileEnv);
-      if (evaluatedStatement.type === "break") {
-        breakLoop = true;
-        break;
+      if (statement.kind === "WhileStatement") {
+        let result = evaluate_while_statement(
+          statement as WhileStatement,
+          whileEnv,
+        );
+        let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+        if (detectedReturn.value === true) {
+          return result;
+        } else {
+          continue;
+        }
+      } else {
+        if (statement.kind === "BreakStatement") {
+          return MAKE_BREAK();
+        }
+        if (statement.kind === "ReturnStatement") {
+          env.assignVar("hasReturn", MAKE_BOOL(true));
+          const result = evaluate_return_statement(
+            statement as ReturnStatement,
+            whileEnv,
+          );
+          if (result === undefined) {
+            return MAKE_NUll();
+          }
+          return result;
+        } else {
+          const result = evaluate(statement, whileEnv);
+          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+          if (detectedReturn.value === true) {
+            return result;
+          } else {
+            if (result !== undefined) {
+              if (result.type === "break") {
+                hasBreak = true;
+              }
+            }
+          }
+        }
       }
     }
 
-    whileEnv.cleanUp(); // Clean up the variables defined within the loop body
+    whileEnv.cleanUp();
 
     evaluatedCondition = evaluate(stmt.condition, env) as NumberVal;
   }
