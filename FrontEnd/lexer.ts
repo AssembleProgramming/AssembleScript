@@ -316,7 +316,7 @@ export function tokenize(sourceCode: string): Token[] {
 }
 
 // // !Testing Lexer
-// const sourceCode = await Deno.readTextFile("./feat.avenger");
+// const sourceCode = await Deno.readTextFile("./test.avenger");
 // for (const token of tokenize(sourceCode)) {
 //   console.log(token);
 // }
