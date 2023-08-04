@@ -129,9 +129,9 @@ export default class Parser {
         return this.parse_switch_statement();
       case TokenType.WakandaFor:
         return this.parse_for_loop_statement();
-      case TokenType.Def:
+      case TokenType.Assemble:
         return this.parse_function_definition();
-      case TokenType.Return:
+      case TokenType.Snap:
         return this.parse_return_statement();
 
       default: {
@@ -151,8 +151,10 @@ export default class Parser {
    * @throws {Error} If there are syntax errors or missing tokens in the parameter.
    */
   private parse_function_param(): FunctionParam {
-    const name =
-      this.expect(TokenType.Identifier, "Expected parameter name").value;
+    const name = this.expect(
+      TokenType.Identifier,
+      "Expected parameter name",
+    ).value;
     return { kind: "FunctionParam", name };
   }
 
@@ -163,10 +165,12 @@ export default class Parser {
    * @throws {Error} If there are syntax errors or missing tokens in the function definition.
    */
   private parse_function_definition(): FunctionDefinition {
-    this.eat(); // Eat 'def' token
+    this.eat(); // Eat 'assemble' token
 
-    const name =
-      this.expect(TokenType.Identifier, "Expected function name").value;
+    const name = this.expect(
+      TokenType.Identifier,
+      "Expected function name",
+    ).value;
 
     this.expect(
       TokenType.OpenParen,
@@ -216,7 +220,7 @@ export default class Parser {
    * @throws {Error} If there are syntax errors or missing tokens in the return statement.
    */
   private parse_return_statement(): ReturnStatement {
-    this.eat(); // Eat 'return' token
+    this.eat(); // Eat 'snap' token
 
     let value: Expr | undefined = undefined;
     if (this.at().type !== TokenType.Semicolon) {
@@ -385,7 +389,8 @@ export default class Parser {
         while (
           this.at().type !== TokenType.Madness &&
           this.at().type !== TokenType.Default &&
-          this.at().type !== TokenType.CloseBrace && this.not_eof()
+          this.at().type !== TokenType.CloseBrace &&
+          this.not_eof()
         ) {
           consequent.push(this.parse_stmt());
         }
@@ -402,7 +407,8 @@ export default class Parser {
         while (
           this.at().type !== TokenType.Madness &&
           this.at().type !== TokenType.Default &&
-          this.at().type !== TokenType.CloseBrace && this.not_eof()
+          this.at().type !== TokenType.CloseBrace &&
+          this.not_eof()
         ) {
           defaultCase.push(this.parse_stmt());
         }
@@ -746,9 +752,7 @@ export default class Parser {
   private parse_comparison_expr(): Expr {
     let left = this.parse_additive_expr();
 
-    while (
-      this.at().type === TokenType.ComparisonOperator
-    ) {
+    while (this.at().type === TokenType.ComparisonOperator) {
       const operator = this.eat().value; // Consume the comparison operator token
       const right = this.parse_additive_expr(); // Parse the right-hand side of the comparison
 
@@ -797,7 +801,8 @@ export default class Parser {
 
     // Pase operator
     while (
-      this.at().value === "*" || this.at().value === "/" ||
+      this.at().value === "*" ||
+      this.at().value === "/" ||
       this.at().value === "%"
     ) {
       const operator = this.eat().value;
@@ -821,9 +826,7 @@ export default class Parser {
     let left = this.parse_call_member_expr();
 
     // Pase operator
-    while (
-      this.at().value === "^"
-    ) {
+    while (this.at().value === "^") {
       const operator = this.eat().value;
       const right = this.parse_call_member_expr();
 

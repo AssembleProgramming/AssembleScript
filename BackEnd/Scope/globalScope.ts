@@ -1,6 +1,7 @@
 import {
   BooleanVal,
   MAKE_BOOL,
+  MAKE_FUNCTION,
   MAKE_NATIVE_FN,
   MAKE_NUll,
   MAKE_NUM,
@@ -12,6 +13,17 @@ import {
 import Environment from "./environment.ts";
 
 export function setupGlobalScope() {
+  const isVaild = (actual: any, expected: any): RuntimeVal => {
+    if (actual === expected) {
+      console.log("✅Test passed!");
+      return MAKE_BOOL(true);
+    } else {
+      console.log("❌Test failed!");
+      console.log("⚠️ Expected: ", expected);
+      console.log("⚠️ Output: ", actual);
+      throw `Failed execution`;
+    }
+  };
   const env = new Environment();
   /** ===========================================================================================
    *                 Definition of global constant variables and builtin methods
@@ -22,6 +34,44 @@ export function setupGlobalScope() {
   env.declareVar("null", MAKE_NUll(), true);
 
   // Define a native builtin method GENERAL
+  env.declareVar(
+    "assertEqual",
+    MAKE_NATIVE_FN((args, _scope): RuntimeVal => {
+      if (args.length !== 2) {
+        const error_msg: any =
+          `No matching function for call to 'assertEqual'. Note: candidate function not viable. Function assertEqual requires 2 arguments, but ${args.length} was provided.`;
+        throw error_msg;
+      }
+      const actual_type = args[0].type;
+      const expected_type = args[1].type;
+
+      if (actual_type !== expected_type) {
+        throw `❌Test failed (Type Mismatched)`;
+      } else {
+        switch (actual_type) {
+          case "string": {
+            const actual = (args[0] as StringVal).value;
+            const expected = (args[1] as StringVal).value;
+            return isVaild(actual, expected);
+          }
+          case "number": {
+            const actual = (args[0] as NumberVal).value;
+            const expected = (args[1] as NumberVal).value;
+            return isVaild(actual, expected);
+          }
+          case "boolean": {
+            const actual = (args[0] as BooleanVal).value;
+            const expected = (args[1] as BooleanVal).value;
+            return isVaild(actual, expected);
+          }
+
+          default:
+            throw `Error: Null value exception`;
+        }
+      }
+    }),
+    true,
+  );
   env.declareVar(
     "vision",
     MAKE_NATIVE_FN((args, _scope): RuntimeVal => {
