@@ -33,7 +33,7 @@ export const evaluate_for_loop_statement = (
   } else {
     step = evaluate(stmt.step as NumericLiteral, env) as NumberVal;
   }
-  if(step.value <= 0){
+  if (step.value <= 0) {
     throw `TLE(Exception): The step value in wakandaFor must be a positive non-zero value.`;
   }
   // Ensure the loop control variables are numeric
