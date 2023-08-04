@@ -34,13 +34,15 @@ export const evaluate_for_loop_statement = (
     step = evaluate(stmt.step as NumericLiteral, env) as NumberVal;
   }
   if (step.value <= 0) {
-    throw `TLE(Exception): The step value in wakandaFor must be a positive non-zero value.`;
+    throw `RunTimeError: The step value in wakandaFor must be a positive non-zero value`;
   }
   // Ensure the loop control variables are numeric
   if (
-    start.type !== "number" || end.type !== "number" || step.type !== "number"
+    start.type !== "number" ||
+    end.type !== "number" ||
+    step.type !== "number"
   ) {
-    throw new Error("Invalid loop control variables");
+    throw `RunTimeError: Invalid loop control variables`;
   }
   if (start.value <= end.value) {
     // Iterate over the range using the start, end, and step values

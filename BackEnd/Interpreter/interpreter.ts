@@ -140,7 +140,7 @@ export const evaluate_call_expression = (
 
     if (expr.args.length !== funcValue.params.length) {
       let caller = expr.caller as Identifier;
-      throw `Function "${caller.symbol}" expects ${funcValue.params.length} arguments, but ${expr.args.length} were provided.`;
+      throw `RunTimeError: Function "${caller.symbol}" expects ${funcValue.params.length} arguments, but ${expr.args.length} were provided.`;
     }
 
     // Create a new environment for the function call, inheriting the closure from the function definition
@@ -179,7 +179,7 @@ export const evaluate_call_expression = (
     }
     return returnValue;
   } else {
-    throw `Cannot call non-function ${JSON.stringify(fn)}`;
+    throw `RunTimeError: Cannot call non-function ${JSON.stringify(fn)}`;
   }
 };
 
@@ -213,7 +213,7 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
   switch (astNode.kind) {
     case "NumericLiteral":
       return {
-        value: ((astNode as NumericLiteral).value),
+        value: (astNode as NumericLiteral).value,
         type: "number",
       } as NumberVal;
 
@@ -300,6 +300,6 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
     default:
       // If the AST node has an unknown or unsupported kind, we log an error and exit the program.
       console.log(astNode);
-      throw `This node has not yet been setup in interpretation...`;
+      throw `RunTimeError: This node has not yet been setup in interpretation...`;
   }
 }

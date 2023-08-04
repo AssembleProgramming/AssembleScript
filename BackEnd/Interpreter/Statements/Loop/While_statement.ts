@@ -188,8 +188,6 @@ export const evaluate_while_statement = (
         env,
       );
     default:
-      throw new Error(
-        "Condition in while statement must be a boolean or numeric value",
-      );
+      throw `RunTimeError: Condition in while statement must be a boolean or numeric value`;
   }
 };

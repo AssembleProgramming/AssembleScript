@@ -8,9 +8,7 @@ import { evaluate } from "../interpreter.ts";
  * @param rhs The number value to negate.
  * @returns The negated number value.
  */
-export const evaluate_minus = (
-  rhs: NumberVal,
-): NumberVal => {
+export const evaluate_minus = (rhs: NumberVal): NumberVal => {
   const res = -1 * rhs.value;
   return { type: "number", value: res } as NumberVal;
 };
@@ -30,5 +28,5 @@ export const evaluate_minus_expression = (
   if (expression.type === "number") {
     return evaluate_minus(expression as NumberVal);
   }
-  throw `The RHS to <MINUS> operator should be of type number`;
+  throw `RunTimeError: The RHS to <MINUS> operator should be of type number`;
 };
