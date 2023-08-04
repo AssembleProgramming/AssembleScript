@@ -44,16 +44,16 @@ export const evaluate_array_declaration = (
   const values_provided = declaration.values.length;
 
   if (size_expr.type !== "number") {
-    throw `error from array Shas`;
+    throw `RunTimeError: The operand for subscript operator is expected to be of type number but recieved ${size_expr.type} at '${declaration.name}'`;
   }
   const arr_size = (evaluate(declaration.size, env) as NumberVal).value;
   if (arr_size > 10000000) {
-    throw `Memory limit exceeded`;
+    throw `RunTimeError: Segmentation Fault expected array size to be less than 1e7 at '${declaration.name}'`;
   } else if (arr_size <= 0) {
-    throw `Invalid Array size`;
+    throw `RunTimeError: Invalid Array size ${arr_size} at '${declaration.name}'`;
   }
   if (values_provided > arr_size) {
-    throw `Size of array exceeded`;
+    throw `RunTimeError: Excess elements in array initializer at '${declaration.name}'. Provided array size ${arr_size} while number of elements in ${values_provided}`;
   }
   let count: number = values_provided;
   while (count < arr_size) {

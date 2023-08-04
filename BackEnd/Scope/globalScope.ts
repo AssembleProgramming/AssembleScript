@@ -1,4 +1,5 @@
 import {
+  ArrayVal,
   BooleanVal,
   MAKE_BOOL,
   MAKE_FUNCTION,
@@ -39,7 +40,7 @@ export function setupGlobalScope() {
     MAKE_NATIVE_FN((args, _scope): RuntimeVal => {
       if (args.length !== 2) {
         const error_msg: any =
-          `No matching function for call to 'assertEqual'. Note: candidate function not viable. Function assertEqual requires 2 arguments, but ${args.length} was provided.`;
+          `RunTimeError: No matching function for call to 'assertEqual'. Note: candidate function not viable. Function assertEqual requires 2 arguments, but ${args.length} was provided.`;
         throw error_msg;
       }
       const actual_type = args[0].type;
@@ -66,7 +67,7 @@ export function setupGlobalScope() {
           }
 
           default:
-            throw `Error: Null value exception`;
+            throw `RunTimeError: Null value exception`;
         }
       }
     }),
@@ -77,11 +78,12 @@ export function setupGlobalScope() {
     MAKE_NATIVE_FN((args, _scope): RuntimeVal => {
       for (let i = 0; i < args.length; i++) {
         const type = args[i].type;
+
         switch (type) {
           case "number": {
             const num_to_print = (args[i] as NumberVal).value;
             console.log(num_to_print);
-            return MAKE_NUll();
+            break;
           }
           case "boolean": {
             const bool_to_print = (args[i] as BooleanVal).value;
@@ -92,19 +94,19 @@ export function setupGlobalScope() {
               ans = "false";
             }
             console.log(ans);
-            return MAKE_NUll();
+            break;
           }
           case "string": {
             const string_to_print = (args[i] as StringVal).value;
             console.log(string_to_print);
-            return MAKE_NUll();
+            break;
           }
           case "array": {
-            throw `Invalid Array Print Operation. Use Iterative Method Instead.`;
+            throw `RunTimeError: Invalid Array Print Operation. Use Iterative Method Instead.`;
           }
           case "null": {
             console.log(null);
-            return MAKE_NUll();
+            break;
           }
         }
       }

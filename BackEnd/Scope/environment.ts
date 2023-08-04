@@ -20,11 +20,9 @@ export default class Environment {
     this.MAX_ALLOWED_ITERATIONS = 102702;
   }
 
-  public checkInfiniteLoop(
-    iterationCnt: number,
-  ): Boolean {
+  public checkInfiniteLoop(iterationCnt: number): Boolean {
     if (iterationCnt > this.MAX_ALLOWED_ITERATIONS) {
-      throw `TIME LIMIT EXCEEDED...`;
+      throw `RunTimeError: TIME LIMIT EXCEEDED...`;
     }
     return false;
   }
@@ -42,7 +40,7 @@ export default class Environment {
     isConst: boolean,
   ): RuntimeVal {
     if (this.variables.has(varname)) {
-      throw `cannot declare variable ${varname}. As it is already defined in the scope.`;
+      throw `RunTimeError: Cannot declare variable ${varname}. As it is already defined in the scope.`;
     }
     this.variables.set(varname, value);
     if (isConst) {
@@ -61,7 +59,7 @@ export default class Environment {
     // Find the scope in which variable exists
     const env: Environment = this.resolveScope(varname);
     if (env.constants.has(varname)) {
-      throw `cannot reassign to const variable ${varname}`;
+      throw `RunTimeError: Cannot reassign to const variable ${varname}`;
     }
 
     env.variables.set(varname, value);
@@ -91,7 +89,7 @@ export default class Environment {
       return this;
     }
     if (this.parent === undefined) {
-      throw `cannot resolve ${varname} in the scope.`;
+      throw `RunTimeError: Cannot resolve ${varname} in the scope.`;
     }
     return this.parent.resolveScope(varname);
   }

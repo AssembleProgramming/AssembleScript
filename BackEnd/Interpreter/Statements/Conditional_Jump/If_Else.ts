@@ -197,9 +197,7 @@ export const evaluate_if_statement = (
     case "boolean":
       return evaluate_boolean_if_statement(condition as BooleanVal, stmt, env);
     default:
-      throw new Error(
-        "Condition in if statement must be a boolean or integer value",
-      );
+      throw `RunTimeError: Condition in if statement must be a boolean or integer value`;
   }
 };
 

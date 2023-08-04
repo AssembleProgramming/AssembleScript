@@ -61,7 +61,7 @@ export const evaluate_switch_statement = (
         }
         // Evaluate the default case if no matching case is found
       } else {
-        throw "Expected Number in switch case as in switch(expression) expression is of type number";
+        throw `RunTimeError: Expected Number in multiverse madness, as in multiverse(expression) the expression is of type number`;
       }
     }
     for (const consequent of switchStmt.default) {
@@ -126,7 +126,7 @@ export const evaluate_switch_statement = (
         }
         // Evaluate the default case if no matching case is found
       } else {
-        throw "Expected string in switch case as in switch(expression) expression is of type string";
+        throw `Expected String in multiverse madness, as in multiverse(expression) the expression is of type String`;
       }
     }
     for (const consequent of switchStmt.default) {
