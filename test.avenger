@@ -8,15 +8,15 @@ $===============================================================================
 $=====================================================================================
                         Factorial calculation using recursion
 ======================================================================================$
-def factorial_recursive(n) {
+assemble factorial_recursive(n) {
   ifWorthy(n == 0 || n == 1) {
-    return 1;
+    snap 1;
   }
-  return n * factorial_recursive(n - 1);
+  snap n * factorial_recursive(n - 1);
 }
 
 # Test case for factorial_recursive
-def test_factorial_recursive() {
+assemble test_factorial_recursive() {
   vision("Testing factorial_recursive...");
   assertEqual(factorial_recursive(0), 1);
   assertEqual(factorial_recursive(1), 1);
@@ -28,19 +28,19 @@ def test_factorial_recursive() {
 $=====================================================================================
                             Factorial calculation using Loop
 ======================================================================================$
-def factorial_loop(n) {
+assemble factorial_loop(n) {
   ifWorthy(n == 0 || n == 1){
-    return 1;
+    snap 1;
   }
   newAvenger result = 1;
   wakandaFor i in 1 to n {
     result = result * i;
   }
-  return result;
+  snap result;
 }
 
 # Test case for factorial_loop
-def test_factorial_loop() {
+assemble test_factorial_loop() {
   vision("Testing factorial_loop...");
   assertEqual(factorial_loop(0), 1);
   assertEqual(factorial_loop(1), 1);
@@ -52,9 +52,9 @@ def test_factorial_loop() {
 $=====================================================================================
                 Check if a number is prime using the Sieve of Eratosthenes
 ======================================================================================$
-def is_prime_sieve(n) {
+assemble is_prime_sieve(n) {
   ifWorthy(n <= 1) {
-    return HYDRA;
+    snap HYDRA;
   }
   team sieve(100) = {SHIELD};
   sieve[0] = HYDRA;
@@ -75,11 +75,11 @@ def is_prime_sieve(n) {
     i = i + 1;
   }
 
-  return sieve[n];
+  snap sieve[n];
 }
 
 # Test case for is_prime_sieve
-def test_is_prime_sieve() {
+assemble test_is_prime_sieve() {
   vision("Testing is_prime_sieve...");
   assertEqual(is_prime_sieve(2), SHIELD);
   assertEqual(is_prime_sieve(3), SHIELD);
@@ -93,7 +93,7 @@ def test_is_prime_sieve() {
 $=====================================================================================
                             Nested for loops
 ======================================================================================$
-def nested_for_test() {
+assemble nested_for_test() {
   vision("Testing nested_for_test...");
   newAvenger sum = 0;
   wakandaFor i in 1 to 2 {
@@ -108,9 +108,9 @@ def nested_for_test() {
 $=====================================================================================
                         Factorial calculation using recursion
 ======================================================================================$
-def reverse_int(num){
+assemble reverse_int(num){
     ifWorthy(num <= 0){
-        return num;
+        snap num;
     }
     newAvenger ans = 0;
     fightUntil(num > 0){
@@ -118,10 +118,10 @@ def reverse_int(num){
         ans = ans * 10 + lastDigit; 
         num = floor(num / 10);
     }
-    return ans;
+    snap ans;
 }
 # Test case for reverse_int
-def test_reverse_int(){
+assemble test_reverse_int(){
     vision("Testing reverse_int...");
     assertEqual(reverse_int(131), 131);
     assertEqual(reverse_int(123), 321);
@@ -136,14 +136,14 @@ def test_reverse_int(){
 $=====================================================================================
                         Binary search Iterative
 ======================================================================================$
-def binary_search(arr, n, key){
+assemble binary_search(arr, n, key){
     newAvenger lo = 0;
     newAvenger hi = n-1;
 
     fightUntil(lo <= hi){
         newAvenger mid = floor(lo + (hi - lo)/2);
         ifWorthy(arr[mid] ==  key){
-            return SHIELD;
+            snap SHIELD;
         }
         otherwise ifWorthy(arr[mid] >  key){
             hi = mid - 1;
@@ -152,10 +152,10 @@ def binary_search(arr, n, key){
             lo = mid + 1;
         }
     }
-    return HYDRA;
+    snap HYDRA;
 }
 # Test case for binary_search
-def test_binary_search(){
+assemble test_binary_search(){
     team arr_zero(1) = {1};
     newAvenger size_zero = 1;
 
@@ -188,30 +188,30 @@ $===============================================================================
                         Binary search Recursive
 ======================================================================================$
 
-def recursiveBinarySearchFunction(arr, x,start, end){
+assemble recursiveBinarySearchFunction(arr, x,start, end){
     ifWorthy(start > end) 
     {
-        return HYDRA;
+        snap HYDRA;
     }
     newAvenger mid = floor((start + end) / 2);
 
     ifWorthy(arr[mid] == x){
-        return SHIELD;
+        snap SHIELD;
     }
 
     ifWorthy(arr[mid] > x) 
     {
         
-        return recursiveBinarySearchFunction(arr, x, start, mid - 1);
+        snap recursiveBinarySearchFunction(arr, x, start, mid - 1);
     }
     otherwise{ 
-        return recursiveBinarySearchFunction(arr, x, mid + 1, end);
+        snap recursiveBinarySearchFunction(arr, x, mid + 1, end);
     }
 }
 
 
 
-def test_recursive_binary_code() {
+assemble test_recursive_binary_code() {
   team arr(6) = {1, 3, 5, 7, 8, 9};
   vision("Testing Binary search recurssive");
   assertEqual(recursiveBinarySearchFunction(arr,5,0,5), SHIELD);
@@ -226,7 +226,7 @@ def test_recursive_binary_code() {
 $ ==========================================================================
                             Variable Declaration 
 ========================================================================== $
-def test_declare_var(){
+assemble test_declare_var(){
     vision("Testing Variable Declaration...");
     newAvenger a = 10;
     newEternal b = 11;
@@ -237,7 +237,7 @@ def test_declare_var(){
 $ ==========================================================================
                             fightUntil Loop
 ========================================================================== $
-def test_fightUntil_loop(){
+assemble test_fightUntil_loop(){
     vision("Testing Break In loop...");
     newAvenger i = 0;
     fightUntil(i < 10){
@@ -252,7 +252,7 @@ def test_fightUntil_loop(){
 $ ==========================================================================
                             Nested Teams
 ========================================================================== $
-def test_nested_teams(){
+assemble test_nested_teams(){
     vision("Testing Nested Teams...");
     newAvenger str = "Loki";
     team apk(1) = {str};
@@ -261,14 +261,14 @@ def test_nested_teams(){
         wakandaFor j in 0 to 0{
             assertEqual(arr[i][j], "Loki");
             vision(" ");
-            return;
+            snap;
         }
     }
 }
 $ ==========================================================================
                             String
 ========================================================================== $
-def test_string(){
+assemble test_string(){
     vision("Testing String Arithmetic...");
     newEternal string = "12";
     newEternal s = 3;
@@ -293,7 +293,7 @@ def test_string(){
 $ ==========================================================================
                             Nums
 ========================================================================== $
-def test_nums(){
+assemble test_nums(){
     vision("Testing Number Arithmetic...");
     newAvenger n = 2;
     newAvenger m = 10;
@@ -305,7 +305,7 @@ def test_nums(){
 $ ==========================================================================
                             ifWorthy-CHAIN
 ========================================================================== $
-def test_ifWorthy_chain(){
+assemble test_ifWorthy_chain(){
     vision("Testing ifWorthy-CHAIN...");
     newAvenger name = "Shashank";
     ifWorthy(name[0] == "S"){
@@ -318,7 +318,7 @@ def test_ifWorthy_chain(){
                                 ifWorthy(name[7] == "k"){
                                     assertEqual("HI", "HI");
                                     vision(" ");
-                                    return;
+                                    snap;
                                 } 
                             } 
                         } 
@@ -333,7 +333,7 @@ def test_ifWorthy_chain(){
 $ ==========================================================================
                             Teams
 ========================================================================== $
-def test_teams(){
+assemble test_teams(){
     vision("Testing teams...");
     team avengers(4) = {"Captain America", "Iron Man", "Thor", "Hulk"};
 
@@ -356,50 +356,50 @@ def test_teams(){
 $ ==========================================================================
                             User Defined Functions
 ========================================================================== $
-def test_user_defined_twopointo(){
+assemble test_user_defined_twopointo(){
     vision("Testing User Defined Functions...");
-    def f(){
-        return ("Called f");
+    assemble f(){
+        snap ("Called f");
     }
-    def f_(){
-        return ("Called f_");
+    assemble f_(){
+        snap ("Called f_");
     }
     team functions(2) = {f(), f_};
     assertEqual(functions[1](),"Called f_");
 
-    def testFunction(){
+    assemble testFunction(){
         ifWorthy(HYDRA){
             ifWorthy(HYDRA){
-                return 10;
+                snap 10;
             }
             otherwise{
                 ifWorthy(HYDRA){
-                    return 20;
+                    snap 20;
                 }
                 otherwise{
                     ifWorthy(HYDRA){
-                        return 30;
+                        snap 30;
                     }
                     otherwise{
-                        return 11;
+                        snap 11;
                     }
                 }
             }
         }
         otherwise ifWorthy(SHIELD){
             ifWorthy(HYDRA){
-                return 100;
+                snap 100;
             }
             otherwise{
                 ifWorthy(HYDRA){
-                    return 200;
+                    snap 200;
                 }
                 otherwise{
                     ifWorthy(HYDRA){
-                        return 300;
+                        snap 300;
                     }
                     otherwise{
-                        return 1000;
+                        snap 1000;
                         vision("❌ You should never reach here!!!");
                         
                     }
@@ -409,10 +409,10 @@ def test_user_defined_twopointo(){
             }
         }
         otherwise{
-            return 21;
+            snap 21;
         }
     }
-    def main(){
+    assemble main(){
         assertEqual(testFunction(), 1000);
     }
 
@@ -421,38 +421,38 @@ def test_user_defined_twopointo(){
 }
 
 $ ==========================================================================
-                            Return in switch
+                            Snap in switch
 ========================================================================== $
-def test_return_in_switch(){
+assemble test_snap_in_switch(){
     vision("Testing User Defined Functions in Switch...");
-    def switchTest(c){
+    assemble switchTest(c){
         multiverse(c){
             madness 0:
-                return "Case 0";
+                snap "Case 0";
             madness 1:
-                return "Case 1";
+                snap "Case 1";
             madness 2:
-                return "Case 2";
+                snap "Case 2";
             madness 3:
-                return "Case 3";
+                snap "Case 3";
             default:
-                return "Default";
+                snap "Default";
         }
     }
     vision(typeOf(switchTest(0)));
     assertEqual(switchTest(0), "Case 0");
-    def stringSwitchTest(c){
+    assemble stringSwitchTest(c){
         multiverse(c){
             madness "one":
-                return "String Case 1";
+                snap "String Case 1";
             madness "two":
-                return "String Case 2";
+                snap "String Case 2";
             madness "three":
-                return "String Case 3";
+                snap "String Case 3";
             madness "four":
-                return "String Case 4";
+                snap "String Case 4";
             default:
-                return "String Case Default";
+                snap "String Case Default";
         }
     }
 
@@ -461,21 +461,21 @@ def test_return_in_switch(){
 }
 
 $ ==========================================================================
-                            Return in fightUntil loop
+                            Snap in fightUntil loop
 ========================================================================== $
-def test_return_in_fightUntil_loop(){
-    vision("Testing Return in while loop...");
+assemble test_snap_in_fightUntil_loop(){
+    vision("Testing snap in while loop...");
     team testArray(6) = {11,13,17,19,23,27};
     team testArray_(6) = {11,13,17,20,23,27};
-    def isEvenPresent(arr){
+    assemble isEvenPresent(arr){
         newAvenger idx = 0;
         fightUntil(idx < 6){
             ifWorthy(arr[idx] % 2 == 0){
-                return SHIELD;
+                snap SHIELD;
             }
             idx = idx + 1;
         }
-        return HYDRA;
+        snap HYDRA;
     }
 
     assertEqual(isEvenPresent(testArray), HYDRA);
@@ -487,7 +487,7 @@ def test_return_in_fightUntil_loop(){
 $=====================================================================================
                             Run all the test cases
 ======================================================================================$
-def run_tests() {
+assemble run_tests() {
   test_factorial_recursive();
   test_factorial_loop();
   test_is_prime_sieve();
@@ -503,29 +503,9 @@ def run_tests() {
   test_ifWorthy_chain();
   test_teams();
   test_user_defined_twopointo();
-  test_return_in_switch();
-  test_return_in_fightUntil_loop();
+  test_snap_in_switch();
+  test_snap_in_fightUntil_loop();
 
 }
 
 run_tests();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

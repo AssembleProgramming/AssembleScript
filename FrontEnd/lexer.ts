@@ -24,9 +24,8 @@ export enum TokenType {
   In,
   To,
   Step,
-  Def,
-  // TODO: Change Return name to Snap
-  Return,
+  Assemble,
+  Snap,
   // Operators + Other tokens
   Equals,
   Semicolon,
@@ -68,9 +67,8 @@ const KEYWORDS: Record<string, TokenType> = {
   step: TokenType.Step,
   and: TokenType.LogicalOperator,
   or: TokenType.LogicalOperator,
-  def: TokenType.Def,
-  // TODO: Change Return name to Snap
-  return: TokenType.Return,
+  assemble: TokenType.Assemble,
+  snap: TokenType.Snap,
 };
 
 /**
@@ -116,10 +114,7 @@ function isNum(src: string): boolean {
 function isAlphabet(src: string): boolean {
   const c = src.charCodeAt(0);
   const underscore = "_".charCodeAt(0);
-  return (
-    src.toUpperCase() !== src.toLowerCase() ||
-    c === underscore
-  );
+  return src.toUpperCase() !== src.toLowerCase() || c === underscore;
 }
 
 /**
@@ -176,8 +171,9 @@ function getMultiCharacterToken(src: string[]): Token | null {
  * @returns True if the string represents a skippable character, false otherwise.
  */
 function isSkippable(src: string): boolean {
-  return src === " " || src === "\n" || src === "\t" || src === "\r" ||
-    src === '"';
+  return (
+    src === " " || src === "\n" || src === "\t" || src === "\r" || src === '"'
+  );
 }
 
 /**
@@ -219,8 +215,12 @@ export function tokenize(sourceCode: string): Token[] {
     } else if (src[0] === "]") {
       tokens.push(getToken(src.shift(), TokenType.CloseBracket));
     } else if (
-      src[0] === "+" || src[0] === "-" || src[0] === "*" || src[0] === "/" ||
-      src[0] === "%" || src[0] === "^"
+      src[0] === "+" ||
+      src[0] === "-" ||
+      src[0] === "*" ||
+      src[0] === "/" ||
+      src[0] === "%" ||
+      src[0] === "^"
     ) {
       tokens.push(getToken(src.shift(), TokenType.BinaryOperator));
     } else if (src[0] === ";") {
