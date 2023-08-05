@@ -1,5 +1,5 @@
 import {
-  ForLoopStatement,
+  ForEachLoopStatement,
   NumericLiteral,
   ReturnStatement,
 } from "../../../../FrontEnd/AST.ts";
@@ -21,8 +21,8 @@ import { evaluate, evaluate_return_statement } from "../../interpreter.ts";
  * @returns The result of evaluating the for loop statement.
  * @throws {Error} If the loop control variables are not numeric.
  */
-export const evaluate_for_loop_statement = (
-  stmt: ForLoopStatement,
+export const evaluate_for_each_loop_statement = (
+  stmt: ForEachLoopStatement,
   env: Environment,
 ): RuntimeVal => {
   const start = evaluate(stmt.start, env) as NumberVal;
@@ -34,7 +34,7 @@ export const evaluate_for_loop_statement = (
     step = evaluate(stmt.step as NumericLiteral, env) as NumberVal;
   }
   if (step.value <= 0) {
-    throw `RunTimeError: The step value in wakandaFor must be a positive non-zero value`;
+    throw `RunTimeError: The step value in wakandaForEach must be a positive non-zero value`;
   }
   // Ensure the loop control variables are numeric
   if (
@@ -53,10 +53,10 @@ export const evaluate_for_loop_statement = (
 
       // Evaluate the body of the loop for each iteration
       for (const bodyStmt of stmt.body) {
-        if (bodyStmt.kind === "ForLoopStatement") {
+        if (bodyStmt.kind === "ForEachLoopStatement") {
           // Handle nested for loops
-          let result = evaluate_for_loop_statement(
-            bodyStmt as ForLoopStatement,
+          let result = evaluate_for_each_loop_statement(
+            bodyStmt as ForEachLoopStatement,
             loopEnv,
           );
           let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
@@ -109,10 +109,10 @@ export const evaluate_for_loop_statement = (
 
       // Evaluate the body of the loop for each iteration
       for (const bodyStmt of stmt.body) {
-        if (bodyStmt.kind === "ForLoopStatement") {
+        if (bodyStmt.kind === "ForEachLoopStatement") {
           // Handle nested for loops
-          let result = evaluate_for_loop_statement(
-            bodyStmt as ForLoopStatement,
+          let result = evaluate_for_each_loop_statement(
+            bodyStmt as ForEachLoopStatement,
             loopEnv,
           );
           let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;

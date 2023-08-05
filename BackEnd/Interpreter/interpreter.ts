@@ -10,7 +10,7 @@ import {
   CallExpr,
   ComparisonExpression,
   ElseStatement,
-  ForLoopStatement,
+  ForEachLoopStatement,
   FunctionDefinition,
   Identifier,
   IfStatement,
@@ -35,7 +35,6 @@ import {
   MAKE_BOOL,
   MAKE_FUNCTION,
   MAKE_NUll,
-  MAKE_STRING,
   NativeFnVal,
   NumberVal,
   RuntimeVal,
@@ -62,7 +61,7 @@ import {
   evaluate_array_declaration,
   evaluate_variable_declaration,
 } from "./Statements/Declaration_statements.ts";
-import { evaluate_for_loop_statement } from "./Statements/Loop/For_loop.ts";
+import { evaluate_for_each_loop_statement} from "./Statements/Loop/For_loop.ts";
 import { evaluate_while_statement } from "./Statements/Loop/While_statement.ts";
 
 /**
@@ -277,8 +276,8 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
     case "WhileStatement":
       return evaluate_while_statement(astNode as WhileStatement, env);
 
-    case "ForLoopStatement":
-      return evaluate_for_loop_statement(astNode as ForLoopStatement, env);
+    case "ForEachLoopStatement":
+      return evaluate_for_each_loop_statement(astNode as ForEachLoopStatement, env);
 
     case "BreakStatement":
       return evaluate_break_statement();
