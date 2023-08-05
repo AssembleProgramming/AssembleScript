@@ -1,4 +1,3 @@
-let line_cnt: number = 1;
 /**
  * Represents the type of a token.
  */
@@ -109,117 +108,116 @@ export interface Token {
 }
 
 /**
- * Retrieves a token with the specified value and type.
- * @param value - The string value of the token.
- * @param type - The type of the token.
- * @returns The token with the specified value and type.
- */
-function getToken(value = "", type: TokenType, curr_line: number): Token {
-  return { value, type, curr_line };
-}
-
-/**
- * Checks if the provided string represents a number.
- * @param src - The string to check.
- * @returns True if the string represents a number, false otherwise.
- */
-function isNum(src: string): boolean {
-  const c = src.charCodeAt(0);
-  const bounds = ["0".charCodeAt(0), "9".charCodeAt(0)];
-  const decimalPoint = ".".charCodeAt(0);
-  const exponentChars = ["e", "E"];
-  return (
-    (c >= bounds[0] && c <= bounds[1]) ||
-    c === decimalPoint ||
-    exponentChars.includes(src)
-  );
-}
-
-/**
- * Checks if the provided string represents a valid identifier.
- * @param src - The string to check.
- * @returns True if the string represents a valid identifier, false otherwise.
- */
-function isAlphabet(src: string): boolean {
-  const c = src.charCodeAt(0);
-  const underscore = "_".charCodeAt(0);
-  return src.toUpperCase() !== src.toLowerCase() || c === underscore;
-}
-
-/**
- * Gets a multi-character token if it matches any of the known operators.
- * @param src - The source code characters.
- * @returns The token if it matches any operator, null otherwise.
- */
-function getMultiCharacterToken(src: string[]): Token | null {
-  const operators: Record<string, TokenType> = {
-    "<MINUS>": TokenType.Minus,
-    "<=": TokenType.ComparisonOperator,
-    ">=": TokenType.ComparisonOperator,
-    "==": TokenType.ComparisonOperator,
-    "!=": TokenType.ComparisonOperator,
-    "<": TokenType.ComparisonOperator,
-    ">": TokenType.ComparisonOperator,
-    "&&": TokenType.LogicalOperator,
-    "||": TokenType.LogicalOperator,
-  };
-
-  for (const operator in operators) {
-    if (src.slice(0, operator.length).join("") === operator) {
-      src.splice(0, operator.length);
-      return getToken(operator, operators[operator], line_cnt);
-    }
-  }
-
-  if (src[0] === "=") {
-    // Handle single "=" as a separate token
-    src.shift();
-    return getToken("=", TokenType.Equals, line_cnt);
-  }
-
-  if (src[0] === '"') {
-    src.shift(); // Consume the opening double quote
-    let string = "";
-
-    while (src.length > 0 && src[0] !== '"') {
-      string += src.shift();
-    }
-
-    if (src[0] === '"') {
-      src.shift(); // Consume the closing double quote
-      return getToken(string, TokenType.String, line_cnt);
-    } else {
-      throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
-    }
-  }
-
-  return null;
-}
-
-/**
- * Checks if the provided string represents a skippable character.
- * @param src - The string to check.
- * @returns True if the string represents a skippable character, false otherwise.
- */
-function isSkippable(src: string): boolean {
-  if (src === "\n") {
-    line_cnt = line_cnt + 1;
-  }
-  return (
-    src === " " || src === "\n" || src === "\t" || src === "\r" || src === '"'
-  );
-}
-
-/**
  * Tokenizes the given source code.
  * @param sourceCode - The source code to tokenize.
  * @returns An array of tokens representing the source code.
  */
 export function tokenize(sourceCode: string): Token[] {
+  let line_cnt: number = 1;
   const tokens: Token[] = [];
   // Split the source code into individual characters
   const src = sourceCode.split("");
+  /**
+   * Retrieves a token with the specified value and type.
+   * @param value - The string value of the token.
+   * @param type - The type of the token.
+   * @returns The token with the specified value and type.
+   */
+  function getToken(value = "", type: TokenType, curr_line: number): Token {
+    return { value, type, curr_line };
+  }
 
+  /**
+   * Checks if the provided string represents a number.
+   * @param src - The string to check.
+   * @returns True if the string represents a number, false otherwise.
+   */
+  function isNum(src: string): boolean {
+    const c = src.charCodeAt(0);
+    const bounds = ["0".charCodeAt(0), "9".charCodeAt(0)];
+    const decimalPoint = ".".charCodeAt(0);
+    const exponentChars = ["e", "E"];
+    return (
+      (c >= bounds[0] && c <= bounds[1]) ||
+      c === decimalPoint ||
+      exponentChars.includes(src)
+    );
+  }
+
+  /**
+   * Checks if the provided string represents a valid identifier.
+   * @param src - The string to check.
+   * @returns True if the string represents a valid identifier, false otherwise.
+   */
+  function isAlphabet(src: string): boolean {
+    const c = src.charCodeAt(0);
+    const underscore = "_".charCodeAt(0);
+    return src.toUpperCase() !== src.toLowerCase() || c === underscore;
+  }
+
+  /**
+   * Gets a multi-character token if it matches any of the known operators.
+   * @param src - The source code characters.
+   * @returns The token if it matches any operator, null otherwise.
+   */
+  function getMultiCharacterToken(src: string[]): Token | null {
+    const operators: Record<string, TokenType> = {
+      "<MINUS>": TokenType.Minus,
+      "<=": TokenType.ComparisonOperator,
+      ">=": TokenType.ComparisonOperator,
+      "==": TokenType.ComparisonOperator,
+      "!=": TokenType.ComparisonOperator,
+      "<": TokenType.ComparisonOperator,
+      ">": TokenType.ComparisonOperator,
+      "&&": TokenType.LogicalOperator,
+      "||": TokenType.LogicalOperator,
+    };
+
+    for (const operator in operators) {
+      if (src.slice(0, operator.length).join("") === operator) {
+        src.splice(0, operator.length);
+        return getToken(operator, operators[operator], line_cnt);
+      }
+    }
+
+    if (src[0] === "=") {
+      // Handle single "=" as a separate token
+      src.shift();
+      return getToken("=", TokenType.Equals, line_cnt);
+    }
+
+    if (src[0] === '"') {
+      src.shift(); // Consume the opening double quote
+      let string = "";
+
+      while (src.length > 0 && src[0] !== '"') {
+        string += src.shift();
+      }
+
+      if (src[0] === '"') {
+        src.shift(); // Consume the closing double quote
+        return getToken(string, TokenType.String, line_cnt);
+      } else {
+        throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Checks if the provided string represents a skippable character.
+   * @param src - The string to check.
+   * @returns True if the string represents a skippable character, false otherwise.
+   */
+  function isSkippable(src: string): boolean {
+    if (src === "\n") {
+      line_cnt = line_cnt + 1;
+    }
+    return (
+      src === " " || src === "\n" || src === "\t" || src === "\r" || src === '"'
+    );
+  }
   // Build tokens until end of file
   while (src.length > 0) {
     if (src[0] === "$") {
@@ -314,9 +312,3 @@ export function tokenize(sourceCode: string): Token[] {
   tokens.push({ type: TokenType.EOF, value: "EndOfFile", curr_line: line_cnt });
   return tokens;
 }
-
-// // !Testing Lexer
-// const sourceCode = await Deno.readTextFile("./test.avenger");
-// for (const token of tokenize(sourceCode)) {
-//   console.log(token);
-// }

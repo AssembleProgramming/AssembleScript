@@ -112,6 +112,12 @@ Marvel Cinematic Universe:
   represents array, symbolizing the formation of an array or a team of values
   working together.
 
+- `assemble` (def): In AssembleScript, the `assemble` keyword is used to define
+  function, symbolizing the assembling of your code block.
+
+- `snap` (return): In AssembleScript, the `snap` keyword is used to return a
+  value, symbolizing the evil snap of Thanos to kill the avengers.
+
 Embrace the spirit of superheroes as you code in AssembleScript, harnessing the
 power of these keywords to build marvelous programs!
 
@@ -136,7 +142,7 @@ otherthan `UNDERSCORE`
 +++VALID: _ironman, captain_america, __moon_knight, spiderman
 ```
 
-```css
+```python
 newAvenger a = "Strange";
 newAvenger b = 3000;
 newEternal PI = 3.142;
@@ -147,7 +153,7 @@ newEternal AI = "Jarvis";
 
 To Print in console use `vision()`
 
-```css
+```python
 vision("Love You 3000");
 ```
 
@@ -160,7 +166,7 @@ variable and execute the corresponding `madness` or the `default` block.
 @@ Instead of break keyword use `endgame`@@
 ```
 
-```css
+```python
 newAvenger name = "iron";
 multiverse(name){
     madness "captain":
@@ -183,7 +189,7 @@ execute the code within the curly braces; otherwise, execute the code in the
 @@ Instead of False keyword use `HYDRA`@@
 ```
 
-```css
+```python
 newAvenger isTrue = SHIELD;
 newAvenger isFalse = HYDRA;
 
@@ -207,7 +213,7 @@ AssembleScript supports for and while loops.
 @@ use blank `vision()` for a newline@@
 ```
 
-```css
+```python
 wakandaFor i in 0 to 10 {
      vision(i);
 }
@@ -220,7 +226,7 @@ wakandaFor i in 10 to 0 step 2{
 - While Loops Use the `fightUntil` keyword for while loops. Specify the
   condition and execute the code within the loop.
 
-```css
+```python
 newAvenger i = 0;
 fightUntil(i < 10){
     vision(i);
@@ -234,16 +240,16 @@ fightUntil(i < 10){
   keyword followed by the array name and the size of the array in parentheses.
   Initialize the array with values enclosed in curly braces. Here's an example:
 
-```css
-team avengers(4) = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
+```python
+team avengers[4] = {'Captain America', 'Iron Man', 'Thor', 'Hulk'};
 ```
 
 - Accessing Array Elements To access individual elements of an array, use square
   brackets with the index position. Remember, array indices start from 0. Here's
   an example:
 
-```css
-team avengers(4) = {"Captain America", "Iron Man", "Thor", "Hulk"};
+```python
+team avengers[4] = {"Captain America", "Iron Man", "Thor", "Hulk"};
 
 newAvenger firstAvenger = avengers[0];
 newAvenger secondAvenger = avengers[1];
@@ -255,10 +261,10 @@ vision(secondAvenger);    $ Output: 'Iron Man' $
 - 2D Array Declaration In AssembleScript, you can create a 2D array by nesting
   arrays within the main array. Here's an example:
 
-```css
-team male(10) = {"Captain America", "Iron Man" ,"Dr. Strange", "Hulk", "Hawkeye", "Spiderman", "Thor", "T`Challa", "Ant Man", "Moon Knight"};
-team female(7) = {"Black Widow","Captain Marvel","Wanda Maximoff","She Hulk","Ms Marvel","Gamora","Nebula"};
-team avenger(2) = {male, female};
+```python
+team male[10] = {"Captain America", "Iron Man" ,"Dr. Strange", "Hulk", "Hawkeye", "Spiderman", "Thor", "T`Challa", "Ant Man", "Moon Knight"};
+team female[7] = {"Black Widow","Captain Marvel","Wanda Maximoff","She Hulk","Ms Marvel","Gamora","Nebula"};
+team avenger[2] = {male, female};
 
 vision(avengers[0][4]);  $ Output: 'Hawkeye' $
 vision(avengers[1][6]);  $ Output: 'Gamora' $
@@ -283,6 +289,38 @@ $
 ```diff
 $ This variable stores the hero's strength $
 newAvenger power = 100;
+```
+
+### 🛡 User Defined Functions
+
+You can create your own user-defined functions in Assemblescript with keyword
+`assemble` and `snap` resembling `def` and `return` keywords in other scripting
+languages
+
+Example:
+
+```python
+assemble binary_search(arr, n, key){
+    newAvenger lo = 0;
+    newAvenger hi = n-1;
+
+    fightUntil(lo <= hi){
+        newAvenger mid = floor(lo + (hi - lo)/2);
+        ifWorthy(arr[mid] ==  key){
+            snap SHIELD;
+        }
+        otherwise ifWorthy(arr[mid] >  key){
+            hi = mid - 1;
+        }
+        otherwise{
+            lo = mid + 1;
+        }
+    }
+    snap HYDRA;
+}
+team arr_one[7] = {1,2,3,4,5,6,7};
+newAvenger size_one = 7;
+vision(binary_search(arr_one, size_one, 4)) #Output: true
 ```
 
 ### 🛡 General Information
@@ -313,39 +351,40 @@ newAvenger power = 100;
 ```js
 typeOf(varName);
 vision(args);
+assertWEqual(val1, val2);
 ```
 
 - Number Methods
 
-```js
-time(); //To get the current time in AssembleScript
-random(); //return random number between 0-1 exclusive
-abs(number); //return absolute value
-floor(number); //rounds a number down to the nearest integer.
-ceil(number); //rounds a number up to the nearest integer.
-sin(angle); //calculates the sine of an angle.
-cos(angle); //calculates the cosine of an angle.
-tan(angle); //calculates the tangent of an angle.
-iSin(number); //calculates the inverse sine of a number.
-iCos(number); //calculates the inverse sine of a number.
-iTan(number); //calculates the inverse sine of a number.
-sqrt(number); //calculates the square root of a number.
-pow(a, b); //calculates the power of a number a raised to b.
-min(num1, num2); //returns the smallest of two numbers num1 and num2.
-max(num1, num2); //returns the largest of two numbers num1 and num2.
+```python
+time();               #To get the current time in AssembleScript
+random();             #return random number between 0-1 exclusive
+abs(number);          #return absolute value
+floor(number);        #rounds a number down to the nearest integer.
+ceil(number);         #rounds a number up to the nearest integer.
+sin(angle);           #calculates the sine of an angle.
+cos(angle);           #calculates the cosine of an angle.
+tan(angle);           #calculates the tangent of an angle.
+iSin(number);         #calculates the inverse sine of a number.
+iCos(number);         #calculates the inverse sine of a number.
+iTan(number);         #calculates the inverse sine of a number.
+sqrt(number);         #calculates the square root of a number.
+pow(a, b);            #calculates the power of a number a raised to b.
+min(num1, num2);      #returns the smallest of two numbers num1 and num2.
+max(num1, num2);      #returns the largest of two numbers num1 and num2.
 ```
 
 - String Methods
 
-```js
-len(string);                        //returns the length of string
-charAt(string, index);              // returns the character at given index
-concat(string1, string2);           // returns the string with the concatenation of given two strings
-toLowerCase(string);                //returns the string in lower case
-toUpperCase(string);                //returns the string in uppercase
-indexOf(string, char):              //returns the index of character from string
-subStr(string, startIdx, endIdx);   //returns the substring from start index to end index
-trim(string);                       // removes leading
+```python
+len(string);                        #returns the length of string
+charAt(string, index);              #returns the character at given index
+concat(string1, string2);           #returns the string with the concatenation of given two strings
+toLowerCase(string);                #returns the string in lower case
+toUpperCase(string);                #returns the string in uppercase
+indexOf(string, char):              #returns the index of character from string
+subStr(string, startIdx, endIdx);   #returns the substring from start index to end index
+trim(string);                       #removes leading
 ```
 
 ## 🤝 Contributing

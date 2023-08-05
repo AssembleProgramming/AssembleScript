@@ -40,7 +40,7 @@ export default class Environment {
     isConst: boolean,
   ): RuntimeVal {
     if (this.variables.has(varname)) {
-      throw `RunTimeError: Cannot declare variable ${varname}. As it is already defined in the scope.`;
+      throw `RunTimeError: Cannot declare identifier '${varname}'. As it is already defined in the scope.`;
     }
     this.variables.set(varname, value);
     if (isConst) {
@@ -59,7 +59,7 @@ export default class Environment {
     // Find the scope in which variable exists
     const env: Environment = this.resolveScope(varname);
     if (env.constants.has(varname)) {
-      throw `RunTimeError: Cannot reassign to const variable ${varname}`;
+      throw `RunTimeError: Cannot reassign to const identifier '${varname}'`;
     }
 
     env.variables.set(varname, value);
@@ -89,7 +89,7 @@ export default class Environment {
       return this;
     }
     if (this.parent === undefined) {
-      throw `RunTimeError: Cannot resolve ${varname} in the scope.`;
+      throw `RunTimeError: Cannot resolve identifier '${varname}' in the scope.`;
     }
     return this.parent.resolveScope(varname);
   }
