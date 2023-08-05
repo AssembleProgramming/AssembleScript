@@ -234,7 +234,7 @@ $ ==========================================================================
                             fightUntil Loop
 ========================================================================== $
 assemble test_fightUntil_loop(){
-    vision("Testing Break In loop...");
+    vision("Testing Break In fightUntil loop...");
     newAvenger i = 0;
     fightUntil(i < 10){
         ifWorthy(i == 8){
@@ -242,7 +242,22 @@ assemble test_fightUntil_loop(){
         }
         i = i + 1;
     }
-    assertEqual(i,9);
+    assertEqual(i,8);
+    vision(" ");
+}
+$ ==========================================================================
+                            Wakanda for Loops
+========================================================================== $
+assemble test_for_loop(){
+    vision("Testing Break In FOR loop...");
+    newAvenger i = 0;
+    wakandaFor(i ; i < 10; i = i + 1){
+        ifWorthy(i == 8){
+            endGame;
+        }
+        i = i + 1;
+    }
+    assertEqual(i,8);
     vision(" ");
 }
 $ ==========================================================================
@@ -493,6 +508,7 @@ assemble run_tests() {
   test_recursive_binary_code();
   test_declare_var();
   test_fightUntil_loop();
+  test_for_loop();
   test_nested_teams();
   test_string();
   test_nums();
@@ -501,7 +517,6 @@ assemble run_tests() {
   test_user_defined_twopointo();
   test_snap_in_switch();
   test_snap_in_fightUntil_loop();
-
 }
 
 run_tests();

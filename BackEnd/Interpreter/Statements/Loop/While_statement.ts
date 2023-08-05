@@ -75,6 +75,9 @@ export const evaluate_boolean_while_statement = (
           }
         }
       }
+      if (hasBreak) {
+        return MAKE_BREAK();
+      }
     }
 
     whileEnv.cleanUp();
@@ -150,6 +153,9 @@ export const evaluate_numeric_while_statement = (
             }
           }
         }
+      }
+      if (hasBreak) {
+        return MAKE_BREAK();
       }
     }
 

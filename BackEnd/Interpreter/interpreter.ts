@@ -25,6 +25,7 @@ import {
   SwitchStatement,
   UnaryExpr,
   VariableDeclaration,
+  WakandaForStatement,
   WhileStatement,
 } from "../../FrontEnd/AST.ts";
 import Environment from "../Scope/environment.ts";
@@ -61,7 +62,10 @@ import {
   evaluate_array_declaration,
   evaluate_variable_declaration,
 } from "./Statements/Declaration_statements.ts";
-import { evaluate_for_each_loop_statement } from "./Statements/Loop/For_loop.ts";
+import {
+  evaluate_for_each_loop_statement,
+  evaluate_wakandaFor_loop_statement,
+} from "./Statements/Loop/For_loop.ts";
 import { evaluate_while_statement } from "./Statements/Loop/While_statement.ts";
 
 /**
@@ -279,6 +283,12 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
     case "ForEachLoopStatement":
       return evaluate_for_each_loop_statement(
         astNode as ForEachLoopStatement,
+        env,
+      );
+
+    case "WakandaForStatement":
+      return evaluate_wakandaFor_loop_statement(
+        astNode as WakandaForStatement,
         env,
       );
 
