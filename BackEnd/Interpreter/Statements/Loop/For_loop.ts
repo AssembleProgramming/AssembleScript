@@ -163,6 +163,13 @@ export const evaluate_for_each_loop_statement = (
   return MAKE_NUll(); // Return null after the loop is finished
 };
 
+/**
+ * 
+ * @param stmt Evaluates a for statement.
+ * @param env 
+ * @param wakandaForEnv 
+ * @returns 
+ */
 export const evaluate_numeric_wakandaFor_loop_statement = (
   stmt: WakandaForStatement,
   env: Environment,
@@ -232,6 +239,13 @@ export const evaluate_numeric_wakandaFor_loop_statement = (
   return MAKE_NUll();
 };
 
+/**
+ * 
+ * @param stmt Evaluates a for statement.
+ * @param env 
+ * @param wakandaForEnv 
+ * @returns 
+ */
 export const evaluate_boolean_wakandaFor_loop_statement = (
   stmt: WakandaForStatement,
   env: Environment,
