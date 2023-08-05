@@ -112,11 +112,11 @@ Marvel Cinematic Universe:
   represents array, symbolizing the formation of an array or a team of values
   working together.
 
-- `assemble` (def): In AssembleScript, the `assemble` keyword is used to define function,
-  symbolizing the assembling of your code block.
+- `assemble` (def): In AssembleScript, the `assemble` keyword is used to define
+  function, symbolizing the assembling of your code block.
 
-- `snap` (return): In AssembleScript, the `snap` keyword is used to return a value,
-  symbolizing the evil snap of Thanos to kill the avengers.
+- `snap` (return): In AssembleScript, the `snap` keyword is used to return a
+  value, symbolizing the evil snap of Thanos to kill the avengers.
 
 Embrace the spirit of superheroes as you code in AssembleScript, harnessing the
 power of these keywords to build marvelous programs!
@@ -292,10 +292,13 @@ newAvenger power = 100;
 ```
 
 ### 🛡 User Defined Functions
-You can create your own user-defined functions in Assemblescript with keyword
-`assemble` and `snap` resembling `def` and `return` keywords in other scripting languages
 
-Example: 
+You can create your own user-defined functions in Assemblescript with keyword
+`assemble` and `snap` resembling `def` and `return` keywords in other scripting
+languages
+
+Example:
+
 ```python
 assemble binary_search(arr, n, key){
     newAvenger lo = 0;
