@@ -10,7 +10,7 @@ import {
   ComparisonExpression,
   ElseStatement,
   Expr,
-  ForLoopStatement,
+  ForEachLoopStatement,
   FunctionDefinition,
   FunctionParam,
   Identifier,
@@ -28,6 +28,7 @@ import {
   SwitchStatement,
   UnaryExpr,
   VariableDeclaration,
+  WakandaForStatement,
   WhileStatement,
 } from "./AST.ts";
 import { Token, tokenize, TokenType } from "./lexer.ts";
@@ -160,8 +161,10 @@ export default class Parser {
         return this.parse_array_declaration();
       case TokenType.Multiverse:
         return this.parse_switch_statement();
+      case TokenType.WakandaForEach:
+        return this.parse_for_each_loop_statement();
       case TokenType.WakandaFor:
-        return this.parse_for_loop_statement();
+        return this.parse_for_statement();
       case TokenType.Assemble:
         return this.parse_function_definition();
       case TokenType.Snap:
@@ -284,14 +287,16 @@ export default class Parser {
    * @returns A parsed 'for' loop statement object.
    * @throws {Error} If the parsing encounters unexpected tokens or missing elements.
    */
-  private parse_for_loop_statement(): Stmt {
-    // Eat 'for' token
+  private parse_for_each_loop_statement(): Stmt {
+    // Eat 'forEach' token
     this.eat();
 
+    // Expect opening parenthesis
+    this.expect(TokenType.OpenParen, "Expected '('");
     // Expect identifier as iterator in 'wakandaFor' loop
     const iterator = this.expect(
       TokenType.Identifier,
-      "Expected identifier as an iterator in 'wakandaFor' loop",
+      "Expected identifier as an iterator in 'wakandaForEach' loop",
     ).value;
 
     // Expect 'in' keyword after iterator
@@ -313,10 +318,13 @@ export default class Parser {
       step = this.parse_expr();
     }
 
+    // Expect closing parenthesis
+    this.expect(TokenType.CloseParen, "Expected ')'");
+
     // Expect '{' before 'for' statement body
     this.expect(
       TokenType.OpenBrace,
-      "Expected '{' before 'wakandaFor' statement body",
+      "Expected '{' before 'wakandaForEach' statement body",
     );
 
     // Parse statements within the 'for' loop body
@@ -328,20 +336,78 @@ export default class Parser {
     // Expect '}' after 'for' statement body
     this.expect(
       TokenType.CloseBrace,
-      "Expected '}' after 'wakandaFor' statement body",
+      "Expected '}' after 'wakandaForEach' statement body",
     );
 
     // Return the parsed 'for' loop statement object
     return {
-      kind: "ForLoopStatement",
+      kind: "ForEachLoopStatement",
       iterator,
       start,
       end,
       step,
       body,
-    } as ForLoopStatement;
+    } as ForEachLoopStatement;
   }
 
+  /**
+   * Parses a 'wakandaFor' loop statement.
+   *
+   * @returns A parsed 'wakandaFor' loop statement object.
+   * @throws {Error} If the parsing encounters unexpected tokens or missing elements.
+   */
+  private parse_for_statement(): Stmt {
+    // Eat 'wakandaFor' token
+    this.eat();
+
+    // Expect opening parenthesis
+    this.expect(TokenType.OpenParen, "Expected '(' after 'wakandaFor'");
+
+    // Parse initialization expression
+    const initialization = this.parse_stmt();
+
+    // Parse condition expression
+    const condition = this.parse_expr();
+
+    // Expect semicolon after condition
+    this.expect(
+      TokenType.Semicolon,
+      "Expected ';' after condition in 'wakandaFor'",
+    );
+
+    // Parse increment expression
+    const modification = this.parse_expr();
+
+    // Expect closing parenthesis
+    this.expect(TokenType.CloseParen, "Expected ')' after 'wakandaFor' header");
+
+    // Expect '{' before 'wakandaFor' statement body
+    this.expect(
+      TokenType.OpenBrace,
+      "Expected '{' before 'wakandaFor' statement body",
+    );
+
+    // Parse statements within the 'wakandaFor' loop body
+    const body: Stmt[] = [];
+    while (this.at().type !== TokenType.CloseBrace && this.not_eof()) {
+      body.push(this.parse_stmt());
+    }
+
+    // Expect '}' after 'wakandaFor' statement body
+    this.expect(
+      TokenType.CloseBrace,
+      "Expected '}' after 'wakandaFor' statement body",
+    );
+
+    // Return the parsed 'wakandaFor' loop statement object
+    return {
+      kind: "WakandaForStatement",
+      initialization,
+      condition,
+      modification,
+      body,
+    } as WakandaForStatement;
+  }
   /**
    * Parses a 'switch' statement.
    *

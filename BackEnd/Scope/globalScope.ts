@@ -76,6 +76,10 @@ export function setupGlobalScope() {
   env.declareVar(
     "vision",
     MAKE_NATIVE_FN((args, _scope): RuntimeVal => {
+      if (args.length == 0) {
+        console.log("\n");
+        return MAKE_NUll();
+      }
       for (let i = 0; i < args.length; i++) {
         const type = args[i].type;
 

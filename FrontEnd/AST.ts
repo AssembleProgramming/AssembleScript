@@ -11,7 +11,8 @@ export type NodeType =
   | "IfStatement"
   | "ElseStatement"
   | "WhileStatement"
-  | "ForLoopStatement"
+  | "ForEachLoopStatement"
+  | "WakandaForStatement"
   | "BreakStatement"
   | "SwitchStatement"
   // Expressions
@@ -281,20 +282,38 @@ export interface WhileStatement extends Stmt {
 
 /**
  * Represents a for loop statement.
- * The ForLoopStatement interface represents a for loop statement. It has the following properties:
- * - kind: The type of the node ("ForLoopStatement").
+ * The ForEachLoopStatement interface represents a for loop statement. It has the following properties:
+ * - kind: The type of the node ("ForEachLoopStatement").
  * - iterator: The name of the loop iterator.
  * - start: The expression representing the starting value of the loop iterator.
  * - end: The expression representing the end condition of the loop.
  * - step: The expression representing the increment or decrement step of the loop iterator (optional).
  * - body: An array of statements comprising the body of the for loop.
  */
-export interface ForLoopStatement extends Stmt {
-  kind: "ForLoopStatement";
+export interface ForEachLoopStatement extends Stmt {
+  kind: "ForEachLoopStatement";
   iterator: string;
   start: Expr;
   end: Expr;
   step?: Expr;
+  body: Stmt[];
+}
+
+/**
+ * Represents a for loop statement.
+ * The WakandaForStatement interface represents a for loop statement. It has the following properties:
+ * - kind: The type of the node ("WakandaForStatement").
+ * - iterator: The name of the loop iterator.
+ * - start: The expression representing the starting value of the loop iterator.
+ * - end: The expression representing the end condition of the loop.
+ * - step: The expression representing the increment or decrement step of the loop iterator (optional).
+ * - body: An array of statements comprising the body of the for loop.
+ */
+export interface WakandaForStatement extends Stmt {
+  kind: "WakandaForStatement";
+  initialization: Expr;
+  condition: Expr;
+  modification: Expr;
   body: Stmt[];
 }
 /**

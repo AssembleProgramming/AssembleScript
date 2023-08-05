@@ -93,10 +93,13 @@ Marvel Cinematic Universe:
   In AssembleScript, the false value is symbolized by `HYDRA`, representing
   falsehood or negation.
 
-- `wakandaFor` loop (For Loop): Wakanda, a technologically advanced nation in
-  the Marvel universe, embraces progress and innovation. The for loop in
-  AssembleScript is aptly named `wakandaFor`, signifying an iteration and
-  advancement.
+- `wakandaForEach` loop (ForEach Loop): Wakanda, a technologically advanced
+  nation in the Marvel universe, embraces progress and innovation. The forEach
+  loop in AssembleScript is aptly named `wakandaForEach`, signifying an
+  iteration and advancement.
+
+- `wakandaFor` loop (For Loop): The for loop in AssembleScript is aptly named
+  `wakandaFor`, signifying an iteration and advancement.
 
 - `fightUntil` loop (While Loop): Marvel superheroes engage in relentless
   battles, fighting until they overcome their adversaries. Similarly, the while
@@ -205,20 +208,33 @@ otherwise{
 
 AssembleScript supports for and while loops.
 
-- For Loops Use the `wakandaFor` keyword for loops. Declare a new variable,
-  specify the condition, and execute the code within the loop. Use `step` to
-  increment or decrement the value of iterator.
+- ForEach Loops Use the `wakandaForEach` keyword for loops. Declare a new
+  variable, specify the condition, and execute the code within the loop. Use
+  `step` to increment or decrement the value of iterator.
 
 ```diff
 @@ use blank `vision()` for a newline@@
 ```
 
 ```python
-wakandaFor i in 0 to 10 {
-     vision(i);
+wakandaForEach(i in 10 to 20){
+    vision(i);
 }
 vision();
-wakandaFor i in 10 to 0 step 2{
+wakandaForEach(i in 10 to 0 step 2){
+    vision(i);
+}
+```
+
+- For Loops Use the `wakandaFor` keyword for loops. Declare a new variable,
+  specify the condition, and execute the code within the loop.
+
+```diff
+@@ use blank `vision()` for a newline@@
+```
+
+```python
+wakandaFor(newAvenger i = 0; i < 20; i = i + 1){
     vision(i);
 }
 ```

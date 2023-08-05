@@ -33,7 +33,7 @@ assemble factorial_loop(n) {
     snap 1;
   }
   newAvenger result = 1;
-  wakandaFor i in 1 to n {
+  wakandaForEach(i in 1 to n) {
     result = result * i;
   }
   snap result;
@@ -60,7 +60,7 @@ assemble is_prime_sieve(n) {
   sieve[0] = HYDRA;
   sieve[1] = HYDRA;
 
-  wakandaFor idx in 2 to n step 1{
+  wakandaForEach(idx in 2 to n step 1){
     sieve[idx] = SHIELD;
   }
   newAvenger i = 2;
@@ -96,8 +96,8 @@ $===============================================================================
 assemble nested_for_test() {
   vision("Testing nested_for_test...");
   newAvenger sum = 0;
-  wakandaFor i in 1 to 2 {
-    wakandaFor j in 1 to 2 {
+  wakandaForEach(i in 1 to 2) {
+    wakandaForEach(j in 1 to 2) {
       sum = sum + (i * j);
     }
   }
@@ -234,7 +234,7 @@ $ ==========================================================================
                             fightUntil Loop
 ========================================================================== $
 assemble test_fightUntil_loop(){
-    vision("Testing Break In loop...");
+    vision("Testing Break In fightUntil loop...");
     newAvenger i = 0;
     fightUntil(i < 10){
         ifWorthy(i == 8){
@@ -242,7 +242,22 @@ assemble test_fightUntil_loop(){
         }
         i = i + 1;
     }
-    assertEqual(i,9);
+    assertEqual(i,8);
+    vision(" ");
+}
+$ ==========================================================================
+                            Wakanda for Loops
+========================================================================== $
+assemble test_for_loop(){
+    vision("Testing Break In FOR loop...");
+    newAvenger i = 0;
+    wakandaFor(i ; i < 10; i = i + 1){
+        ifWorthy(i == 8){
+            endGame;
+        }
+        i = i + 1;
+    }
+    assertEqual(i,8);
     vision(" ");
 }
 $ ==========================================================================
@@ -253,8 +268,8 @@ assemble test_nested_teams(){
     newAvenger str = "Loki";
     team apk[1] = {str};
     team arr[1] = {apk};
-    wakandaFor i in 0 to 0{
-        wakandaFor j in 0 to 0{
+    wakandaForEach(i in 0 to 0){
+        wakandaForEach(j in 0 to 0){
             assertEqual(arr[i][j], "Loki");
             vision(" ");
             snap;
@@ -493,6 +508,7 @@ assemble run_tests() {
   test_recursive_binary_code();
   test_declare_var();
   test_fightUntil_loop();
+  test_for_loop();
   test_nested_teams();
   test_string();
   test_nums();
@@ -501,7 +517,6 @@ assemble run_tests() {
   test_user_defined_twopointo();
   test_snap_in_switch();
   test_snap_in_fightUntil_loop();
-
 }
 
 run_tests();
