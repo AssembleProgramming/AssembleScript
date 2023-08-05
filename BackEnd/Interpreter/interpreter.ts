@@ -61,7 +61,7 @@ import {
   evaluate_array_declaration,
   evaluate_variable_declaration,
 } from "./Statements/Declaration_statements.ts";
-import { evaluate_for_each_loop_statement} from "./Statements/Loop/For_loop.ts";
+import { evaluate_for_each_loop_statement } from "./Statements/Loop/For_loop.ts";
 import { evaluate_while_statement } from "./Statements/Loop/While_statement.ts";
 
 /**
@@ -277,7 +277,10 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
       return evaluate_while_statement(astNode as WhileStatement, env);
 
     case "ForEachLoopStatement":
-      return evaluate_for_each_loop_statement(astNode as ForEachLoopStatement, env);
+      return evaluate_for_each_loop_statement(
+        astNode as ForEachLoopStatement,
+        env,
+      );
 
     case "BreakStatement":
       return evaluate_break_statement();

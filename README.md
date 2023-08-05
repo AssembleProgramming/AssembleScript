@@ -93,9 +93,9 @@ Marvel Cinematic Universe:
   In AssembleScript, the false value is symbolized by `HYDRA`, representing
   falsehood or negation.
 
-- `wakandaForEach` loop (ForEach Loop): Wakanda, a technologically advanced nation in
-  the Marvel universe, embraces progress and innovation. The for loop in
-  AssembleScript is aptly named `wakandaForEach`, signifying an iteration and
+- `wakandaForEach` loop (ForEach Loop): Wakanda, a technologically advanced
+  nation in the Marvel universe, embraces progress and innovation. The for loop
+  in AssembleScript is aptly named `wakandaForEach`, signifying an iteration and
   advancement.
 
 - `fightUntil` loop (While Loop): Marvel superheroes engage in relentless

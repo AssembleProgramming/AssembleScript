@@ -33,7 +33,7 @@ assemble factorial_loop(n) {
     snap 1;
   }
   newAvenger result = 1;
-  wakandaFor i in 1 to n {
+  wakandaForEach(i in 1 to n) {
     result = result * i;
   }
   snap result;
@@ -60,7 +60,7 @@ assemble is_prime_sieve(n) {
   sieve[0] = HYDRA;
   sieve[1] = HYDRA;
 
-  wakandaFor idx in 2 to n step 1{
+  wakandaForEach(idx in 2 to n step 1){
     sieve[idx] = SHIELD;
   }
   newAvenger i = 2;
@@ -96,8 +96,8 @@ $===============================================================================
 assemble nested_for_test() {
   vision("Testing nested_for_test...");
   newAvenger sum = 0;
-  wakandaFor i in 1 to 2 {
-    wakandaFor j in 1 to 2 {
+  wakandaForEach(i in 1 to 2) {
+    wakandaForEach(j in 1 to 2) {
       sum = sum + (i * j);
     }
   }
@@ -253,8 +253,8 @@ assemble test_nested_teams(){
     newAvenger str = "Loki";
     team apk[1] = {str};
     team arr[1] = {apk};
-    wakandaFor i in 0 to 0{
-        wakandaFor j in 0 to 0{
+    wakandaForEach(i in 0 to 0){
+        wakandaForEach(j in 0 to 0){
             assertEqual(arr[i][j], "Loki");
             vision(" ");
             snap;
