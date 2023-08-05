@@ -194,7 +194,7 @@ export const evaluate_return_statement = (
   env: Environment,
 ): RuntimeVal => {
   if (returnStmt.value === undefined) {
-    return undefined;
+    return MAKE_NUll();
   } else {
     let return_result = evaluate(returnStmt.value, env) as RuntimeVal;
     if (return_result.type !== "null") {
