@@ -164,11 +164,10 @@ export const evaluate_for_each_loop_statement = (
 };
 
 /**
- * 
  * @param stmt Evaluates a for statement.
- * @param env 
- * @param wakandaForEnv 
- * @returns 
+ * @param env
+ * @param wakandaForEnv
+ * @returns
  */
 export const evaluate_numeric_wakandaFor_loop_statement = (
   stmt: WakandaForStatement,
@@ -240,11 +239,10 @@ export const evaluate_numeric_wakandaFor_loop_statement = (
 };
 
 /**
- * 
  * @param stmt Evaluates a for statement.
- * @param env 
- * @param wakandaForEnv 
- * @returns 
+ * @param env
+ * @param wakandaForEnv
+ * @returns
  */
 export const evaluate_boolean_wakandaFor_loop_statement = (
   stmt: WakandaForStatement,
