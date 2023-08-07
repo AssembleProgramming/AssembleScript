@@ -1,10 +1,2 @@
-# Old for loop
-wakandaForEach(i in 10 to 20 step 2){
-    vision(i);
-}
-vision();
-
-# New for loop
-wakandaFor(newAvenger i = 0; i < 20; i = i + 1){
-    vision(i);
-}
+newAvenger string = '"HELLO WORLD!!!"';
+vision(string);
