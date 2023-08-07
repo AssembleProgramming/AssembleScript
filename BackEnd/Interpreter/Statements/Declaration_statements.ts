@@ -3,13 +3,7 @@ import {
   VariableDeclaration,
 } from "../../../FrontEnd/AST.ts";
 import Environment from "../../Scope/environment.ts";
-import {
-  ArrayVal,
-  MAKE_NUll,
-  MAKE_NUM,
-  NumberVal,
-  RuntimeVal,
-} from "../../values.ts";
+import { ArrayVal, MAKE_NUll, NumberVal, RuntimeVal } from "../../values.ts";
 import { evaluate } from "../interpreter.ts";
 
 /**
