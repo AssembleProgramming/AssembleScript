@@ -12,7 +12,8 @@ import {
   NumberVal,
   RuntimeVal,
 } from "../../../values.ts";
-import { evaluate, evaluate_return_statement } from "../../interpreter.ts";
+import { evaluate_return_statement } from "../../Functions/Functions.ts";
+import { evaluate } from "../../interpreter.ts";
 
 /**
  * Evaluates a numeric if statement by conditionally executing the body based on the condition value.

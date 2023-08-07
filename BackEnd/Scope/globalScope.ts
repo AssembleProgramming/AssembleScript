@@ -1,8 +1,6 @@
 import {
-  ArrayVal,
   BooleanVal,
   MAKE_BOOL,
-  MAKE_FUNCTION,
   MAKE_NATIVE_FN,
   MAKE_NUll,
   MAKE_NUM,
