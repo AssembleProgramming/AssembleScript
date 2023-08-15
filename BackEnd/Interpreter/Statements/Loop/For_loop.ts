@@ -234,6 +234,8 @@ export const evaluate_numeric_wakandaFor_loop_statement = (
     }
     evaluate(stmt.modification, wakandaForEnv);
     evaluatedCondition = evaluate(stmt.condition, wakandaForEnv) as NumberVal;
+
+    wakandaForEnv.cleanUp();
   }
 
   return MAKE_NUll();
@@ -309,6 +311,8 @@ export const evaluate_boolean_wakandaFor_loop_statement = (
     }
     evaluate(stmt.modification, wakandaForEnv);
     evaluatedCondition = evaluate(stmt.condition, wakandaForEnv) as BooleanVal;
+
+    wakandaForEnv.cleanUp();
   }
 
   return MAKE_NUll();
@@ -326,6 +330,12 @@ export const evaluate_wakandaFor_loop_statement = (
   env: Environment,
 ): RuntimeVal => {
   const wakandaForEnv = new Environment(env);
+  if (
+    stmt.initialization.kind === "ArrayDeclaration" ||
+    stmt.initialization.kind === "VariableDeclaration"
+  ) {
+    throw `RunTimeError: wakandaFor loop does not support initialization. Initialize the iterator variable outside the scope.`;
+  }
   const initialization = evaluate(stmt.initialization, wakandaForEnv);
   const condition = evaluate(stmt.condition, wakandaForEnv);
   switch (condition.type) {
