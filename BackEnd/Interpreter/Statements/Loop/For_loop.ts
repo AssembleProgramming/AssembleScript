@@ -197,36 +197,29 @@ export const evaluate_numeric_wakandaFor_loop_statement = (
         let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
         if (detectedReturn.value === true) {
           return result;
-        } else {
-          continue;
         }
-      } else {
-        if (statement.kind === "BreakStatement") {
-          return MAKE_BREAK();
+      }
+      if (statement.kind === "BreakStatement") {
+        return MAKE_BREAK();
+      }
+      if (statement.kind === "ReturnStatement") {
+        env.assignVar("hasReturn", MAKE_BOOL(true));
+        const result = evaluate_return_statement(
+          statement as ReturnStatement,
+          wakandaForEnv,
+        );
+        if (result === undefined) {
+          return MAKE_NUll();
         }
-        if (statement.kind === "ReturnStatement") {
-          env.assignVar("hasReturn", MAKE_BOOL(true));
-          const result = evaluate_return_statement(
-            statement as ReturnStatement,
-            wakandaForEnv,
-          );
-          if (result === undefined) {
-            return MAKE_NUll();
-          }
-          return result;
-        } else {
-          const result = evaluate(statement, wakandaForEnv);
-          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-          if (detectedReturn.value === true) {
-            return result;
-          } else {
-            if (result !== undefined) {
-              if (result.type === "break") {
-                hasBreak = true;
-              }
-            }
-          }
-        }
+        return result;
+      }
+      const result = evaluate(statement, wakandaForEnv);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
+      }
+      if (result !== undefined && result.type === "break") {
+        hasBreak = true;
       }
       if (hasBreak) {
         return MAKE_BREAK();
@@ -234,6 +227,8 @@ export const evaluate_numeric_wakandaFor_loop_statement = (
     }
     evaluate(stmt.modification, wakandaForEnv);
     evaluatedCondition = evaluate(stmt.condition, wakandaForEnv) as NumberVal;
+
+    wakandaForEnv.cleanUp();
   }
 
   return MAKE_NUll();
@@ -272,36 +267,29 @@ export const evaluate_boolean_wakandaFor_loop_statement = (
         let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
         if (detectedReturn.value === true) {
           return result;
-        } else {
-          continue;
         }
-      } else {
-        if (statement.kind === "BreakStatement") {
-          return MAKE_BREAK();
+      }
+      if (statement.kind === "BreakStatement") {
+        return MAKE_BREAK();
+      }
+      if (statement.kind === "ReturnStatement") {
+        env.assignVar("hasReturn", MAKE_BOOL(true));
+        const result = evaluate_return_statement(
+          statement as ReturnStatement,
+          wakandaForEnv,
+        );
+        if (result === undefined) {
+          return MAKE_NUll();
         }
-        if (statement.kind === "ReturnStatement") {
-          env.assignVar("hasReturn", MAKE_BOOL(true));
-          const result = evaluate_return_statement(
-            statement as ReturnStatement,
-            wakandaForEnv,
-          );
-          if (result === undefined) {
-            return MAKE_NUll();
-          }
-          return result;
-        } else {
-          const result = evaluate(statement, wakandaForEnv);
-          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-          if (detectedReturn.value === true) {
-            return result;
-          } else {
-            if (result !== undefined) {
-              if (result.type === "break") {
-                hasBreak = true;
-              }
-            }
-          }
-        }
+        return result;
+      }
+      const result = evaluate(statement, wakandaForEnv);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
+      }
+      if (result !== undefined && result.type === "break") {
+        hasBreak = true;
       }
       if (hasBreak) {
         return MAKE_BREAK();
@@ -309,6 +297,8 @@ export const evaluate_boolean_wakandaFor_loop_statement = (
     }
     evaluate(stmt.modification, wakandaForEnv);
     evaluatedCondition = evaluate(stmt.condition, wakandaForEnv) as BooleanVal;
+
+    wakandaForEnv.cleanUp();
   }
 
   return MAKE_NUll();
@@ -326,6 +316,12 @@ export const evaluate_wakandaFor_loop_statement = (
   env: Environment,
 ): RuntimeVal => {
   const wakandaForEnv = new Environment(env);
+  if (
+    stmt.initialization.kind === "ArrayDeclaration" ||
+    stmt.initialization.kind === "VariableDeclaration"
+  ) {
+    throw `RunTimeError: wakandaFor loop does not support initialization. Initialize the iterator variable outside the scope.`;
+  }
   const initialization = evaluate(stmt.initialization, wakandaForEnv);
   const condition = evaluate(stmt.condition, wakandaForEnv);
   switch (condition.type) {

@@ -16,12 +16,11 @@ export function setupGlobalScope() {
     if (actual === expected) {
       console.log("✅Test passed!");
       return MAKE_BOOL(true);
-    } else {
-      console.log("❌Test failed!");
-      console.log("⚠️ Expected: ", expected);
-      console.log("⚠️ Output: ", actual);
-      throw `Failed execution`;
     }
+    console.log("❌Test failed!");
+    console.log("⚠️ Expected: ", expected);
+    console.log("⚠️ Output: ", actual);
+    throw `Failed execution`;
   };
   const env = new Environment();
   /** ===========================================================================================
@@ -46,27 +45,26 @@ export function setupGlobalScope() {
 
       if (actual_type !== expected_type) {
         throw `❌Test failed (Type Mismatched)`;
-      } else {
-        switch (actual_type) {
-          case "string": {
-            const actual = (args[0] as StringVal).value;
-            const expected = (args[1] as StringVal).value;
-            return isVaild(actual, expected);
-          }
-          case "number": {
-            const actual = (args[0] as NumberVal).value;
-            const expected = (args[1] as NumberVal).value;
-            return isVaild(actual, expected);
-          }
-          case "boolean": {
-            const actual = (args[0] as BooleanVal).value;
-            const expected = (args[1] as BooleanVal).value;
-            return isVaild(actual, expected);
-          }
-
-          default:
-            throw `RunTimeError: Null value exception`;
+      }
+      switch (actual_type) {
+        case "string": {
+          const actual = (args[0] as StringVal).value;
+          const expected = (args[1] as StringVal).value;
+          return isVaild(actual, expected);
         }
+        case "number": {
+          const actual = (args[0] as NumberVal).value;
+          const expected = (args[1] as NumberVal).value;
+          return isVaild(actual, expected);
+        }
+        case "boolean": {
+          const actual = (args[0] as BooleanVal).value;
+          const expected = (args[1] as BooleanVal).value;
+          return isVaild(actual, expected);
+        }
+
+        default:
+          throw `RunTimeError: Null value exception`;
       }
     }),
     true,
