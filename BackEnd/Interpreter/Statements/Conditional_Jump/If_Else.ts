@@ -116,26 +116,22 @@ export const evaluate_boolean_if_statement = (
     for (const bodyStmt of stmt.body) {
       if (bodyStmt.kind === "BreakStatement") {
         return MAKE_BREAK();
-      } else {
-        if (bodyStmt.kind === "ReturnStatement") {
-          env.assignVar("hasReturn", MAKE_BOOL(true));
-          let result = evaluate_return_statement(
-            bodyStmt as ReturnStatement,
-            ifEnv,
-          );
-          if (result === undefined) {
-            return MAKE_NUll();
-          }
-          return result;
-        } else {
-          let result = evaluate(bodyStmt, ifEnv);
-          let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-          if (detectedReturn.value === true) {
-            return result;
-          } else {
-            continue;
-          }
+      }
+      if (bodyStmt.kind === "ReturnStatement") {
+        env.assignVar("hasReturn", MAKE_BOOL(true));
+        const result = evaluate_return_statement(
+          bodyStmt as ReturnStatement,
+          ifEnv,
+        );
+        if (result === undefined) {
+          return MAKE_NUll();
         }
+        return result;
+      }
+      let result = evaluate(bodyStmt, ifEnv);
+      let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value === true) {
+        return result;
       }
     }
   } else if (stmt.elseBranch) {
@@ -153,26 +149,22 @@ export const evaluate_boolean_if_statement = (
       for (const bodyStmt of stmt.elseBranch.body) {
         if (bodyStmt.kind === "BreakStatement") {
           return MAKE_BREAK();
-        } else {
-          if (bodyStmt.kind === "ReturnStatement") {
-            env.assignVar("hasReturn", MAKE_BOOL(true));
-            const result = evaluate_return_statement(
-              bodyStmt as ReturnStatement,
-              elseEnv,
-            );
-            if (result === undefined) {
-              return MAKE_NUll();
-            }
-            return result;
-          } else {
-            let result = evaluate(bodyStmt, elseEnv);
-            let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
-            if (detectedReturn.value === true) {
-              return result;
-            } else {
-              continue;
-            }
+        }
+        if (bodyStmt.kind === "ReturnStatement") {
+          env.assignVar("hasReturn", MAKE_BOOL(true));
+          const result = evaluate_return_statement(
+            bodyStmt as ReturnStatement,
+            elseEnv,
+          );
+          if (result === undefined) {
+            return MAKE_NUll();
           }
+          return result;
+        }
+        let result = evaluate(bodyStmt, elseEnv);
+        let detectedReturn = env.lookupVar("hasReturn") as BooleanVal;
+        if (detectedReturn.value === true) {
+          return result;
         }
       }
     }

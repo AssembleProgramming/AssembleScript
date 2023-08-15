@@ -85,18 +85,14 @@ export const evaluate_call_expression = (
         if (returnStmt.value) {
           returnValue = evaluate(returnStmt.value, functionEnv);
           return returnValue;
-        } else {
-          return MAKE_NUll();
         }
-      } else {
-        let result = evaluate(statement, functionEnv);
-        let detectedReturn = functionEnv.lookupVar("hasReturn") as BooleanVal;
-        if (detectedReturn.value == true) {
-          returnValue = result;
-          return returnValue;
-        } else {
-          continue;
-        }
+        return MAKE_NUll();
+      }
+      const result = evaluate(statement, functionEnv);
+      const detectedReturn = functionEnv.lookupVar("hasReturn") as BooleanVal;
+      if (detectedReturn.value == true) {
+        returnValue = result;
+        return returnValue;
       }
     }
     return returnValue;
@@ -117,12 +113,10 @@ export const evaluate_return_statement = (
 ): RuntimeVal => {
   if (returnStmt.value === undefined) {
     return MAKE_NUll();
-  } else {
-    let return_result = evaluate(returnStmt.value, env) as RuntimeVal;
-    if (return_result.type !== "null") {
-      return return_result;
-    } else {
-      return MAKE_NUll();
-    }
   }
+  let return_result = evaluate(returnStmt.value, env) as RuntimeVal;
+  if (return_result.type !== "null") {
+    return return_result;
+  }
+  return MAKE_NUll();
 };
