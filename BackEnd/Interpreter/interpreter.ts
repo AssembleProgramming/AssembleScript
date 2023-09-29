@@ -9,6 +9,7 @@ import {
   BooleanLiteral,
   CallExpr,
   ComparisonExpression,
+  CompoundAssignmentExpr,
   ElseStatement,
   ForEachLoopStatement,
   FunctionDefinition,
@@ -43,6 +44,7 @@ import {
   evaluate_unary_expr,
 } from "./Expressions/Boolean_expression.ts";
 import { evaluate_comparison_expression } from "./Expressions/Comparison_expression.ts";
+import { evaluate_compound_assignment_expression } from "./Expressions/Compound_assignment.ts";
 import {
   evaluate_assignment_expression,
   evaluate_member_expression,
@@ -200,6 +202,12 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
 
     case "ReturnStatement":
       return evaluate_return_statement(astNode as ReturnStatement, env);
+
+    case "CompoundAssignmentExpr":
+      return evaluate_compound_assignment_expression(
+        astNode as CompoundAssignmentExpr,
+        env,
+      );
     default:
       // If the AST node has an unknown or unsupported kind, we log an error and exit the program.
       console.log(astNode);

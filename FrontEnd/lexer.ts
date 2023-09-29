@@ -36,6 +36,7 @@ export enum TokenType {
   BinaryOperator,
   LogicalOperator,
   ComparisonOperator,
+  CompoundAssignmentOperator,
   NotOperator,
   OpenParen, // (
   CloseParen, // )
@@ -173,6 +174,12 @@ export function tokenize(sourceCode: string): Token[] {
       ">": TokenType.ComparisonOperator,
       "&&": TokenType.LogicalOperator,
       "||": TokenType.LogicalOperator,
+      "+=": TokenType.CompoundAssignmentOperator,
+      "*=": TokenType.CompoundAssignmentOperator,
+      "/=": TokenType.CompoundAssignmentOperator,
+      "-=": TokenType.CompoundAssignmentOperator,
+      "%=": TokenType.CompoundAssignmentOperator,
+      "^=": TokenType.CompoundAssignmentOperator,
     };
 
     for (const operator in operators) {
@@ -199,9 +206,8 @@ export function tokenize(sourceCode: string): Token[] {
       if (src[0] === '"') {
         src.shift(); // Consume the closing double quote
         return getToken(string, TokenType.String, line_cnt);
-      } else {
-        throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
       }
+      throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
     }
 
     if (src[0] === "'") {
@@ -215,11 +221,20 @@ export function tokenize(sourceCode: string): Token[] {
       if (src[0] === "'") {
         src.shift(); // Consume the closing double quote
         return getToken(string, TokenType.String, line_cnt);
-      } else {
-        throw `SyntaxError:line:${line_cnt}: missing terminating ''' character.`;
       }
+      throw `SyntaxError:line:${line_cnt}: missing terminating ''' character.`;
     }
 
+    if (
+      src[0] === "+" ||
+      src[0] === "-" ||
+      src[0] === "*" ||
+      src[0] === "/" ||
+      src[0] === "%" ||
+      src[0] === "^"
+    ) {
+      return getToken(src.shift(), TokenType.BinaryOperator, line_cnt);
+    }
     return null;
   }
 
@@ -268,15 +283,6 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(getToken(src.shift(), TokenType.OpenBracket, line_cnt));
     } else if (src[0] === "]") {
       tokens.push(getToken(src.shift(), TokenType.CloseBracket, line_cnt));
-    } else if (
-      src[0] === "+" ||
-      src[0] === "-" ||
-      src[0] === "*" ||
-      src[0] === "/" ||
-      src[0] === "%" ||
-      src[0] === "^"
-    ) {
-      tokens.push(getToken(src.shift(), TokenType.BinaryOperator, line_cnt));
     } else if (src[0] === ";") {
       tokens.push(getToken(src.shift(), TokenType.Semicolon, line_cnt));
     } else if (src[0] === "!") {
@@ -328,5 +334,6 @@ export function tokenize(sourceCode: string): Token[] {
 
   // Push EOF token
   tokens.push({ type: TokenType.EOF, value: "EndOfFile", curr_line: line_cnt });
+
   return tokens;
 }

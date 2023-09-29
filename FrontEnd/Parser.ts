@@ -8,6 +8,7 @@ import {
   BreakStatement,
   CallExpr,
   ComparisonExpression,
+  CompoundAssignmentExpr,
   ElseStatement,
   Expr,
   ForEachLoopStatement,
@@ -754,6 +755,16 @@ export default class Parser {
         assignee: left,
         kind: "AssignmentExpression",
       } as AssignmentExpression;
+    } else if (this.at().type === TokenType.CompoundAssignmentOperator) {
+      const operator = this.at().value;
+      this.eat();
+      const value = this.parse_assignment_expr();
+      return {
+        assignee: left,
+        val: value,
+        kind: "CompoundAssignmentExpr",
+        operator: operator,
+      } as CompoundAssignmentExpr;
     }
     return left;
   }

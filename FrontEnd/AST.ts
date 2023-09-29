@@ -25,6 +25,7 @@ export type NodeType =
   | "LogicalExpression"
   | "UnaryExpr"
   | "MinusExpr"
+  | "CompoundAssignmentExpr"
   // Literals
   | "Identifier"
   | "NumericLiteral"
@@ -377,6 +378,22 @@ export interface SwitchStatement {
 export interface MinusExpr extends Expr {
   kind: "MinusExpr";
   argument: Expr;
+}
+
+/**
+ * Represents a compound assignment expression.
+ * The CompoundAssignmentExpr interface represents a compound assignment expression.
+ * It has the following properties:
+ * - kind: The type of the node ("CompoundAssignmentExpression").
+ * - assignee: The expression being assigned.
+ * - operator: The compound assignment operator used in the expression.
+ * - val: The value being assigned.
+ */
+export interface CompoundAssignmentExpr extends Expr {
+  kind: "CompoundAssignmentExpr";
+  assignee: Expr;
+  operator: string; // This can be "+=", "-=", "/=", etc.
+  val: Expr;
 }
 
 /**

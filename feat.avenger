@@ -1,6 +1,20 @@
-newAvenger i;
-wakandaFor( i = 0 ; 10 ;i = i + 1){
-    newAvenger temp = 10;
-    vision(i);
-    vision(temp);
-}
+newAvenger i = 27;
+newAvenger j = 27;
+newAvenger k = 27;
+newAvenger l = 27;
+newAvenger m = 27;
+newAvenger n = 27;
+
+i += 3;
+j -= 3;
+k *= 3;
+l /= 3;
+m %= 10;
+n ^= 2;
+
+vision(i);
+vision(j);
+vision(k);
+vision(l);
+vision(m);
+vision(n);
