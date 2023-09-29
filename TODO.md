@@ -18,14 +18,13 @@
 - [x] Implement user defined functions
 - [x] Write test cases
 - [x] Documentation
+- [x] For loop new syntax
 
 ## Increment
-
-- [x] For loop new syntax
+- [x] Add support for `+=` `-=` `*=` `/=` `%=` `^=` operator
 
 ## Backlog
 
 - [ ] Implement objects
 - [ ] Implement error handling
 - [ ] Optimize performance
-- [ ] Add support for `+=` `-=` `*=` `/=` `%=` `^=` operator
