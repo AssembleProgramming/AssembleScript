@@ -199,9 +199,8 @@ export function tokenize(sourceCode: string): Token[] {
       if (src[0] === '"') {
         src.shift(); // Consume the closing double quote
         return getToken(string, TokenType.String, line_cnt);
-      } else {
-        throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
       }
+      throw `SyntaxError:line:${line_cnt}: missing terminating '"' character.`;
     }
 
     if (src[0] === "'") {
@@ -215,9 +214,8 @@ export function tokenize(sourceCode: string): Token[] {
       if (src[0] === "'") {
         src.shift(); // Consume the closing double quote
         return getToken(string, TokenType.String, line_cnt);
-      } else {
-        throw `SyntaxError:line:${line_cnt}: missing terminating ''' character.`;
       }
+      throw `SyntaxError:line:${line_cnt}: missing terminating ''' character.`;
     }
 
     return null;
