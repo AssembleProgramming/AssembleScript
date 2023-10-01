@@ -7,6 +7,7 @@ export enum TokenType {
   Number,
   Identifier,
   String,
+  TemplateLiteral, // @{}
   // Keywords
   NewAvenger,
   NewEternal,
@@ -44,6 +45,7 @@ export enum TokenType {
   CloseBrace, // }
   OpenBracket, // [
   CloseBracket, // ]
+  BackTicks, // 
   //Easter eggs
   If,
   Else,
@@ -297,6 +299,53 @@ export function tokenize(sourceCode: string): Token[] {
       const token = getMultiCharacterToken(src);
       if (token) {
         tokens.push(token);
+      } // Check Template literals
+      else if (src[0] === "`") {
+        tokens.push(getToken(src.shift(), TokenType.BackTicks, line_cnt));
+        while (src.length > 0 && src[0] !== "`") {
+          if (src[0] === "@") {
+            let templateLiteral: string = "";
+            src.shift();
+            if (src[0] === "{") {
+              src.shift();
+              while (src.length > 0 && src[0] !== "}") {
+                templateLiteral += src.shift();
+              }
+              if (src[0] === "}") {
+                src.shift();
+                tokens.push(
+                  getToken(
+                    templateLiteral,
+                    TokenType.TemplateLiteral,
+                    line_cnt,
+                  ),
+                );
+              } else {
+                throw `SyntaxError:line:${line_cnt}: missing terminating '}' character.`;
+              }
+            } else {
+              throw `SyntaxError:line:${line_cnt}: missing opening '{' character for template interpolation.`;
+            }
+          } else {
+            let templateString: string = "";
+            while (src.length > 0 && src[0] !== "@" && src[0] !== "`") {
+              templateString += src.shift();
+            }
+            if (src[0] === "@") {
+              tokens.push(getToken(templateString, TokenType.String, line_cnt));
+            } else if (src[0] === "`") {
+              tokens.push(getToken(templateString, TokenType.String, line_cnt));
+              break;
+            }
+          }
+        }
+        if (src[0] === "`") {
+          tokens.push(getToken(src.shift(), TokenType.BackTicks, line_cnt));
+        }
+        else{
+          let backtick = "`";
+          throw `SyntaxError:line:${line_cnt}: missing closing ${backtick} character for template interpolation.`;
+        }
       } // Check for identifiers
       else if (isAlphabet(src[0])) {
         let id = "";
@@ -335,5 +384,6 @@ export function tokenize(sourceCode: string): Token[] {
   // Push EOF token
   tokens.push({ type: TokenType.EOF, value: "EndOfFile", curr_line: line_cnt });
 
+  console.log(tokens);
   return tokens;
 }
