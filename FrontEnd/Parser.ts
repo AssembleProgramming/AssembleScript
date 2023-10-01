@@ -27,7 +27,6 @@ import {
   StringLiteral,
   SwitchCase,
   SwitchStatement,
-  TemplateLiteralInterpolation,
   TemplateLiteralNode,
   UnaryExpr,
   VariableDeclaration,
@@ -1041,15 +1040,20 @@ export default class Parser {
           TokenType.OpenBrace,
           "Expected template literal to start with a backtick '{'",
         );
-        const interpolation = this.parse_expr();
-        parts.push({
-          kind: "TemplateLiteralInterpolation",
-          value: interpolation,
-        });
-        this.expect(
-          TokenType.CloseBrace,
-          "Expected '}'",
-        );
+        if (this.at().type === TokenType.CloseBrace) {
+          this.eat();
+          continue;
+        } else {
+          const interpolation = this.parse_expr();
+          parts.push({
+            value: interpolation,
+            kind: interpolation.kind,
+          });
+          this.expect(
+            TokenType.CloseBrace,
+            "Expected '}'",
+          );
+        }
       } else if (this.at().type === TokenType.String) {
         parts.push(this.at().value);
         this.eat();
@@ -1058,8 +1062,6 @@ export default class Parser {
         throw `SyntaxError:line:${this.at().curr_line}: Unexpected token found inside template literal`;
       }
     }
-    // Add the last string part
-    console.log(parts);
 
     this.expect(
       TokenType.BackTicks,

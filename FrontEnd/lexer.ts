@@ -442,6 +442,5 @@ export function tokenize(sourceCode: string): Token[] {
 
   // Push EOF token
   tokens.push({ type: TokenType.EOF, value: "EndOfFile", curr_line: line_cnt });
-
   return tokens;
 }

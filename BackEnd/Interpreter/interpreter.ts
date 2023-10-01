@@ -24,6 +24,7 @@ import {
   Stmt,
   StringLiteral,
   SwitchStatement,
+  TemplateLiteralNode,
   UnaryExpr,
   VariableDeclaration,
   WakandaForStatement,
@@ -34,6 +35,7 @@ import Environment from "../Scope/environment.ts";
 import {
   BooleanVal,
   MAKE_NUll,
+  MAKE_STRING,
   NumberVal,
   RuntimeVal,
   StringVal,
@@ -98,6 +100,27 @@ const evaluate_identifier = (
 ): RuntimeVal => {
   const val = env.lookupVar(ident.symbol);
   return val;
+};
+
+const evaluate_template_literals = (
+  node: TemplateLiteralNode,
+  env: Environment,
+): RuntimeVal => {
+  let ans = "";
+  node.body.forEach((element) => {
+    switch (typeof element) {
+      case "string":
+        ans += element;
+        break;
+      case "object":
+        const templateLiteralValue = evaluate(element.value, env).value;
+        ans += templateLiteralValue.toString();
+        break;
+      default:
+        throw `RunTimeError: Error while interpreting TemplateLiteralNode`;
+    }
+  });
+  return MAKE_STRING(ans);
 };
 
 /**
@@ -206,6 +229,11 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
     case "CompoundAssignmentExpr":
       return evaluate_compound_assignment_expression(
         astNode as CompoundAssignmentExpr,
+        env,
+      );
+    case "TemplateLiteral":
+      return evaluate_template_literals(
+        astNode as TemplateLiteralNode,
         env,
       );
     default:

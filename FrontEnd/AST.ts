@@ -34,7 +34,6 @@ export type NodeType =
   | "NullLiteral"
   | "BooleanLiteral"
   | "TemplateLiteral"
-  | "TemplateLiteralInterpolation"
   // Function-related nodes
   | "FunctionParam"
   | "FunctionDefinition"
@@ -275,15 +274,7 @@ export interface StringLiteral extends Expr {
  */
 export interface TemplateLiteralNode extends Expr {
   kind: "TemplateLiteral";
-  body: (string | TemplateLiteralInterpolation)[];
-}
-
-/**
- * Represents an AST node for template literal interpolations.
- */
-export interface TemplateLiteralInterpolation extends Expr {
-  kind: "TemplateLiteralInterpolation";
-  value: Expr;
+  body: (string | Expr)[];
 }
 
 /**
