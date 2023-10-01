@@ -27,6 +27,8 @@ import {
   StringLiteral,
   SwitchCase,
   SwitchStatement,
+  TemplateLiteralInterpolation,
+  TemplateLiteralNode,
   UnaryExpr,
   VariableDeclaration,
   WakandaForStatement,
@@ -1020,6 +1022,53 @@ export default class Parser {
   }
 
   /**
+   * Parses a template literal.
+   *
+   * @returns An Expr object representing the parsed template literal.
+   * @throws {Error} If there are syntax errors or missing tokens in the expression.
+   */
+  private parse_template_literal(): Expr {
+    const parts: (string | TemplateLiteralInterpolation)[] = [];
+    this.expect(
+      TokenType.BackTicks,
+      "Expected template literal to start with a backtick (`)",
+    );
+
+    while (this.at().type !== TokenType.BackTicks) {
+      if (this.at().type === TokenType.Interpolation) {
+        this.eat();
+        this.expect(
+          TokenType.OpenBrace,
+          "Expected template literal to start with a backtick '{'",
+        );
+        const interpolation = this.parse_expr();
+        parts.push({
+          kind: "TemplateLiteralInterpolation",
+          value: interpolation,
+        });
+        this.expect(
+          TokenType.CloseBrace,
+          "Expected '}'",
+        );
+      } else if (this.at().type === TokenType.String) {
+        parts.push(this.at().value);
+        this.eat();
+      } else {
+        // Handle other tokens inside template literals
+        throw `SyntaxError:line:${this.at().curr_line}: Unexpected token found inside template literal`;
+      }
+    }
+    // Add the last string part
+    console.log(parts);
+
+    this.expect(
+      TokenType.BackTicks,
+      "Expected template literal to end with a backtick (`)",
+    );
+
+    return { kind: "TemplateLiteral", body: parts } as TemplateLiteralNode;
+  }
+  /**
    * Parses a primary expression.
    *
    * @returns An Expr object representing the parsed primary expression.
@@ -1074,6 +1123,10 @@ export default class Parser {
       // Unary expression
       case TokenType.NotOperator:
         return this.parse_not_expr();
+
+        // Handle template literals
+      case TokenType.BackTicks:
+        return this.parse_template_literal();
 
       default:
         throw `SyntaxError:line:${this.at().curr_line}: Unexpected token found while parsing scanned ${this.at().value}`;
