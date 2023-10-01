@@ -45,7 +45,7 @@ export enum TokenType {
   CloseBrace, // }
   OpenBracket, // [
   CloseBracket, // ]
-  BackTicks, // 
+  BackTicks, //
   //Easter eggs
   If,
   Else,
@@ -341,8 +341,7 @@ export function tokenize(sourceCode: string): Token[] {
         }
         if (src[0] === "`") {
           tokens.push(getToken(src.shift(), TokenType.BackTicks, line_cnt));
-        }
-        else{
+        } else {
           let backtick = "`";
           throw `SyntaxError:line:${line_cnt}: missing closing ${backtick} character for template interpolation.`;
         }
