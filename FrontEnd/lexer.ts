@@ -7,6 +7,7 @@ export enum TokenType {
   Number,
   Identifier,
   String,
+  TemplateLiteral, // @{}
   // Keywords
   NewAvenger,
   NewEternal,
@@ -44,6 +45,8 @@ export enum TokenType {
   CloseBrace, // }
   OpenBracket, // [
   CloseBracket, // ]
+  BackTicks, //]
+  Interpolation, //@
   //Easter eggs
   If,
   Else,
@@ -297,8 +300,7 @@ export function tokenize(sourceCode: string): Token[] {
       const token = getMultiCharacterToken(src);
       if (token) {
         tokens.push(token);
-      } // Check for identifiers
-      else if (isAlphabet(src[0])) {
+      } else if (isAlphabet(src[0])) {
         let id = "";
         while (src.length > 0 && isAlphabet(src[0])) {
           id += src.shift();
@@ -323,8 +325,114 @@ export function tokenize(sourceCode: string): Token[] {
       else if (isSkippable(src[0])) {
         // Skip the current character
         src.shift();
-      } // Handle unrecognized characters
-      else {
+      } else if (src[0] === "`") {
+        tokens.push(getToken(src.shift(), TokenType.BackTicks, line_cnt));
+        while (src.length > 0 && src[0] !== "`") {
+          if (src[0] === "@") {
+            tokens.push(
+              getToken(src.shift(), TokenType.Interpolation, line_cnt),
+            );
+            if (src[0] === "{") {
+              tokens.push(getToken(src.shift(), TokenType.OpenBrace, line_cnt));
+              while (src.length > 0 && src[0] !== "}") {
+                if (src[0] === "@") {
+                  break;
+                } else if (src[0] === "{") {
+                  throw `SyntaxError:line:${line_cnt}: nesting within template literal is not allowed.`;
+                } else if (src[0] === "`") {
+                  throw `SyntaxError:line:${line_cnt}: Missing closing '}`;
+                } else if (src[0] === "(") {
+                  tokens.push(
+                    getToken(src.shift(), TokenType.OpenParen, line_cnt),
+                  );
+                } else if (src[0] === ")") {
+                  tokens.push(
+                    getToken(src.shift(), TokenType.CloseParen, line_cnt),
+                  );
+                } else if (src[0] === "[") {
+                  tokens.push(
+                    getToken(src.shift(), TokenType.OpenBracket, line_cnt),
+                  );
+                } else if (src[0] === "]") {
+                  tokens.push(
+                    getToken(src.shift(), TokenType.CloseBracket, line_cnt),
+                  );
+                } else if (src[0] === ";") {
+                  tokens.push(
+                    getToken(src.shift(), TokenType.Semicolon, line_cnt),
+                  );
+                } else if (src[0] === "!") {
+                  tokens.push(
+                    getToken(src.shift(), TokenType.NotOperator, line_cnt),
+                  );
+                } else if (src[0] === ":") {
+                  tokens.push(getToken(src.shift(), TokenType.Colon, line_cnt));
+                } else if (src[0] === ",") {
+                  tokens.push(getToken(src.shift(), TokenType.Comma, line_cnt));
+                } else if (src[0] === ".") {
+                  tokens.push(getToken(src.shift(), TokenType.Dot, line_cnt));
+                } else {
+                  const token = getMultiCharacterToken(src);
+                  if (token) {
+                    tokens.push(token);
+                  } else if (isAlphabet(src[0])) {
+                    let id = "";
+                    while (src.length > 0 && isAlphabet(src[0])) {
+                      id += src.shift();
+                    }
+                    // Check for keywords
+                    const reserved: TokenType = KEYWORDS[id];
+                    if (typeof reserved === "number") {
+                      tokens.push(getToken(id, reserved, line_cnt));
+                    } else {
+                      // unreserved means user defined identifier
+                      tokens.push(getToken(id, TokenType.Identifier, line_cnt));
+                    }
+                  } // Build number token
+                  else if (isNum(src[0])) {
+                    let num = "";
+                    while (src.length > 0 && isNum(src[0])) {
+                      num += src.shift();
+                    }
+
+                    tokens.push(getToken(num, TokenType.Number, line_cnt));
+                  } // Skip the skippable character
+                  else if (isSkippable(src[0])) {
+                    // Skip the current character
+                    src.shift();
+                  }
+                }
+              }
+              if (src[0] === "}") {
+                tokens.push(
+                  getToken(src.shift(), TokenType.CloseBrace, line_cnt),
+                );
+              } else {
+                throw `SyntaxError:line:${line_cnt}: missing terminating '}' character.`;
+              }
+            } else {
+              throw `SyntaxError:line:${line_cnt}: missing opening '{' character for template interpolation.`;
+            }
+          } else {
+            let templateString: string = "";
+            while (src.length > 0 && src[0] !== "@" && src[0] !== "`") {
+              templateString += src.shift();
+            }
+            if (src[0] === "@") {
+              tokens.push(getToken(templateString, TokenType.String, line_cnt));
+            } else if (src[0] === "`") {
+              tokens.push(getToken(templateString, TokenType.String, line_cnt));
+              break;
+            }
+          }
+        }
+        if (src[0] === "`") {
+          tokens.push(getToken(src.shift(), TokenType.BackTicks, line_cnt));
+        } else {
+          let backtick = "`";
+          throw `SyntaxError:line:${line_cnt}: missing closing ${backtick} character for template interpolation.`;
+        }
+      } else {
         throw `SyntaxError:line:${line_cnt}: Unrecognised character ${
           src[0]
         } found.`;
@@ -334,6 +442,5 @@ export function tokenize(sourceCode: string): Token[] {
 
   // Push EOF token
   tokens.push({ type: TokenType.EOF, value: "EndOfFile", curr_line: line_cnt });
-
   return tokens;
 }
