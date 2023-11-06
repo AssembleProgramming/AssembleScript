@@ -234,7 +234,8 @@ wakandaForEach(i in 10 to 0 step 2){
 ```
 
 ```python
-wakandaFor(newAvenger i = 0; i < 20; i = i + 1){
+newAvenger i;
+wakandaFor(i = 0; i < 20; i = i + 1){
     vision(i);
 }
 ```
