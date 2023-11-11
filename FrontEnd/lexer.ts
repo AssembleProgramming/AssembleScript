@@ -288,8 +288,6 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(getToken(src.shift(), TokenType.CloseBracket, line_cnt));
     } else if (src[0] === ";") {
       tokens.push(getToken(src.shift(), TokenType.Semicolon, line_cnt));
-    } else if (src[0] === "!") {
-      tokens.push(getToken(src.shift(), TokenType.NotOperator, line_cnt));
     } else if (src[0] === ":") {
       tokens.push(getToken(src.shift(), TokenType.Colon, line_cnt));
     } else if (src[0] === ",") {
@@ -361,10 +359,6 @@ export function tokenize(sourceCode: string): Token[] {
                   tokens.push(
                     getToken(src.shift(), TokenType.Semicolon, line_cnt),
                   );
-                } else if (src[0] === "!") {
-                  tokens.push(
-                    getToken(src.shift(), TokenType.NotOperator, line_cnt),
-                  );
                 } else if (src[0] === ":") {
                   tokens.push(getToken(src.shift(), TokenType.Colon, line_cnt));
                 } else if (src[0] === ",") {
@@ -432,6 +426,10 @@ export function tokenize(sourceCode: string): Token[] {
           let backtick = "`";
           throw `SyntaxError:line:${line_cnt}: missing closing ${backtick} character for template interpolation.`;
         }
+      } else if (src[0] === "!") {
+        tokens.push(
+          getToken(src.shift(), TokenType.NotOperator, line_cnt),
+        );
       } else {
         throw `SyntaxError:line:${line_cnt}: Unrecognised character ${
           src[0]
