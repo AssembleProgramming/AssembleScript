@@ -1,6 +1,1 @@
-newAvenger i = 27;
-newEternal PI = 3.142;
-newAvenger template = `The value of i is: @{i} and the value of PI is @{PI}`;
-vision(template);
-vision(`Hello how are you. @{ }`);
-vision(`The value of 22/7 is @{22/7}`);
+vision(1 != 1);
